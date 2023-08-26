@@ -59,9 +59,9 @@ export default function Home() {
       />
       <ul>
         {movies.map((movie) => (
-          <li>
+          <li key={movie.name}>
             {movie.name + " (" + movie.year + ")"}
-            <img src={movie.image}></img>
+            <Image src={movie.image} alt={movie.name} />
           </li>
         ))}
       </ul>
