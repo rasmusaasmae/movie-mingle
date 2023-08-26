@@ -15,9 +15,15 @@ export async function GET(request: Request) {
   });
   const ratings = await prisma.rating.findMany({
     where: { author: user },
+    select: {
+      movieId: true,
+      rating: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   });
 
-  return NextResponse.json({ session: session, ratings });
+  return NextResponse.json(ratings);
 }
 
 export async function POST(request: Request) {
