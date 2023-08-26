@@ -1,8 +1,18 @@
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 
-export async function GET() {
-  const session = await getServerSession(authOptions);
-  return NextResponse.json({ session: session });
+export async function GET(request: Request) {
+  const ranking = await prisma.rating.groupBy({
+    by: "movieId",
+    orderBy: {
+      _avg: {
+        rating: "desc",
+      },
+    },
+    _avg: {
+      rating: true,
+    },
+    take: 10,
+  });
+  return NextResponse.json({ ranking });
 }
