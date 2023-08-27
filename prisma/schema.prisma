@@ -10,14 +10,73 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
+enum Genre {
+  Action
+  Adventure
+  Animation
+  Biography
+  Comedy
+  Crime
+  Documentary
+  Drama
+  Family
+  Fantasy
+  FilmNoir
+  GameShow
+  History
+  Horror
+  Music
+  Musical
+  Mystery
+  News
+  RealityTV
+  Romance
+  SciFi
+  Sport
+  TalkShow
+  Thriller
+  War
+  Western
+}
+
+model Movie {
+  id                String  @id @unique
+  url               String
+  title             String
+  slug              String
+  year              Int
+  runtime           Int
+  imdbCode          String
+  imdbRating        Float
+  genres            Genre[]
+  description       String
+  language          String
+  mpaRating         String
+  small_cover_image String
+  large_cover_image String
+  ratings           Rating[]
+}
+
 model Rating {
-  id        String     @id @default(cuid())
+  id        String    @id @default(cuid())
+  movie     Movie     @relation(fields:[movieId], references:[id])
   movieId   String
   rating    Float
-  author    User?@relation(fields:[authorId], references:[id])
-  authorId  String?
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
+  user      User      @relation(fields:[userId], references:[id])
+  userId    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  ratings       Rating[]
+  accounts      Account[]
+  sessions      Session[]
 }
 
 model Account {
@@ -47,17 +106,6 @@ model Session {
   userId       String   @map("user_id")
   expires      DateTime
   user         User     @relation(fields:[userId], references:[id], onDelete: Cascade)
-}
-
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  ratings       Rating[]
-  accounts      Account[]
-  sessions      Session[]
 }
 
 model VerificationToken {
