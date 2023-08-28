@@ -7,7 +7,7 @@ import type { Movies } from "@/schemas/movie";
 export async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams.get("query");
 
-  if (query === null) return NextResponse.json([]);
+  if (query === null || query === "") return NextResponse.json([]);
 
   const response = await fetch(
     `${YTS_BASE_URL}/list_movies.json?query_term=${query}`
