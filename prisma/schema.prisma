@@ -41,19 +41,19 @@ enum Genre {
 
 model Movie {
   id                String  @id @unique
-  url               String
+  url               String  @unique
   title             String
-  slug              String
+  slug              String  @unique
   year              Int
   runtime           Int
-  imdbCode          String
+  imdbCode          String  @unique
   imdbRating        Float
   genres            Genre[]
   description       String
   language          String
   mpaRating         String
-  small_cover_image String
-  large_cover_image String
+  smallCoverImage String
+  largeCoverImage String
   ratings           Rating[]
 }
 
@@ -66,6 +66,8 @@ model Rating {
   userId    String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  
+  @@unique([movieId, userId])
 }
 
 model User {
