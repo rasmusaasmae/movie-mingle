@@ -5,12 +5,11 @@ import { ytsMoviesSchema } from "@/schemas/yts";
 import type { Movies } from "@/schemas/movie";
 
 export async function GET(request: NextRequest) {
-  const query = request.nextUrl.searchParams.get("query");
-
+  const query = request.nextUrl.searchParams.get("query_term");
   if (query === null || query === "") return NextResponse.json([]);
 
   const response = await fetch(
-    `${YTS_BASE_URL}/list_movies.json?query_term=${query}`
+    `${YTS_BASE_URL}/list_movies.json?` + request.nextUrl.searchParams
   );
   const body = await response.json();
   const movies = ytsMoviesSchema.parse(body.data.movies ?? []);
