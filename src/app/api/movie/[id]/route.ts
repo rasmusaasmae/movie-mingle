@@ -57,6 +57,7 @@ export async function GET(
       language,
       mpa_rating,
       small_cover_image,
+      medium_cover_image,
       large_cover_image,
       genres,
     } = ytsMovieSchema.parse(body.data.movie);
@@ -82,6 +83,7 @@ export async function GET(
       language,
       mpaRating: mpa_rating,
       smallCoverImage: small_cover_image,
+      mediumCoverImage: medium_cover_image,
       largeCoverImage: large_cover_image,
       avgRating: undefined,
       userRating: undefined,
