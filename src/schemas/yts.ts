@@ -43,6 +43,7 @@ export const ytsMovieSchema = z.object({
   language: z.string(),
   mpa_rating: z.string(),
   small_cover_image: z.string(),
+  medium_cover_image: z.string(),
   large_cover_image: z.string(),
 });
 

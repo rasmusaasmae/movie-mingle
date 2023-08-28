@@ -30,6 +30,7 @@ export async function GET(request: NextRequest) {
       language,
       mpa_rating,
       small_cover_image,
+      medium_cover_image,
       large_cover_image,
     }) => ({
       id: String(id),
@@ -52,6 +53,7 @@ export async function GET(request: NextRequest) {
       language,
       mpaRating: mpa_rating,
       smallCoverImage: small_cover_image,
+      mediumCoverImage: medium_cover_image,
       largeCoverImage: large_cover_image,
       avgRating: undefined,
       userRating: undefined,

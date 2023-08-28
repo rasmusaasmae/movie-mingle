@@ -52,8 +52,9 @@ model Movie {
   description       String
   language          String
   mpaRating         String
-  smallCoverImage String
-  largeCoverImage String
+  smallCoverImage   String
+  mediumCoverImage  String
+  largeCoverImage   String
   ratings           Rating[]
 }
 

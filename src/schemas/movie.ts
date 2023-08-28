@@ -43,6 +43,7 @@ export const movieSchema = z.object({
   language: z.string(),
   mpaRating: z.string(),
   smallCoverImage: z.string(),
+  mediumCoverImage: z.string(),
   largeCoverImage: z.string(),
   avgRating: z.number().optional(),
   userRating: z
