@@ -1,7 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactNode } from "react";
 
 const queryClient = new QueryClient();
 

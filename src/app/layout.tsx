@@ -1,8 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import NextAuthProvider from "@/contexts/NextAuthProvider";
-import QueryProvider from "@/contexts/QueryProvider";
+import Providers from "@/providers";
+import Navbar from "@/components/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProvider>
-          <NextAuthProvider>{children}</NextAuthProvider>
-        </QueryProvider>
+        <Providers>
+          <div className="w-screen min-h-screen bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900 text-black dark:text-white">
+            <Navbar />
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   );
