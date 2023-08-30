@@ -6,6 +6,7 @@ import axios from "axios";
 export default function Home() {
   const [value, setValue] = useState<string>("");
   const [movies, setMovies] = useState<any[]>([]);
+
   function handleChange(event: any) {
     setValue(event.target.value);
     let name = event.target.value;
@@ -44,7 +45,7 @@ export default function Home() {
       },
       (error) => {
         console.log(error);
-      }
+      },
     );
   }
 

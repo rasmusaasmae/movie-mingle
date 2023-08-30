@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import _ from "lodash";
 import { YTS_BASE_URL } from "@/constants/yts";
 import { ytsMoviesSchema } from "@/schemas/yts";
 import type { Movies } from "@/schemas/movie";
@@ -9,7 +8,7 @@ export async function GET(request: NextRequest) {
   if (query === null || query === "") return NextResponse.json([]);
 
   const response = await fetch(
-    `${YTS_BASE_URL}/list_movies.json?` + request.nextUrl.searchParams
+    `${YTS_BASE_URL}/list_movies.json?` + request.nextUrl.searchParams,
   );
   const body = await response.json();
   const movies = ytsMoviesSchema.parse(body.data.movies ?? []);
@@ -56,7 +55,7 @@ export async function GET(request: NextRequest) {
       largeCoverImage: large_cover_image,
       avgRating: undefined,
       userRating: undefined,
-    })
+    }),
   );
 
   return NextResponse.json(result);

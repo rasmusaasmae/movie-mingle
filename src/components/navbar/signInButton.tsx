@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 
 export default function SignInButton() {
   const { status } = useSession();
+
   async function handleSignIn() {
     await signIn("google").catch();
   }
+
   if (status === "authenticated") return null;
   if (status === "loading") return null;
   return (

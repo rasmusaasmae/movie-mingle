@@ -17,6 +17,7 @@ export default function UserMenu() {
   async function handleSignOut() {
     await signOut().catch();
   }
+
   if (status === "unauthenticated") return null;
   if (status === "loading") return null;
 

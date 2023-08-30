@@ -9,7 +9,7 @@ import { Movie } from "@/schemas/movie";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const movieDB = await prisma.movie.findUnique({
     where: {
@@ -25,8 +25,8 @@ export async function GET(
     const session = await getServerSession(authOptions);
     const user = session?.user?.email
       ? await prisma.user.findUnique({
-          where: { email: session.user.email },
-        })
+        where: { email: session.user.email },
+      })
       : null;
     const { ratings, ...movie } = movieDB;
     const avgRating = _.mean(ratings.map((r) => r.rating));
@@ -42,7 +42,7 @@ export async function GET(
   } else {
     // Movie does not exist in database
     const response = await fetch(
-      `${YTS_BASE_URL}/movie_details.json?movie_id=${params.id}`
+      `${YTS_BASE_URL}/movie_details.json?movie_id=${params.id}`,
     );
     const body = await response.json();
     const {

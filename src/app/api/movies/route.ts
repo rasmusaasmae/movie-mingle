@@ -12,8 +12,8 @@ export async function GET(request: Request) {
   const session = await getServerSession(authOptions);
   const user = session?.user?.email
     ? await prisma.user.findUnique({
-        where: { email: session.user.email },
-      })
+      where: { email: session.user.email },
+    })
     : null;
   const result: Movies = movies.map((movie) => {
     const { ratings, ...rest } = movie;
