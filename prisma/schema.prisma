@@ -10,20 +10,6 @@ datasource db {
 
 model Movie {
   id               String   @id @unique
-  url              String   @unique
-  title            String
-  slug             String   @unique
-  year             Int
-  runtime          Int
-  imdbCode         String   @unique
-  imdbRating       Float
-  genres           Genre[]
-  description      String
-  language         String
-  mpaRating        String
-  largeCoverImage  String
-  smallCoverImage  String
-  mediumCoverImage String
   ratings          Rating[]
 }
 
@@ -86,33 +72,4 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-enum Genre {
-  Action
-  Adventure
-  Animation
-  Biography
-  Comedy
-  Crime
-  Documentary
-  Drama
-  Family
-  Fantasy
-  FilmNoir
-  GameShow
-  History
-  Horror
-  Music
-  Musical
-  Mystery
-  News
-  RealityTV
-  Romance
-  SciFi
-  Sport
-  TalkShow
-  Thriller
-  War
-  Western
 }

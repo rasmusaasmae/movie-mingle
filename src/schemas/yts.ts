@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const ytsGenreSchema = z.enum([
+const genreSchema = z.enum([
   "Action",
   "Adventure",
   "Animation",
@@ -29,22 +29,57 @@ export const ytsGenreSchema = z.enum([
   "Western",
 ]);
 
-export const ytsMovieSchema = z.object({
+const torrentSchema = z.object({
+  url: z.string(),
+  hash: z.string(),
+  quality: z.string(),
+  type: z.string(),
+  is_repack: z.string(),
+  video_codec: z.string(),
+  bit_depth: z.string(),
+  audio_channels: z.string(),
+  seeds: z.number(),
+  peers: z.number(),
+  size: z.string(),
+  size_bytes: z.number(),
+  date_uploaded: z.coerce.date(),
+  date_uploaded_unix: z.number(),
+});
+
+const movieSchema = z.object({
   id: z.number(),
   url: z.string(),
+  imdb_code: z.string(),
   title: z.string(),
+  title_english: z.string(),
+  title_long: z.string(),
   slug: z.string(),
   year: z.number(),
-  runtime: z.number(),
-  imdb_code: z.string(),
   rating: z.number(),
-  genres: z.array(ytsGenreSchema),
-  description: z.string().optional(),
+  runtime: z.number(),
+  genres: z.array(genreSchema),
+  download_count: z.number(),
+  like_count: z.number(),
+  description_intro: z.string().optional(),
+  description_full: z.string().optional(),
+  yt_trailer_code: z.string(),
   language: z.string(),
   mpa_rating: z.string(),
+  background_image: z.string(),
+  background_image_original: z.string(),
   small_cover_image: z.string(),
   medium_cover_image: z.string(),
   large_cover_image: z.string(),
+  torrents: z.array(torrentSchema),
 });
 
-export const ytsMoviesSchema = z.array(ytsMovieSchema);
+export const ytsMovieDetailsSchema = z.object({
+  movie: movieSchema,
+});
+
+export const ytsMovieListSchema = z.object({
+  movie_count: z.number(),
+  limit: z.number(),
+  page_number: z.number(),
+  movies: z.array(movieSchema),
+});

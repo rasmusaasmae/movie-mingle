@@ -1,7 +1,7 @@
 import Link from "next/link";
-import ThemeMenu from "./themeMenu";
-import UserMenu from "./userMenu";
-import SignInButton from "./signInButton";
+import ThemeDropdownMenu from "./theme-dropdown-menu";
+import UserDropdownMenu from "./user-dropdown-menu";
+import SignInButton from "./sign-in-button";
 
 export default function Navbar() {
   return (
@@ -16,16 +16,16 @@ export default function Navbar() {
               Movie Mingle
             </Link>
             <Link
-              href="/movies"
+              href="/movie/2719"
               className="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:cursor-pointer transition-colors"
             >
-              Ranking
+              Shrek
             </Link>
           </div>
           <div className="flex space-x-4 items-center">
-            <ThemeMenu />
+            <ThemeDropdownMenu />
             <SignInButton />
-            <UserMenu />
+            <UserDropdownMenu />
           </div>
         </div>
       </div>

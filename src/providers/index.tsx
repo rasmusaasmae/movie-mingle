@@ -1,16 +1,14 @@
-import QueryProvider from "./QueryProvider";
-import NextAuthProvider from "./AuthProvider";
-import ThemeProvider from "./ThemeProvider";
 import React from "react";
+import AuthProvider from "./auth";
+import ThemeProvider from "./theme";
+import QueryProvider from "./query";
 
-export default function Providers({ children }: {
-  children: React.ReactNode
-}) {
+export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryProvider>
-      <NextAuthProvider>
+      <AuthProvider>
         <ThemeProvider>{children}</ThemeProvider>
-      </NextAuthProvider>
+      </AuthProvider>
     </QueryProvider>
   );
 }

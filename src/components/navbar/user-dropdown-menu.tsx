@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default function UserMenu() {
+export default function UserDropdownMenu() {
   const { data: session, status } = useSession();
 
   async function handleSignOut() {
