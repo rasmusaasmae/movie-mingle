@@ -17,10 +17,9 @@ export default async function getMovieListYTS(
     | "date_added" = "rating",
   orderBy: "desc" | "asc" = "desc",
 ) {
-  if (queryTerm === undefined || queryTerm === "") return [];
   const url =
     YTS_BASE_URL +
-    `/list_movies?query_term=${queryTerm}&limit=${limit}&page=${page}&minimum_rating=${minimumRating}&sort_by=${sortBy}&order_by=${orderBy}`;
+    `/list_movies.json?query_term=${queryTerm}&limit=${limit}&page=${page}&minimum_rating=${minimumRating}&sort_by=${sortBy}&order_by=${orderBy}`;
 
   const response = await fetch(url);
   if (!response.ok)

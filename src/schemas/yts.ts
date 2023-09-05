@@ -58,8 +58,8 @@ const movieSchema = z.object({
   rating: z.number(),
   runtime: z.number(),
   genres: z.array(genreSchema),
-  download_count: z.number(),
-  like_count: z.number(),
+  download_count: z.number().optional(),
+  like_count: z.number().optional(),
   description_intro: z.string().optional(),
   description_full: z.string().optional(),
   yt_trailer_code: z.string(),
@@ -81,5 +81,7 @@ export const ytsMovieListSchema = z.object({
   movie_count: z.number(),
   limit: z.number(),
   page_number: z.number(),
-  movies: z.array(movieSchema),
+  movies: z.array(movieSchema).optional(),
 });
+
+export type MovieYTS = z.infer<typeof movieSchema>;
