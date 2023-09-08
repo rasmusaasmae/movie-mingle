@@ -3,7 +3,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Providers from "@/providers";
-import Navbar from "@/components/navbar";
+import Header from "@/components/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <div className="w-screen min-h-screen bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900 text-slate-800 dark:text-slate-200">
-            <Navbar />
+            <Header />
             {children}
           </div>
         </Providers>

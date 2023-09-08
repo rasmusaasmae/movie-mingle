@@ -1,6 +1,8 @@
+"use client";
+
 import { HTMLAttributes, useState } from "react";
 import { cn } from "@/libs/shadcn";
-import useMovieList from "@/hooks/use-movie-list";
+import useMovies from "@/hooks/use-movies";
 import { Input } from "@/components/ui/input";
 import SearchResult from "./search-result";
 import SearchResultLoading from "./search-result-loading";
@@ -9,7 +11,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 export default function MovieSearch({ className, ...rest }: Props) {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const { data, isLoading } = useMovieList(searchTerm, 500);
+  const { data: movies, isLoading } = useMovies(searchTerm, 200);
 
   function handleSearchChange(value: string) {
     setSearchTerm(value);
@@ -26,8 +28,8 @@ export default function MovieSearch({ className, ...rest }: Props) {
         placeholder="Search..."
         onChange={(e) => handleSearchChange(e.target.value)}
       />
-      <ul className="w-full h-full overflow-auto space-y-2">
-        {data?.movies?.map((movie) => (
+      <ul className="w-full h-full px-6 overflow-auto space-y-2">
+        {movies?.map((movie) => (
           <li key={movie.id} className="first:mt-4">
             <SearchResult movie={movie} />
           </li>

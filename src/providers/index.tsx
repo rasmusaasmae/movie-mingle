@@ -1,4 +1,3 @@
-import React from "react";
 import AuthProvider from "./auth";
 import ThemeProvider from "./theme";
 import QueryProvider from "./query";
