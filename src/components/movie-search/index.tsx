@@ -35,7 +35,7 @@ export default function MovieSearch({ className, ...rest }: Props) {
             <SearchResult movie={movie} />
           </li>
         ))}
-        {isLoading && (
+        {isLoading && searchTerm !== "" && (
           <>
             <li className="first:mt-4">
               <SearchResultLoading />
