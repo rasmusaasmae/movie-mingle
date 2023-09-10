@@ -27,6 +27,7 @@ export default function MovieSearch({ className, ...rest }: Props) {
         className="w-full px-3 py-2 mb-1"
         placeholder="Search..."
         onChange={(e) => handleSearchChange(e.target.value)}
+        maxLength={50}
       />
       <ul className="w-full h-full px-6 overflow-auto space-y-2">
         {movies?.map((movie) => (
