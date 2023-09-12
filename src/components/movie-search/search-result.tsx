@@ -1,4 +1,4 @@
-import { Database } from "@/libs/supabase/types";
+import { Database } from "@/lib/supabase/types";
 import Image from "next/image";
 import Link from "next/link";
 

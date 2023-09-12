@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
 import type { NextRequest } from "next/server";
-import type { Database } from "@/libs/supabase/types";
+import type { Database } from "@/lib/supabase/types";
 
 export const dynamic = "force-dynamic";
 

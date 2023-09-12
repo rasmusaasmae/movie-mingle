@@ -1,7 +1,7 @@
 "use client";
 
 import { HTMLAttributes, useState } from "react";
-import { cn } from "@/libs/shadcn";
+import { cn } from "@/lib/shadcn";
 import useMovies from "@/hooks/use-movies";
 import { Input } from "@/components/ui/input";
 import SearchResult from "./search-result";

@@ -1,14 +1,15 @@
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import type { Database } from "./types";
+import type { Database } from "../types";
 
-export default async function getRating(movieId: string) {
+export async function getRating(movieId: string) {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data, error } = await supabase
     .from("ratings")
     .select()
     .eq("movie_id", movieId)
     .maybeSingle();
-  if (error) throw new Error(error.message);
+
+  if (error !== null) throw new Error("Failed to fetch rating");
   return data;
 }
