@@ -2,7 +2,7 @@
 
 import { HTMLAttributes, useState } from "react";
 import { cn } from "@/lib/shadcn";
-import useMovies from "@/hooks/use-movies";
+import useSearchMovies from "@/hooks/use-search-movies";
 import { Input } from "@/components/ui/input";
 import SearchResult from "./search-result";
 import SearchResultLoading from "./search-result-loading";
@@ -11,7 +11,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 export default function MovieSearch({ className, ...rest }: Props) {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const { data: movies, isLoading } = useMovies(searchTerm, 200);
+  const { data: movies, isLoading } = useSearchMovies(searchTerm);
 
   function handleSearchChange(value: string) {
     setSearchTerm(value);
@@ -31,7 +31,7 @@ export default function MovieSearch({ className, ...rest }: Props) {
       />
       <ul className="w-full h-full px-6 overflow-auto space-y-2">
         {movies?.map((movie) => (
-          <li key={movie.id} className="first:mt-4">
+          <li key={movie.slug} className="first:mt-4">
             <SearchResult movie={movie} />
           </li>
         ))}

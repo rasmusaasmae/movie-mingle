@@ -14,10 +14,10 @@ import {
 export default function UserDropdownMenu() {
   const { session, signOut } = useAuth();
 
-  if (!session) return null;
+  if (session === null) return null;
 
-  const imageSrc = session.user.user_metadata.avatar_url;
-  const name = session.user.user_metadata.full_name;
+  const imageSrc = session?.user.user_metadata.avatar_url;
+  const name = session?.user.user_metadata.full_name ?? "";
 
   return (
     <DropdownMenu>

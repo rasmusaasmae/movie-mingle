@@ -1,7 +1,10 @@
 import Image from "next/image";
+
 import { getMovie } from "@/lib/supabase/movies/server";
-import UserRating from "@/components/user-rating";
-import IMDbRating from "@/components/imdb-rating";
+
+import AverageRating from "@/components/rating/average-rating";
+import IMDbRating from "@/components/rating/imdb-rating";
+import UserRating from "@/components/rating/user-rating";
 
 export async function generateMetadata({
   params,
@@ -17,10 +20,11 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
+  console.log(`/movies/${params.slug}`);
   const movie = await getMovie(params.slug);
 
-  const runtimeHours = Math.floor(movie.runtime / 60);
-  const runtimeMinutes = movie.runtime - 60 * runtimeHours;
+  const runtimeHours = Math.floor(movie.runtime! / 60);
+  const runtimeMinutes = movie.runtime! - 60 * runtimeHours;
 
   return (
     <main className="w-full h-full flex flex-col items-center">
@@ -38,21 +42,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </div>
           </section>
           <section className="flex flex-row space-x-1 sm:space-x-3">
-            <div className="flex flex-col items-center space-y-1">
-              <h4 className="uppercase text-sm text-slate-700 dark:text-slate-400">
-                your rating
-              </h4>
-              <UserRating movieId={movie.id} movieTitle={movie.title_long} />
-            </div>
-            <div className="flex flex-col items-center space-y-1">
-              <h4 className="uppercase text-sm text-slate-700 dark:text-slate-400">
-                IMDb rating
-              </h4>
-              <IMDbRating
-                imdb_code={movie.imdb_code}
-                rating={movie.imdb_rating}
-              />
-            </div>
+            <AverageRating movieId={movie.id!} />
+            <UserRating movieId={movie.id!} movieTitle={movie.title_long!} />
+            <IMDbRating
+              imdb_code={movie.imdb_code!}
+              rating={movie.imdb_rating}
+            />
           </section>
         </section>
         <section className="self-center">
