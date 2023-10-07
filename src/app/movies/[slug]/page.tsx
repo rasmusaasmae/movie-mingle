@@ -20,7 +20,6 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  console.log(`/movies/${params.slug}`);
   const movie = await getMovie(params.slug);
 
   const runtimeHours = Math.floor(movie.runtime! / 60);
@@ -42,8 +41,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </div>
           </section>
           <section className="flex flex-row space-x-1 sm:space-x-3">
-            <AverageRating movieId={movie.id!} />
             <UserRating movieId={movie.id!} movieTitle={movie.title_long!} />
+            <AverageRating movieId={movie.id!} />
             <IMDbRating
               imdb_code={movie.imdb_code!}
               rating={movie.imdb_rating}

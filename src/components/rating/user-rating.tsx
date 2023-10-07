@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import RatingWrapper from "./rating-wrapper";
+import { useAuth } from "@/providers/auth";
 
 type UserRatingProps = {
   movieId: string;
@@ -23,16 +24,17 @@ type UserRatingProps = {
 
 export default function UserRating({ movieId, movieTitle }: UserRatingProps) {
   const { query, mutation } = useUserRating(movieId);
+  const { session } = useAuth();
   const title = "your rating";
 
-  if (query.isLoading || query.data === undefined)
+  if (session === null) return null;
+
+  if (query.isLoading || query.isError || session === undefined)
     return (
       <RatingWrapper title={title}>
         <Skeleton className="w-28 h-10" />
       </RatingWrapper>
     );
-
-  if (query.data === null) return null;
 
   const rating = query.data?.rating ?? null;
 

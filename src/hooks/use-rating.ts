@@ -4,7 +4,7 @@ import {
   getUserRating,
   setUserRating,
 } from "@/lib/supabase/ratings/client";
-import { UserRating } from "@/lib/supabase/ratings/types";
+import { type UserRating } from "@/lib/supabase/ratings/types";
 
 export function useUserRating(movieId: string) {
   const queryClient = useQueryClient();
