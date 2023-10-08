@@ -5,6 +5,7 @@ import { getMovie } from "@/lib/supabase/movies/server";
 import AverageRating from "@/components/rating/average-rating";
 import IMDbRating from "@/components/rating/imdb-rating";
 import UserRating from "@/components/rating/user-rating";
+import Torrents from "@/components/torrents";
 
 export async function generateMetadata({
   params,
@@ -39,6 +40,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 {runtimeMinutes}m
               </span>
             </div>
+          </section>
+          <section>
+            <Torrents movieId={movie.id!} />
           </section>
           <section className="flex flex-row space-x-1 sm:space-x-3">
             <UserRating movieId={movie.id!} movieTitle={movie.title_long!} />
