@@ -269,8 +269,8 @@ export interface Database {
           title_query: string
         }
         Returns: {
+          id: string
           title: string
-          rank: number
           slug: string
           title_english: string
           year: number
