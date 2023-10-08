@@ -139,30 +139,30 @@ export interface Database {
       torrents: {
         Row: {
           hash: string
-          id: string
-          magnet_url: string
+          magnet: string
           movie_id: string
           quality: string
+          size_bytes: number
+          source: string
           type: string
-          yts_url: string | null
         }
         Insert: {
           hash: string
-          id?: string
-          magnet_url: string
+          magnet: string
           movie_id: string
           quality: string
+          size_bytes: number
+          source: string
           type: string
-          yts_url?: string | null
         }
         Update: {
           hash?: string
-          id?: string
-          magnet_url?: string
+          magnet?: string
           movie_id?: string
           quality?: string
+          size_bytes?: number
+          source?: string
           type?: string
-          yts_url?: string | null
         }
         Relationships: [
           {
