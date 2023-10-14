@@ -15,7 +15,7 @@ export default function SearchResult({ movie }: Props) {
         <Link href={`/movies/${movie.slug}`}>
           <Image
             fill
-            src={movie.medium_cover_image}
+            src={movie.poster}
             alt={movie.title}
             className="object-cover border-r border-slate-300 dark:border-slate-600"
           />

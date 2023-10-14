@@ -14,9 +14,9 @@ export async function generateMetadata({
 }) {
   const movie = await getMovie(params.slug);
   return {
-    title: `${movie.title_long} - Movie Mingle`,
-    description: `${movie.description_intro?.slice(0, 150)}`,
-    keywords: ["Movie Mingle", movie.title_long],
+    title: `${movie.title} (${movie.year}) - Movie Mingle`,
+    description: `${movie.description?.slice(0, 150)}`,
+    keywords: ["Movie Mingle", movie.title, movie.year],
   };
 }
 
@@ -45,7 +45,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <Torrents movieId={movie.id!} />
           </section>
           <section className="flex flex-row space-x-1 sm:space-x-3">
-            <UserRating movieId={movie.id!} movieTitle={movie.title_long!} />
+            <UserRating
+              movieId={movie.id!}
+              movieTitle={`${movie.title} (${movie.year})`}
+            />
             <AverageRating movieId={movie.id!} />
             <IMDbRating
               imdb_code={movie.imdb_code!}
@@ -55,7 +58,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </section>
         <section className="self-center">
           <Image
-            src={movie.large_cover_image ?? ""}
+            src={movie.poster ?? ""}
             alt={`Picture of ${movie.title}`}
             height={300}
             width={300}

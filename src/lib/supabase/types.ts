@@ -11,88 +11,73 @@ export interface Database {
     Tables: {
       movies_metadata: {
         Row: {
-          background_image: string | null
-          background_image_original: string | null
+          actors: string[] | null
+          countries: string[] | null
           created_at: string
-          description_full: string | null
-          description_intro: string | null
+          description: string | null
+          directors: string[] | null
           genres: string[]
           id: string
           imdb_code: string
           imdb_rating: number | null
           language: string
-          large_cover_image: string | null
-          medium_cover_image: string | null
           mpa_rating: string
+          poster: string | null
           runtime: number
           search: unknown | null
           slug: string
-          small_cover_image: string | null
           title: string
-          title_english: string
-          title_long: string
+          writers: string[] | null
           year: number
           yt_trailer_code: string | null
-          yts_download_count: number | null
-          yts_id: number
-          yts_like_count: number | null
-          yts_url: string
+          yts_id: number | null
+          yts_url: string | null
         }
         Insert: {
-          background_image?: string | null
-          background_image_original?: string | null
+          actors?: string[] | null
+          countries?: string[] | null
           created_at?: string
-          description_full?: string | null
-          description_intro?: string | null
+          description?: string | null
+          directors?: string[] | null
           genres?: string[]
           id?: string
           imdb_code: string
           imdb_rating?: number | null
           language: string
-          large_cover_image?: string | null
-          medium_cover_image?: string | null
           mpa_rating: string
+          poster?: string | null
           runtime: number
           search?: unknown | null
           slug: string
-          small_cover_image?: string | null
           title: string
-          title_english: string
-          title_long: string
+          writers?: string[] | null
           year: number
           yt_trailer_code?: string | null
-          yts_download_count?: number | null
-          yts_id: number
-          yts_like_count?: number | null
-          yts_url: string
+          yts_id?: number | null
+          yts_url?: string | null
         }
         Update: {
-          background_image?: string | null
-          background_image_original?: string | null
+          actors?: string[] | null
+          countries?: string[] | null
           created_at?: string
-          description_full?: string | null
-          description_intro?: string | null
+          description?: string | null
+          directors?: string[] | null
           genres?: string[]
           id?: string
           imdb_code?: string
           imdb_rating?: number | null
           language?: string
-          large_cover_image?: string | null
-          medium_cover_image?: string | null
           mpa_rating?: string
+          poster?: string | null
           runtime?: number
           search?: unknown | null
           slug?: string
-          small_cover_image?: string | null
           title?: string
-          title_english?: string
-          title_long?: string
+          writers?: string[] | null
           year?: number
           yt_trailer_code?: string | null
-          yts_download_count?: number | null
-          yts_id?: number
-          yts_like_count?: number | null
-          yts_url?: string
+          yts_id?: number | null
+          yts_url?: string | null
         }
         Relationships: []
       }
@@ -203,33 +188,28 @@ export interface Database {
       }
       movies: {
         Row: {
+          actors: string[] | null
           average_rating: number | null
-          background_image: string | null
-          background_image_original: string | null
+          countries: string[] | null
           created_at: string | null
-          description_full: string | null
-          description_intro: string | null
+          description: string | null
+          directors: string[] | null
           genres: string[] | null
           id: string | null
           imdb_code: string | null
           imdb_rating: number | null
           language: string | null
-          large_cover_image: string | null
-          medium_cover_image: string | null
           mpa_rating: string | null
+          poster: string | null
           runtime: number | null
           search: unknown | null
           slug: string | null
-          small_cover_image: string | null
           title: string | null
-          title_english: string | null
-          title_long: string | null
           user_rating: number | null
+          writers: string[] | null
           year: number | null
           yt_trailer_code: string | null
-          yts_download_count: number | null
           yts_id: number | null
-          yts_like_count: number | null
           yts_url: string | null
         }
         Relationships: []
@@ -272,7 +252,6 @@ export interface Database {
           id: string
           title: string
           slug: string
-          title_english: string
           year: number
           runtime: number
           language: string
@@ -280,18 +259,20 @@ export interface Database {
           description: string
           imdb_code: string
           imdb_rating: number
-          background_image: string
-          small_cover_image: string
-          medium_cover_image: string
-          large_cover_image: string
+          yt_trailer_code: string
+          poster: string
           genres: string[]
           average_rating: number
           user_rating: number
+          directors: string[]
+          writers: string[]
+          actors: string[]
+          countries: string[]
         }[]
       }
     }
     Enums: {
-      [_ in never]: never
+      type: "movie" | "series"
     }
     CompositeTypes: {
       [_ in never]: never
