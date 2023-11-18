@@ -41,7 +41,3 @@ export async function searchMovies(query: string, page: number = 1) {
     .then(tmdbSearchMovieSchema.parse);
   return searchResult;
 }
-
-export function getImageFullPath(path: string) {
-  return `${TMDB_IMAGE_BASE_URL}/${path}`;
-}

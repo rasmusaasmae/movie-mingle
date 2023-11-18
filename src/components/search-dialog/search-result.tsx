@@ -1,7 +1,10 @@
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
-import { getImageFullPath } from "@/lib/tmdb";
 import { type TmdbMovie } from "@/lib/tmdb/schemas";
+import {
+  TMDB_IMAGE_BASE_URL,
+  TMDB_IMAGE_SIZE_POSTER_SMALL,
+} from "@/lib/tmdb/constants";
 
 type Props = {
   movie: TmdbMovie;
@@ -17,7 +20,7 @@ export default function SearchResult({ movie }: Props) {
         {movie.poster_path ? (
           <Image
             alt={`Poster of ${movie.title}`}
-            src={getImageFullPath(movie.poster_path)}
+            src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_SMALL}/${movie.poster_path}`}
             fill
             className="object-cover"
           />

@@ -1,7 +1,10 @@
 import Image from "next/image";
 import { type TmdbMovieDetails } from "@/lib/tmdb/schemas";
-import { TMDB_IMAGE_BASE_URL } from "@/lib/tmdb/constants";
-import IMDbRating from "@/components/rating/imdb-rating";
+import {
+  TMDB_IMAGE_BASE_URL,
+  TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL,
+  TMDB_IMAGE_SIZE_POSTER_ORIGINAL,
+} from "@/lib/tmdb/constants";
 import TMDBRating from "@/components/rating/tmdb-rating";
 import AverageRating from "@/components/rating/average-rating";
 import UserRating from "@/components/rating/user-rating";
@@ -22,14 +25,14 @@ export default async function Summary({ movie }: Props) {
     <section className="relative w-full p-6 flex flex-col items-center overflow-hidden bg-slate-950 text-white">
       <Image
         alt={`Backdrop of ${movie.title}`}
-        src={`${TMDB_IMAGE_BASE_URL}/${movie.backdrop_path}`}
+        src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${movie.backdrop_path}`}
         fill
         className="h-full object-cover aspect-video opacity-25 pointer-events-none"
       />
       <div className="w-full max-w-7xl gap-10 flex flex-col sm:flex-row items-center sm:items-start z-10">
         <div className="relative w-full max-w-[18rem] aspect-[2/3] rounded-md overflow-hidden">
           <Image
-            src={`${TMDB_IMAGE_BASE_URL}/${movie.poster_path}`}
+            src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_ORIGINAL}/${movie.poster_path}`}
             alt={`Poster of ${movie.title}`}
             fill
             className="object-contain"

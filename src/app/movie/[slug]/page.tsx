@@ -1,7 +1,4 @@
-import Image from "next/image";
 import { fetchMovie } from "@/lib/tmdb";
-import { TMDB_IMAGE_BASE_URL } from "@/lib/tmdb/constants";
-import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import Summary from "./summary";
 import Collection from "./collection";
