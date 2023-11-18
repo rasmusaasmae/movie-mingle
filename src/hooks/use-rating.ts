@@ -1,56 +1,19 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import {
-  getAverageRating,
-  getUserRating,
-  setUserRating,
-} from "@/lib/supabase/ratings/client";
-import { type UserRating } from "@/lib/supabase/ratings/types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getUserRating, setUserRating } from "@/lib/supabase/ratings/client";
 
-export function useUserRating(movieId: string) {
+export function useUserRating(imdb_id: string) {
   const queryClient = useQueryClient();
   const query = useQuery({
-    queryKey: ["rating", movieId, "user"],
-    queryFn: () => getUserRating(movieId),
+    queryKey: ["supabase-user-rating", imdb_id],
+    queryFn: () => getUserRating(imdb_id),
   });
   const mutation = useMutation({
     mutationFn: setUserRating,
-    onMutate: async (data) => {
-      await queryClient.cancelQueries({
-        queryKey: ["rating", data.movieId, "user"],
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({
+        queryKey: ["supabase-user-rating", imdb_id],
       });
-
-      const previousRating: UserRating | null | undefined =
-        queryClient.getQueryData(["rating", data.movieId, "user"]);
-
-      const newRating: UserRating | null = data.rating
-        ? {
-            movie_id: data.movieId,
-            created_at: Date.now().toString(),
-            rating: data.rating,
-            user_id: previousRating?.user_id ?? "undefined",
-          }
-        : null;
-      queryClient.setQueryData(["rating", movieId, "user"], newRating);
-
-      return { previousRating, newRating };
-    },
-    onError: (err, newRating, context) => {
-      queryClient.setQueryData(
-        ["rating", context?.newRating?.movie_id, "user"],
-        context?.previousRating ?? null,
-      );
-    },
-    onSettled: (newTodo) => {
-      queryClient.invalidateQueries({ queryKey: ["rating", movieId] });
     },
   });
   return { query, mutation };
-}
-
-export function useAverageRating(movieId: string) {
-  const query = useQuery({
-    queryKey: ["rating", movieId, "average"],
-    queryFn: () => getAverageRating(movieId),
-  });
-  return { query };
 }

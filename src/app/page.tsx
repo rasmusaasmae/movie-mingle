@@ -1,9 +1,5 @@
-import MovieSearch from "@/components/movie-search";
-
 export default function Home() {
   return (
-    <main className="flex flex-col w-full h-full max-w-lg px-6 mx-auto items-center mt-6">
-      <MovieSearch className="h-[calc(100vh-5rem)]" />
-    </main>
+    <main className="w-screen min-h-screen pb-8 flex flex-col items-center gap-6"></main>
   );
 }

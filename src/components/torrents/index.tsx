@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 type TorrentsProps = {
-  movieId: string;
+  imdbId: string;
 };
 
-export default async function Torrents({ movieId }: TorrentsProps) {
-  const torrents = await getTorrents(movieId);
+export default async function Torrents({ imdbId }: TorrentsProps) {
+  const torrents = await getTorrents(imdbId);
   const sorted = _.orderBy(
     torrents,
     function (t) {
@@ -52,6 +52,9 @@ export default async function Torrents({ movieId }: TorrentsProps) {
               </Link>
             </DropdownMenuItem>
           ))}
+          {sorted.length === 0 && (
+            <DropdownMenuItem disabled>No torrents found</DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

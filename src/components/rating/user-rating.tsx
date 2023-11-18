@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/shadcn";
+import { cn } from "@/utils/shadcn";
 import { useUserRating } from "@/hooks/use-rating";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,12 +18,12 @@ import RatingWrapper from "./rating-wrapper";
 import { useAuth } from "@/providers/auth";
 
 type UserRatingProps = {
-  movieId: string;
+  imdbId: string;
   movieTitle: string;
 };
 
-export default function UserRating({ movieId, movieTitle }: UserRatingProps) {
-  const { query, mutation } = useUserRating(movieId);
+export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
+  const { query, mutation } = useUserRating(imdbId);
   const { session } = useAuth();
   const title = "your rating";
 
@@ -32,14 +32,16 @@ export default function UserRating({ movieId, movieTitle }: UserRatingProps) {
   if (query.isLoading || query.isError || session === undefined)
     return (
       <RatingWrapper title={title}>
-        <Skeleton className="w-28 h-10" />
+        <Skeleton className="w-32 h-10" />
       </RatingWrapper>
     );
 
-  const rating = query.data?.rating ?? null;
+  const userRating = mutation.isPending
+    ? mutation.variables.value
+    : query.data?.value ?? null;
 
   function handleRatingUpdate(rating: number | null) {
-    mutation.mutate({ movieId, rating });
+    mutation.mutate({ imdbId, value: rating });
   }
 
   return (
@@ -48,14 +50,15 @@ export default function UserRating({ movieId, movieTitle }: UserRatingProps) {
         <DialogTrigger asChild>
           <Button
             variant="outline"
-            className="w-28 h-10 flex flex-row space-x-3"
+            className="w-32 h-10 flex flex-row space-x-3"
           >
             <Star
               fill="currentColor"
-              className="w-6 h-6 self-center text-blue-300"
+              className="w-6 h-6 self-center text-blue-400 dark:text-blue-300"
             />
-            <div className="text-lg self-center">
-              <span className="font-bold">{rating ?? "-"}</span>/10
+            <div className="text-lg tracking-wider self-center text-black dark:text-white">
+              <span className="font-bold">{userRating?.toFixed(1) ?? "-"}</span>
+              /10
             </div>
           </Button>
         </DialogTrigger>
@@ -66,52 +69,52 @@ export default function UserRating({ movieId, movieTitle }: UserRatingProps) {
           <div className="group flex flex-row-reverse justify-center">
             <RateButton
               value={10}
-              rating={rating}
+              rating={userRating}
               onClick={handleRatingUpdate}
             />
             <RateButton
               value={9}
-              rating={rating}
+              rating={userRating}
               onClick={handleRatingUpdate}
             />
             <RateButton
               value={8}
-              rating={rating}
+              rating={userRating}
               onClick={handleRatingUpdate}
             />
             <RateButton
               value={7}
-              rating={rating}
+              rating={userRating}
               onClick={handleRatingUpdate}
             />
             <RateButton
               value={6}
-              rating={rating}
+              rating={userRating}
               onClick={handleRatingUpdate}
             />
             <RateButton
               value={5}
-              rating={rating}
+              rating={userRating}
               onClick={handleRatingUpdate}
             />
             <RateButton
               value={4}
-              rating={rating}
+              rating={userRating}
               onClick={handleRatingUpdate}
             />
             <RateButton
               value={3}
-              rating={rating}
+              rating={userRating}
               onClick={handleRatingUpdate}
             />
             <RateButton
               value={2}
-              rating={rating}
+              rating={userRating}
               onClick={handleRatingUpdate}
             />
             <RateButton
               value={1}
-              rating={rating}
+              rating={userRating}
               onClick={handleRatingUpdate}
             />
           </div>

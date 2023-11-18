@@ -1,14 +1,15 @@
-import { searchMovies } from "@/lib/supabase/movies/client";
-import { useQuery } from "react-query";
+import { searchMovies } from "@/lib/tmdb";
+import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "usehooks-ts";
 
 export default function useSearchMovies(
   query: string,
-  debounceMS: number = 200,
+  page: number = 1,
+  debounceMS: number = 0,
 ) {
   const debouncedQuery = useDebounce(query, debounceMS);
   return useQuery({
-    queryKey: ["movies", "search", debouncedQuery],
-    queryFn: () => searchMovies(debouncedQuery),
+    queryKey: ["tmdb-search-movies", { query: debouncedQuery, page }],
+    queryFn: () => searchMovies(debouncedQuery, page),
   });
 }

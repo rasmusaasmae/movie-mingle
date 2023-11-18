@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Providers from "@/providers";
 import Header from "@/components/header";
+import { cn } from "@/utils/shadcn";
+import Footer from "@/components/footer";
+import { Separator } from "@/components/ui/separator";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +22,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={cn(
+          inter.className,
+          "w-screen h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200",
+        )}
+      >
         <Providers>
-          <div className="w-screen min-h-screen space-y-6 bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900 text-slate-800 dark:text-slate-200">
+          <>
             <Header />
             {children}
-          </div>
+          </>
         </Providers>
       </body>
     </html>

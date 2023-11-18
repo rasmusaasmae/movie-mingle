@@ -1,12 +1,12 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { type Database } from "@/lib/supabase/types";
 
-export async function getUserRating(movieId: string) {
+export async function getUserRating(imdb_id: string) {
   const supabase = createClientComponentClient<Database>();
   const { data, error } = await supabase
     .from("ratings")
     .select()
-    .eq("movie_id", movieId)
+    .eq("imdb_id", imdb_id)
     .maybeSingle();
 
   if (error !== null) throw new Error("Failed to get user rating");
@@ -14,36 +14,24 @@ export async function getUserRating(movieId: string) {
 }
 
 export async function setUserRating({
-  movieId,
-  rating,
+  imdbId,
+  value,
 }: {
-  movieId: string;
-  rating: number | null;
+  imdbId: string;
+  value: number | null;
 }) {
   const supabase = createClientComponentClient<Database>();
-  if (rating === null) {
+  if (value === null) {
     const { error } = await supabase
       .from("ratings")
       .delete()
-      .eq("movie_id", movieId);
+      .eq("imdb_id", imdbId);
     if (error !== null) throw new Error("Failed to delete rating");
   } else {
     const { error } = await supabase
       .from("ratings")
-      .upsert({ movie_id: movieId, rating });
+      .upsert({ imdb_id: imdbId, value });
 
     if (error !== null) throw new Error("Failed to set rating");
   }
-}
-
-export async function getAverageRating(movieId: string) {
-  const supabase = createClientComponentClient<Database>();
-  const { data, error } = await supabase
-    .from("average_ratings")
-    .select()
-    .eq("movie_id", movieId)
-    .maybeSingle();
-
-  if (error !== null) throw new Error("Failed to get average rating");
-  return data;
 }

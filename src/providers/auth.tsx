@@ -5,7 +5,7 @@ import {
   type Session,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AuthContext = createContext<{
   session: Session | null | undefined;
