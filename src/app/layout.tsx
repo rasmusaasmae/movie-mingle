@@ -1,18 +1,24 @@
 import "./globals.css";
-import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Providers from "@/providers";
-import Header from "@/components/header";
 import { cn } from "@/utils/shadcn";
-import Footer from "@/components/footer";
-import { Separator } from "@/components/ui/separator";
+import Header from "@/components/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Movie Mingle",
-  description: "Movie rating website",
+  description:
+    "Movie Mingle is an exclusive movie rating website for the few true and honest movie raters out there.",
+  keywords: [
+    "Movies",
+    "User Ratings",
+    "Synopsis",
+    "Photos",
+    "Reviews",
+    "Trailers",
+  ],
 };
 
 export default function RootLayout({
