@@ -86,5 +86,9 @@ export const tmdbSearchMovieSchema = z.object({
   total_results: z.number(),
 });
 
+export const tmdbSearchExternalSchema = z.object({
+  movie_results: z.array(tmdbMovie),
+});
+
 export type TmdbMovie = z.infer<typeof tmdbMovie>;
 export type TmdbMovieDetails = z.infer<typeof tmdbMovieDetailsSchema>;

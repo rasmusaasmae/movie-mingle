@@ -10,6 +10,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Separator } from "./ui/separator";
+import Link from "next/link";
 
 export default function UserDropdownMenu() {
   const { session, signOut } = useAuth();
@@ -32,6 +34,10 @@ export default function UserDropdownMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
+        <DropdownMenuItem asChild>
+          <Link href="/ratings">Your Ratings</Link>
+        </DropdownMenuItem>
+        <Separator />
         <DropdownMenuItem onClick={signOut}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>

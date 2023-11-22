@@ -1,3 +1,6 @@
-import { type Database } from "@/lib/supabase/types";
-
-export type UserRating = Database["public"]["Tables"]["ratings"]["Row"];
+export type UserRating = {
+  imdb_id: string;
+  value: number | null;
+  created_at: string;
+  updated_at: string;
+};
