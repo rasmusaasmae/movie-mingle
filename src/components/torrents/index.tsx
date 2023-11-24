@@ -47,8 +47,8 @@ export default async function Torrents({ imdbId }: TorrentsProps) {
           {sorted.map((t) => (
             <DropdownMenuItem key={t.hash}>
               <Link href={t.magnet} target="_top" className="capitalize">
-                {t.quality} {t.type} ({(t.size_bytes / 1000000000).toFixed(1)}{" "}
-                GB)
+                {t.quality} {t.type} (
+                {(t.size_bytes / (1024 * 1024 * 1024)).toFixed(1)} GB)
               </Link>
             </DropdownMenuItem>
           ))}
