@@ -3,7 +3,7 @@
 import { useAuth } from "@/providers/auth";
 import { Button } from "@/components/ui/button";
 import { usePathname, useSearchParams } from "next/navigation";
-import getBaseURL from "@/utils/get-base-url";
+import { getBaseUrl } from "@/utils/url";
 
 export default function SignInButton() {
   const { session, signIn } = useAuth();
@@ -16,7 +16,7 @@ export default function SignInButton() {
     <Button
       variant="ghost"
       onClick={() =>
-        signIn(getBaseURL() + pathname + "?" + searchParams.toString())
+        signIn(getBaseUrl() + pathname + "?" + searchParams.toString())
       }
     >
       Sign in

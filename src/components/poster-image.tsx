@@ -7,7 +7,7 @@ import {
   TMDB_IMAGE_BASE_URL,
   TMDB_IMAGE_SIZE_POSTER_MEDIUM,
 } from "@/lib/tmdb/constants";
-import slugify from "@/utils/slugify";
+import { getMovieUrl } from "@/utils/url";
 
 type PosterImageProps = {
   tmdb_id: number;
@@ -18,7 +18,7 @@ type PosterImageProps = {
 export default function PosterImage(props: PosterImageProps) {
   const { tmdb_id, title, poster_path } = props;
 
-  const href = `/movie/${tmdb_id}-${slugify(title)}`;
+  const href = getMovieUrl(tmdb_id, title);
   const alt = `Poster of ${title}`;
   const src = `${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_MEDIUM}/${poster_path}`;
 

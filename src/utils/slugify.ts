@@ -1,11 +1,12 @@
-export default function slugify(value: string) {
-  return value
-    .toString()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w-]+/g, "")
-    .replace(/--+/g, "-");
+import slugify from "slugify";
+
+export function slugifyTitle(value: string) {
+  return slugify(value, {
+    replacement: "-",
+    // remove: /[*+~.()'"!:@]/g,
+    lower: true,
+    strict: true,
+    locale: "en",
+    trim: true,
+  });
 }

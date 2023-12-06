@@ -13,7 +13,7 @@ import { useState } from "react";
 import useSearchMovies from "@/hooks/use-search-movies";
 import SearchResult from "./search-result";
 import Link from "next/link";
-import slugify from "@/utils/slugify";
+import { getMovieUrl } from "@/utils/url";
 
 type Props = {};
 
@@ -56,7 +56,7 @@ export default function SearchDialog(props: Props) {
           {data?.results.map((movie) => (
             <DialogClose key={movie.id} asChild>
               <Link
-                href={`/movie/${movie.id}-${slugify(movie.title)}`}
+                href={getMovieUrl(movie.id, movie.title)}
                 className="hover:bg-black/5 dark:hover:bg-white/5"
               >
                 <SearchResult key={movie.id} movie={movie} />

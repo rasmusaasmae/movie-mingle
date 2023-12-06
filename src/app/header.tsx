@@ -3,7 +3,7 @@ import Link from "next/link";
 import ThemeDropdownMenu from "@/components/theme-dropdown-menu";
 import UserDropdownMenu from "@/components/user-dropdown-menu";
 import SignInButton from "@/components/sign-in-button";
-import SearchDialog from "./search-dialog";
+import SearchDialog from "../components/search-dialog";
 
 export default function Header() {
   return (

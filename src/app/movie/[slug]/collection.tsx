@@ -1,45 +1,36 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import { type TmdbMovieDetails } from "@/lib/tmdb/schemas";
-import {
-  TMDB_IMAGE_BASE_URL,
-  TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL,
-} from "@/lib/tmdb/constants";
+import { getCollectionBackdropImageUrl, getCollectionUrl } from "@/utils/url";
 
 type Props = {
-  movie: TmdbMovieDetails;
+  collection: TmdbMovieDetails["belongs_to_collection"];
 };
 
-export default async function Collection({ movie }: Props) {
-  if (movie.belongs_to_collection === null)
-    return (
-      <section className="w-full max-w-7xl flex flex-col">
-        <h2 className="text-2xl font-semibold mb-4">Collection</h2>
-        <p>
-          <span className="font-semibold">{movie.title}</span> doesn&apos;t seem
-          to be a part of any collection.
-        </p>
-      </section>
-    );
+export default async function Collection({ collection }: Props) {
+  if (collection === null) return null;
+
+  const src = getCollectionBackdropImageUrl(collection.backdrop_path);
+  const href = getCollectionUrl(collection.id, collection.name);
+
   return (
     <section className="w-full max-w-7xl flex flex-col">
       <h2 className="text-2xl font-semibold mb-4">Collection</h2>
       <div className="relative w-full h-48 max-w-7xl rounded-md overflow-hidden p-8">
         <Image
-          alt={`Backdrop of ${movie.title}`}
-          src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${movie.belongs_to_collection.backdrop_path}`}
+          alt={`Backdrop of ${collection.name}`}
+          src={src}
           fill
-          className="h-full object-cover aspect-video opacity-30 dark:opacity-20 pointer-events-none"
+          className="h-full object-cover aspect-video opacity-30 dark:opacity-20 pointer-events-none object-[50%_20%]"
         />
         <p className="text-xl">
           Part of the{" "}
           <span className="text-2xl text-black dark:text-white">
-            {movie.belongs_to_collection.name}
+            {collection.name}
           </span>
         </p>
-        <Link href={`/collection/${movie.belongs_to_collection.id}`}>
-          View the collection
-        </Link>
+        <Link href={href}>View the collection</Link>
       </div>
     </section>
   );

@@ -8,7 +8,7 @@ import {
 import TMDBRating from "@/components/rating/tmdb-rating";
 import AverageRating from "@/components/rating/average-rating";
 import UserRating from "@/components/rating/user-rating";
-import Torrents from "@/components/torrents";
+import Torrents from "@/app/movie/[slug]/torrents";
 
 type Props = {
   movie: TmdbMovieDetails;
@@ -27,7 +27,7 @@ export default async function Summary({ movie }: Props) {
         alt={`Backdrop of ${movie.title}`}
         src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${movie.backdrop_path}`}
         fill
-        className="h-full object-cover aspect-video opacity-25 pointer-events-none"
+        className="h-full object-cover aspect-video opacity-25 pointer-events-none object-[50%_20%]"
       />
       <div className="w-full max-w-7xl gap-10 flex flex-col sm:flex-row items-center sm:items-start z-10">
         <div className="relative w-full max-w-[18rem] aspect-[2/3] rounded-md overflow-hidden">
