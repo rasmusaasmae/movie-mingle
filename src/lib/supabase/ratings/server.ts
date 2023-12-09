@@ -24,3 +24,12 @@ export async function getUserRatings() {
   if (error !== null) throw new Error("Failed to get user ratings");
   return data;
 }
+
+export async function getPopularMovies() {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const { data, error } = await supabase.rpc("get_popular_movies", {});
+
+  if (error !== null) console.log(error.message);
+  if (error !== null) throw new Error("Failed to get average rating");
+  return data;
+}
