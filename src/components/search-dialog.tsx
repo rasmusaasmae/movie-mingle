@@ -1,4 +1,12 @@
 "use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { Search } from "lucide-react";
+import { type TmdbMovie } from "@/lib/tmdb/schemas";
+import { getMovieUrl } from "@/utils/url";
+import useSearchMovies from "@/hooks/use-search-movies";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -6,14 +14,8 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
-import { Separator } from "../ui/separator";
-import { useState } from "react";
-import useSearchMovies from "@/hooks/use-search-movies";
-import SearchResult from "./search-result";
-import Link from "next/link";
-import { getMovieUrl } from "@/utils/url";
+import { Separator } from "@/components/ui/separator";
+import PosterImage from "@/components/poster-image";
 
 type Props = {};
 
@@ -22,7 +24,6 @@ export default function SearchDialog(props: Props) {
   const { data, isLoading, isError, isSuccess } = useSearchMovies(
     searchTerm,
     1,
-    0,
   );
 
   function handleSearchChange(value: string) {
@@ -66,5 +67,27 @@ export default function SearchDialog(props: Props) {
         </div>
       </DialogContent>
     </Dialog>
+  );
+}
+
+type SearchResultProps = {
+  movie: TmdbMovie;
+};
+function SearchResult({ movie }: SearchResultProps) {
+  const release_date = new Date(movie.release_date);
+  const year = release_date.getFullYear();
+
+  return (
+    <div className="flex h-24 w-full flex-row overflow-hidden rounded-md">
+      <PosterImage
+        tmdb_id={movie.id}
+        title={movie.title}
+        poster_path={movie.poster_path}
+      />
+      <div className="h-full w-full px-2 py-2">
+        <h3 className="truncate text-lg font-semibold">{movie.title}</h3>
+        <p className="dark:text-slate-300"> {year}</p>
+      </div>
+    </div>
   );
 }

@@ -1,9 +1,9 @@
 import Link from "next/link";
 
+import SearchDialog from "@/components/search-dialog";
+import SignInButton from "@/components/sign-in-button";
 import ThemeDropdownMenu from "@/components/theme-dropdown-menu";
 import UserDropdownMenu from "@/components/user-dropdown-menu";
-import SignInButton from "@/components/sign-in-button";
-import SearchDialog from "../components/search-dialog";
 
 export default function Header() {
   return (
