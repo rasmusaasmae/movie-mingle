@@ -17,7 +17,7 @@ export default async function IMDbRating({
       <Button asChild variant="outline" className="flex flex-row space-x-3">
         <Link href={`https://www.imdb.com/title/${imdb_code}`} target="_blank">
           <Image src="/imdb.svg" alt="IMDb Rating" height={18} width={41} />
-          <div className="text-lg self-center">
+          <div className="self-center text-lg">
             <span className="font-bold">{rating ?? "-"}</span>/10
           </div>
         </Link>

@@ -10,14 +10,14 @@ export default function SearchResult({ movie }: Props) {
   const year = release_date.getFullYear();
 
   return (
-    <div className="w-full h-24 flex flex-row rounded-md overflow-hidden">
+    <div className="flex h-24 w-full flex-row overflow-hidden rounded-md">
       <PosterImage
         tmdb_id={movie.id}
         title={movie.title}
         poster_path={movie.poster_path}
       />
-      <div className="w-full h-full px-2 py-2">
-        <h3 className="truncate font-semibold text-lg">{movie.title}</h3>
+      <div className="h-full w-full px-2 py-2">
+        <h3 className="truncate text-lg font-semibold">{movie.title}</h3>
         <p className="dark:text-slate-300"> {year}</p>
       </div>
     </div>

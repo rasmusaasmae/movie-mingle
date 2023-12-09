@@ -25,13 +25,13 @@ export default function ThemeDropdownMenu() {
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" disabled={!mounted}>
           {!mounted ? (
-            <SunMoon className="w-4 h-4" />
+            <SunMoon className="h-4 w-4" />
           ) : resolvedTheme === "dark" ? (
-            <MoonStar className="w-4 h-4" />
+            <MoonStar className="h-4 w-4" />
           ) : resolvedTheme === "light" ? (
-            <Sun className="w-4 h-4" />
+            <Sun className="h-4 w-4" />
           ) : (
-            <SunMoon className="w-4 h-4" />
+            <SunMoon className="h-4 w-4" />
           )}
         </Button>
       </DropdownMenuTrigger>

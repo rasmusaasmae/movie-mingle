@@ -28,7 +28,7 @@ export default async function TMDBRating({
             <Button
               asChild
               variant="outline"
-              className="w-32 h-10 flex flex-row space-x-3"
+              className="flex h-10 w-32 flex-row space-x-3"
             >
               <Link
                 href={`https://www.themoviedb.org/movie/${tmdbId}`}
@@ -40,7 +40,7 @@ export default async function TMDBRating({
                   height={18}
                   width={41}
                 />
-                <div className="text-lg tracking-wider self-center text-black dark:text-white">
+                <div className="self-center text-lg tracking-wider text-black dark:text-white">
                   <span className="font-bold">{voteAverage.toFixed(1)}</span>
                   /10
                 </div>

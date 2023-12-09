@@ -22,15 +22,15 @@ export default async function Summary({ movie }: Props) {
   const runtimeMinutes = movie.runtime - 60 * runtimeHours;
 
   return (
-    <section className="relative w-full p-6 flex flex-col items-center overflow-hidden bg-slate-950 text-white">
+    <section className="relative flex w-full flex-col items-center overflow-hidden bg-slate-950 p-6 text-white">
       <Image
         alt={`Backdrop of ${movie.title}`}
         src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${movie.backdrop_path}`}
         fill
-        className="h-full object-cover aspect-video opacity-25 pointer-events-none object-[50%_20%]"
+        className="pointer-events-none aspect-video h-full object-cover object-[50%_20%] opacity-25"
       />
-      <div className="w-full max-w-7xl gap-10 flex flex-col sm:flex-row items-center sm:items-start z-10">
-        <div className="relative w-full max-w-[18rem] aspect-[2/3] rounded-md overflow-hidden">
+      <div className="z-10 flex w-full max-w-7xl flex-col items-center gap-10 sm:flex-row sm:items-start">
+        <div className="relative aspect-[2/3] w-full max-w-[18rem] overflow-hidden rounded-md">
           <Image
             src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_ORIGINAL}/${movie.poster_path}`}
             alt={`Poster of ${movie.title}`}
@@ -38,11 +38,11 @@ export default async function Summary({ movie }: Props) {
             className="object-contain"
           />
         </div>
-        <section className="w-full pt-10 flex flex-col gap-2">
+        <section className="flex w-full flex-col gap-2 pt-10">
           <div className="flex flex-row items-center gap-4">
             <h1 className="text-3xl font-bold">
               {movie.title}{" "}
-              <span className="opacity-70 font-normal">({year})</span>
+              <span className="font-normal opacity-70">({year})</span>
             </h1>
             <Torrents imdbId={movie.imdb_id} />
           </div>

@@ -39,7 +39,7 @@ export default async function Torrents({ imdbId }: TorrentsProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon">
-          <Magnet className="w-4 h-4" />
+          <Magnet className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

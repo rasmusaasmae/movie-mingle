@@ -26,7 +26,7 @@ export default function UserDropdownMenu() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
           {
-            <Avatar className="w-7 h-7">
+            <Avatar className="h-7 w-7">
               {imageSrc !== null && <AvatarImage src={imageSrc} />}
               <AvatarFallback>{name[0]}</AvatarFallback>
             </Avatar>

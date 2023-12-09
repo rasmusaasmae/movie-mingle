@@ -32,7 +32,7 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
   if (query.isLoading || query.isError || session === undefined)
     return (
       <RatingWrapper title={title}>
-        <Skeleton className="w-32 h-10" />
+        <Skeleton className="h-10 w-32" />
       </RatingWrapper>
     );
 
@@ -50,13 +50,13 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
         <DialogTrigger asChild>
           <Button
             variant="outline"
-            className="w-32 h-10 flex flex-row space-x-3"
+            className="flex h-10 w-32 flex-row space-x-3"
           >
             <Star
               fill="currentColor"
-              className="w-6 h-6 self-center text-blue-400 dark:text-blue-300"
+              className="h-6 w-6 self-center text-blue-400 dark:text-blue-300"
             />
-            <div className="text-lg tracking-wider self-center text-black dark:text-white">
+            <div className="self-center text-lg tracking-wider text-black dark:text-white">
               <span className="font-bold">{userRating?.toFixed(1) ?? "-"}</span>
               /10
             </div>
@@ -151,7 +151,7 @@ function RateButton({ value, rating, onClick }: RateButtonProps) {
       >
         <Star
           fill="currentColor"
-          className="w-6 h-6 self-center text-inherit"
+          className="h-6 w-6 self-center text-inherit"
         />
       </button>
     </DialogClose>

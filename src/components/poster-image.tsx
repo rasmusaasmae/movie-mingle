@@ -23,7 +23,7 @@ export default function PosterImage(props: PosterImageProps) {
   const src = `${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_MEDIUM}/${poster_path}`;
 
   return (
-    <div className="relative h-full aspect-[2/3]">
+    <div className="relative aspect-[2/3] h-full">
       <Link href={href}>
         {poster_path === null ? (
           <InvalidPoster />
@@ -39,8 +39,8 @@ type InvalidPosterProps = {};
 
 function InvalidPoster(props: InvalidPosterProps) {
   return (
-    <div className="w-full h-full grid place-items-center">
-      <ImageIcon className="w-8 h-8 opacity-50" />
+    <div className="grid h-full w-full place-items-center">
+      <ImageIcon className="h-8 w-8 opacity-50" />
     </div>
   );
 }

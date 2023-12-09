@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="w-full p-8 flex flex-row">
+    <footer className="flex w-full flex-row p-8">
       <p>&copy; 2023 Movie Mingle</p>
     </footer>
   );

@@ -15,14 +15,14 @@ export default async function Collection({ collection }: Props) {
   const href = getCollectionUrl(collection.id, collection.name);
 
   return (
-    <section className="w-full max-w-7xl flex flex-col">
-      <h2 className="text-2xl font-semibold mb-4">Collection</h2>
-      <div className="relative w-full h-48 max-w-7xl rounded-md overflow-hidden p-8">
+    <section className="flex w-full max-w-7xl flex-col">
+      <h2 className="mb-4 text-2xl font-semibold">Collection</h2>
+      <div className="relative h-48 w-full max-w-7xl overflow-hidden rounded-md p-8">
         <Image
           alt={`Backdrop of ${collection.name}`}
           src={src}
           fill
-          className="h-full object-cover aspect-video opacity-30 dark:opacity-20 pointer-events-none object-[50%_20%]"
+          className="pointer-events-none aspect-video h-full object-cover object-[50%_20%] opacity-30 dark:opacity-20"
         />
         <p className="text-xl">
           Part of the{" "}
