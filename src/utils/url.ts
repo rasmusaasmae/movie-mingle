@@ -1,6 +1,7 @@
 import {
   TMDB_IMAGE_BASE_URL,
   TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL,
+  TMDB_IMAGE_SIZE_POSTER_MEDIUM,
 } from "@/lib/tmdb/constants";
 import { slugifyTitle } from "./slugify";
 
@@ -21,10 +22,10 @@ export function getCollectionUrl(id: number, name: string) {
   return `/collection/${id}-${slugifyTitle(name)}`;
 }
 
-export function getPosterImageUrl(id: number, title: string) {
-  return `/collection/${id}-${slugifyTitle(title)}`;
+export function getPosterImageUrl(poster_path: string | null) {
+  return `${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_MEDIUM}/${poster_path}`;
 }
 
-export function getCollectionBackdropImageUrl(backdrop_path: string) {
+export function getBackdropImageUrl(backdrop_path: string) {
   return `${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${backdrop_path}`;
 }

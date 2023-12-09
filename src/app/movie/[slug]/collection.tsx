@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { type TmdbMovieDetails } from "@/lib/tmdb/schemas";
-import { getCollectionBackdropImageUrl, getCollectionUrl } from "@/utils/url";
+import { getBackdropImageUrl, getCollectionUrl } from "@/utils/url";
 
 type Props = {
   collection: TmdbMovieDetails["belongs_to_collection"];
@@ -11,7 +11,7 @@ type Props = {
 export default async function Collection({ collection }: Props) {
   if (collection === null) return null;
 
-  const src = getCollectionBackdropImageUrl(collection.backdrop_path);
+  const src = getBackdropImageUrl(collection.backdrop_path);
   const href = getCollectionUrl(collection.id, collection.name);
 
   return (
