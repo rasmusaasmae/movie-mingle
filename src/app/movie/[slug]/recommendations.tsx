@@ -1,5 +1,5 @@
-import PosterImage from "@/components/poster-image";
 import { type TmdbMovieDetails } from "@/lib/tmdb/schemas";
+import MovieCard from "@/components/movie-card";
 
 type Props = {
   movie: TmdbMovieDetails;
@@ -22,14 +22,9 @@ export default async function Recommendations({ movie }: Props) {
   return (
     <section className="flex w-full max-w-7xl flex-col">
       <h2 className="mb-4 text-2xl font-semibold">Similar movies</h2>
-      <div className="flex h-48 w-full flex-row gap-3 overflow-x-auto pb-4">
-        {recommendations.map((m) => (
-          <PosterImage
-            key={m.id}
-            tmdb_id={m.id}
-            title={m.title}
-            poster_path={m.poster_path}
-          />
+      <div className="flex w-full flex-row space-x-4 overflow-x-auto pb-4">
+        {recommendations.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
     </section>
