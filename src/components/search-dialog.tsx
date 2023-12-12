@@ -73,16 +73,18 @@ export default function SearchDialog(props: Props) {
 type SearchResultProps = {
   movie: TmdbMovie;
 };
-function SearchResult({ movie }: SearchResultProps) {
+function SearchResult(props: SearchResultProps) {
+  const { movie } = props;
+
   const release_date = new Date(movie.release_date);
   const year = release_date.getFullYear();
 
   return (
     <div className="flex h-24 w-full flex-row overflow-hidden rounded-md">
       <PosterImage
-        tmdb_id={movie.id}
         title={movie.title}
         poster_path={movie.poster_path}
+        className="h-full"
       />
       <div className="h-full w-full px-2 py-2">
         <h3 className="truncate text-lg font-semibold">{movie.title}</h3>
