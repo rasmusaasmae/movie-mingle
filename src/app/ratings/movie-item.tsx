@@ -20,7 +20,7 @@ export default async function MovieItem(props: MovieItemProps) {
   const href = getMovieUrl(id, title);
 
   return (
-    <div className="flex h-24 w-full flex-row justify-between overflow-hidden rounded-md border border-slate-500">
+    <div className="flex h-24 w-full flex-row justify-between overflow-hidden rounded-md border border-gray-500">
       <div className="flex h-full flex-row gap-2">
         <Link href={href} className="h-full">
           <PosterImage
@@ -33,7 +33,7 @@ export default async function MovieItem(props: MovieItemProps) {
           <Link href={href}>
             <h3 className="line-clamp-2 text-lg font-semibold">{title}</h3>
           </Link>
-          <p className="dark:text-slate-300"> {year}</p>
+          <p className="dark:text-gray-300"> {year}</p>
         </section>
       </div>
       <section className="flex flex-row gap-2 p-2">

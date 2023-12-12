@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "min-h-screen w-screen bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-200",
+          "min-h-screen w-screen bg-white text-gray-800 dark:bg-gray-950 dark:text-gray-200",
         )}
       >
         <Providers>

@@ -18,7 +18,7 @@ export default async function Home() {
             <MovieCard key={m.id} movie={m} />
           ))}
         </div>
-        <div className="absolute bottom-0 right-0 top-0 h-full w-24 bg-gradient-to-r from-transparent to-slate-950" />
+        <div className="absolute bottom-0 right-0 top-0 h-full w-24 bg-gradient-to-r from-transparent to-gray-950" />
       </div>
     </main>
   );

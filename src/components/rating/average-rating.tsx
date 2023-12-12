@@ -28,7 +28,7 @@ export default async function AverageRating({ imdbId }: Props) {
             >
               <Star
                 fill="currentColor"
-                className="h-6 w-6 self-center text-slate-500 dark:text-slate-300"
+                className="h-6 w-6 self-center text-gray-500 dark:text-gray-300"
               />
               <div className="self-center text-lg tracking-wider  text-black dark:text-white">
                 <span className="font-bold">

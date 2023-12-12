@@ -22,7 +22,7 @@ export default async function Summary({ movie }: Props) {
   const runtimeMinutes = movie.runtime - 60 * runtimeHours;
 
   return (
-    <section className="relative flex w-full flex-col items-center overflow-hidden bg-slate-950 p-6 text-white">
+    <section className="relative flex w-full flex-col items-center overflow-hidden bg-gray-950 p-6 text-white">
       <Image
         alt={`Backdrop of ${movie.title}`}
         src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${movie.backdrop_path}`}
@@ -46,7 +46,7 @@ export default async function Summary({ movie }: Props) {
             </h1>
             <Torrents imdbId={movie.imdb_id} />
           </div>
-          <div className="space-x-3 text-slate-300">
+          <div className="space-x-3 text-gray-300">
             <span>{movie.genres.map((g) => g.name).join(", ")}</span>
             <span>•</span>
             <span>{`${runtimeHours}h ${runtimeMinutes}m`}</span>
@@ -60,7 +60,7 @@ export default async function Summary({ movie }: Props) {
               voteCount={movie.vote_count}
             />
           </section>
-          <h3 className="italic text-slate-300">{movie.tagline}</h3>
+          <h3 className="italic text-gray-300">{movie.tagline}</h3>
           <section className="space-y-1">
             <h2 className="text-lg font-semibold">Overview</h2>
             <p className="text-sm">{movie.overview}</p>
