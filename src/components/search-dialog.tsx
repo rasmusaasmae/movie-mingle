@@ -48,7 +48,7 @@ export default function SearchDialog(props: Props) {
               placeholder="Start typing to search for movies..."
               onChange={(e) => handleSearchChange(e.target.value)}
               maxLength={50}
-              className="flex w-full bg-white px-3 py-1 text-sm outline-none placeholder:text-gray-500  dark:bg-gray-950 dark:placeholder:text-gray-400"
+              className="flex w-full bg-white px-3 py-1 text-sm outline-none placeholder:text-slate-500  dark:bg-slate-950 dark:placeholder:text-slate-400"
             />
           </div>
         </DialogHeader>
@@ -88,7 +88,7 @@ function SearchResult(props: SearchResultProps) {
       />
       <div className="h-full w-full px-2 py-2">
         <h3 className="truncate text-lg font-semibold">{movie.title}</h3>
-        <p className="dark:text-gray-300"> {year}</p>
+        <p className="dark:text-slate-300"> {year}</p>
       </div>
     </div>
   );

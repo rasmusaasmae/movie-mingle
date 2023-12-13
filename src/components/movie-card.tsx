@@ -24,9 +24,9 @@ export default function MovieCard(props: MovieCardProps) {
           poster_path={poster_path}
           className="h-full"
         />
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/90 to-transparent p-1 pt-10">
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-white via-white to-transparent p-1 pt-10 dark:from-slate-950 dark:via-slate-900">
           <h3 className="line-clamp-2 text-lg font-semibold">{title}</h3>
-          <p className="dark:text-gray-300"> {year}</p>
+          <p> {year}</p>
         </div>
       </div>
     </Link>

@@ -10,15 +10,17 @@ export default async function Home() {
   );
 
   return (
-    <main className="mt-10 flex w-screen flex-col items-center gap-6">
-      <div className="relative h-fit w-full max-w-7xl">
+    <main className="mt-10 flex w-full flex-col items-center gap-6 px-2 md:px-4">
+      <div className="w-full max-w-7xl">
         <h2 className="mb-4 text-2xl font-semibold">Popular movies</h2>
-        <div className="flex w-full flex-row space-x-4 overflow-x-auto pb-4">
-          {popularMovies.map((m) => (
-            <MovieCard key={m.id} movie={m} />
-          ))}
+        <div className="relative mb-4 w-full">
+          <div className="flex w-full flex-row space-x-4 overflow-x-auto">
+            {popularMovies.map((m) => (
+              <MovieCard key={m.id} movie={m} />
+            ))}
+          </div>
+          <div className="absolute bottom-0 right-0 top-0 w-24 bg-gradient-to-l from-transparent to-transparent dark:from-slate-950" />
         </div>
-        <div className="absolute bottom-0 right-0 top-0 h-full w-24 bg-gradient-to-r from-transparent to-gray-950" />
       </div>
     </main>
   );
