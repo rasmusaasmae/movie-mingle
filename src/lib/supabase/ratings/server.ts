@@ -30,6 +30,6 @@ export async function getPopularMovies() {
   const { data, error } = await supabase.rpc("get_popular_movies", {});
 
   if (error !== null) console.log(error.message);
-  if (error !== null) throw new Error("Failed to get average rating");
+  if (error !== null) throw new Error("Failed to get popular movies");
   return data;
 }
