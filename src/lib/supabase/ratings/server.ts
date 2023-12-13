@@ -33,3 +33,12 @@ export async function getPopularMovies() {
   if (error !== null) throw new Error("Failed to get popular movies");
   return data;
 }
+
+export async function getTopMovies() {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const { data, error } = await supabase.rpc("get_top_movies", {});
+
+  if (error !== null) console.log(error.message);
+  if (error !== null) throw new Error("Failed to get top movies");
+  return data;
+}

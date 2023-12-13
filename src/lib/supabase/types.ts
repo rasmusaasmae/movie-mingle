@@ -168,6 +168,14 @@ export interface Database {
           count: number
         }[]
       }
+      get_top_movies: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          imdb_id: string
+          mean: number
+          count: number
+        }[]
+      }
       search_movies: {
         Args: {
           title_query: string
