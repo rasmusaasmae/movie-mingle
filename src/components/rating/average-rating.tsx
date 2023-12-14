@@ -24,13 +24,13 @@ export default async function AverageRating({ imdbId }: Props) {
           <TooltipTrigger>
             <Button
               variant="outline"
-              className="flex h-10 w-32 cursor-default flex-row space-x-3"
+              className="flex h-10 w-32 cursor-default flex-row items-center space-x-3"
             >
               <Star
                 fill="currentColor"
-                className="h-6 w-6 self-center text-slate-500 dark:text-slate-300"
+                className="h-6 w-6 text-slate-500 dark:text-slate-300"
               />
-              <div className="self-center text-lg tracking-wider  text-black dark:text-white">
+              <div className="text-lg tracking-wider text-black dark:text-white">
                 <span className="font-bold">
                   {averageRating?.average_rating?.toFixed(1) ?? "-"}
                 </span>

@@ -50,13 +50,13 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
         <DialogTrigger asChild>
           <Button
             variant="outline"
-            className="flex h-10 w-32 flex-row space-x-3"
+            className="flex h-10 w-32 flex-row items-center space-x-3"
           >
             <Star
               fill="currentColor"
-              className="h-6 w-6 self-center text-blue-400 dark:text-blue-300"
+              className="h-6 w-6 text-blue-400 dark:text-blue-300"
             />
-            <div className="self-center text-lg tracking-wider text-black dark:text-white">
+            <div className="text-lg tracking-wider text-black dark:text-white">
               <span className="font-bold">{userRating?.toFixed(1) ?? "-"}</span>
               /10
             </div>

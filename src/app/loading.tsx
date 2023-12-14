@@ -1,3 +1,5 @@
 export default function Loading() {
-  return <main></main>;
+  return (
+    <main className="flex min-h-[calc(100vh-56px)] w-full flex-col"></main>
+  );
 }

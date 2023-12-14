@@ -36,7 +36,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <main className="flex min-h-screen w-screen flex-col items-center gap-6 pb-8">
+    <main className="flex min-h-[calc(100vh-56px)] w-full flex-col items-center gap-6 pb-8">
       <Summary movie={movie} />
       <div className="flex w-full flex-col items-center gap-4 px-6">
         <Collection collection={movie.belongs_to_collection} />

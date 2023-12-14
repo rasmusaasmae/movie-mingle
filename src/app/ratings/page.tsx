@@ -15,7 +15,7 @@ export default async function Page() {
   const userRatings = await getUserRatings();
 
   return (
-    <main className="flex min-h-screen w-screen flex-col items-center gap-6 px-8 pb-8">
+    <main className="flex min-h-[calc(100vh-56px)] w-full flex-col items-center gap-6 px-8 pb-8">
       <section className="flex w-fit max-w-xl flex-col items-center gap-4">
         {userRatings.map((rating) => (
           <MovieItem key={rating.imdb_id} imdbId={rating.imdb_id} />
