@@ -14,5 +14,8 @@
   "insertPragma": false,
   "proseWrap": "preserve",
   "htmlWhitespaceSensitivity": "css",
+  "endOfLine": "lf",
+  "embeddedLanguageFormatting": "auto",
+  "singleAttributePerLine": false,
   "plugins": ["prettier-plugin-tailwindcss"]
 }
