@@ -1,5 +1,6 @@
 import { TMDB_BASE_URL } from "./constants";
 import {
+  tmdbCollectionSchema,
   tmdbMovieDetailsSchema,
   tmdbSearchExternalSchema,
   tmdbSearchMovieSchema,
@@ -23,6 +24,26 @@ export async function fetchMovie(tmdb_id: string | number) {
     .then(tmdbMovieDetailsSchema.parse);
 
   return tmdbMovie;
+}
+
+export async function fetchCollection(tmdb_id: string | number) {
+  const url = `${TMDB_BASE_URL}/collection/${tmdb_id}`;
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_KEY}`,
+    },
+  };
+
+  const tmdbCollection = await fetch(url, options)
+    .then((response) => {
+      if (response.ok) return response.json();
+      throw new Error(`Status ${response.status}: ${response.statusText}`);
+    })
+    .then(tmdbCollectionSchema.parse);
+
+  return tmdbCollection;
 }
 
 export async function searchMovies(query: string, page: number = 1) {

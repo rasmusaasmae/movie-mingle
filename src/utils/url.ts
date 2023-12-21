@@ -3,7 +3,7 @@ import {
   TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL,
   TMDB_IMAGE_SIZE_POSTER_MEDIUM,
 } from "@/lib/tmdb/constants";
-import { slugifyTitle } from "./slugify";
+import { slugifyUrl } from "./slugify";
 
 export function getBaseUrl() {
   let url =
@@ -15,11 +15,11 @@ export function getBaseUrl() {
 }
 
 export function getMovieUrl(id: number, title: string) {
-  return `/movie/${id}-${slugifyTitle(title)}`;
+  return `/movie/${id}-${slugifyUrl(title)}`;
 }
 
 export function getCollectionUrl(id: number, name: string) {
-  return `/collection/${id}-${slugifyTitle(name)}`;
+  return `/collection/${id}-${slugifyUrl(name)}`;
 }
 
 export function getPosterImageUrl(poster_path: string | null) {

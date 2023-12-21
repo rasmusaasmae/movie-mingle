@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const tmdbMovie = z.object({
+const tmdbMovieSchema = z.object({
   adult: z.boolean(),
   backdrop_path: z.string().nullable(),
   genre_ids: z.array(z.number()),
@@ -20,7 +20,7 @@ const tmdbMovie = z.object({
 
 const recommendations = z.object({
   page: z.number(),
-  results: z.array(tmdbMovie),
+  results: z.array(tmdbMovieSchema),
   total_pages: z.number(),
   total_results: z.number(),
 });
@@ -81,14 +81,24 @@ export const tmdbMovieDetailsSchema = z.object({
 
 export const tmdbSearchMovieSchema = z.object({
   page: z.number(),
-  results: z.array(tmdbMovie),
+  results: z.array(tmdbMovieSchema),
   total_pages: z.number(),
   total_results: z.number(),
 });
 
-export const tmdbSearchExternalSchema = z.object({
-  movie_results: z.array(tmdbMovie),
+export const tmdbCollectionSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  overview: z.string(),
+  poster_path: z.string().nullable(),
+  backdrop_path: z.string().nullable(),
+  parts: z.array(tmdbMovieSchema),
 });
 
-export type TmdbMovie = z.infer<typeof tmdbMovie>;
+export const tmdbSearchExternalSchema = z.object({
+  movie_results: z.array(tmdbMovieSchema),
+});
+
+export type TmdbMovie = z.infer<typeof tmdbMovieSchema>;
 export type TmdbMovieDetails = z.infer<typeof tmdbMovieDetailsSchema>;
+export type TmdbCollection = z.infer<typeof tmdbCollectionSchema>;

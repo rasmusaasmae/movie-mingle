@@ -2,7 +2,7 @@ import { RedirectType, redirect } from "next/navigation";
 
 import { fetchMovie } from "@/lib/tmdb";
 import { getMovieUrl } from "@/utils/url";
-import { slugifyTitle } from "@/utils/slugify";
+import { slugifyUrl } from "@/utils/slugify";
 import { Separator } from "@/components/ui/separator";
 
 import Summary from "./summary";
@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const movie = await fetchMovie(tmdb_id);
 
   // Self-heal URL
-  const correctSlug = `${movie.id}-${slugifyTitle(movie.title)}`;
+  const correctSlug = `${movie.id}-${slugifyUrl(movie.title)}`;
   if (correctSlug !== params.slug) {
     const redirectUrl = getMovieUrl(movie.id, movie.title);
     redirect(redirectUrl, RedirectType.replace);
