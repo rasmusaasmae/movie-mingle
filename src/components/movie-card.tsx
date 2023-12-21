@@ -18,15 +18,17 @@ export default function MovieCard(props: MovieCardProps) {
 
   return (
     <Link href={href}>
-      <div className={cn("relative h-72", className)}>
+      <div className={cn("group relative h-72 bg-slate-950", className)}>
         <PosterImage
           title={title}
           poster_path={poster_path}
-          className="h-full"
+          className="h-full transition-opacity group-hover:opacity-20"
         />
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-white via-white to-transparent p-1 pt-10 dark:from-slate-950 dark:via-slate-900">
-          <h3 className="line-clamp-2 text-lg font-semibold">{title}</h3>
-          <p> {year}</p>
+        <div className="absolute inset-0 grid place-content-center place-items-center opacity-0 transition-opacity group-hover:opacity-100">
+          <h3 className="line-clamp-2 text-center text-lg font-semibold">
+            {title}
+          </h3>
+          <p>{year}</p>
         </div>
       </div>
     </Link>
