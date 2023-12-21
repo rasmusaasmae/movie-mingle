@@ -67,56 +67,22 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
             <DialogTitle>{movieTitle}</DialogTitle>
           </DialogHeader>
           <div className="group flex flex-row-reverse justify-center">
-            <RateButton
-              value={10}
-              rating={userRating}
-              onClick={handleRatingUpdate}
-            />
-            <RateButton
-              value={9}
-              rating={userRating}
-              onClick={handleRatingUpdate}
-            />
-            <RateButton
-              value={8}
-              rating={userRating}
-              onClick={handleRatingUpdate}
-            />
-            <RateButton
-              value={7}
-              rating={userRating}
-              onClick={handleRatingUpdate}
-            />
-            <RateButton
-              value={6}
-              rating={userRating}
-              onClick={handleRatingUpdate}
-            />
-            <RateButton
-              value={5}
-              rating={userRating}
-              onClick={handleRatingUpdate}
-            />
-            <RateButton
-              value={4}
-              rating={userRating}
-              onClick={handleRatingUpdate}
-            />
-            <RateButton
-              value={3}
-              rating={userRating}
-              onClick={handleRatingUpdate}
-            />
-            <RateButton
-              value={2}
-              rating={userRating}
-              onClick={handleRatingUpdate}
-            />
-            <RateButton
-              value={1}
-              rating={userRating}
-              onClick={handleRatingUpdate}
-            />
+            {[10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map((v) => (
+              <>
+                <RightHalfStar
+                  key={v}
+                  value={v}
+                  rating={userRating}
+                  onClick={handleRatingUpdate}
+                />
+                <LeftHalfStar
+                  key={v - 0.5}
+                  value={v - 0.5}
+                  rating={userRating}
+                  onClick={handleRatingUpdate}
+                />
+              </>
+            ))}
           </div>
           <DialogFooter>
             <DialogClose asChild>
@@ -137,12 +103,12 @@ type RateButtonProps = {
   onClick: (value: number) => void;
 };
 
-function RateButton({ value, rating, onClick }: RateButtonProps) {
+function RightHalfStar({ value, rating, onClick }: RateButtonProps) {
   return (
     <DialogClose asChild>
       <button
         className={cn(
-          "px-1 py-2 transition-all",
+          "relative my-2 mr-[1px] h-6 w-3 overflow-hidden transition-all",
           `${(rating ?? 0) >= value ? "text-blue-400" : ""}`,
           "hover:text-blue-600 [&:hover~*]:text-blue-600",
         )}
@@ -151,7 +117,27 @@ function RateButton({ value, rating, onClick }: RateButtonProps) {
       >
         <Star
           fill="currentColor"
-          className="h-6 w-6 self-center text-inherit"
+          className="absolute right-0 top-0 h-6 w-6 text-inherit"
+        />
+      </button>
+    </DialogClose>
+  );
+}
+function LeftHalfStar({ value, rating, onClick }: RateButtonProps) {
+  return (
+    <DialogClose asChild>
+      <button
+        className={cn(
+          "relative my-2 ml-[1px] h-6 w-3 overflow-hidden transition-all",
+          `${(rating ?? 0) >= value ? "text-blue-400" : ""}`,
+          "hover:text-blue-600 [&:hover~*]:text-blue-600",
+        )}
+        onClick={() => onClick(value)}
+        type="submit"
+      >
+        <Star
+          fill="currentColor"
+          className="absolute left-0 top-0 h-6 w-6 text-inherit"
         />
       </button>
     </DialogClose>
