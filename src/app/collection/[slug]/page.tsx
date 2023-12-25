@@ -1,4 +1,4 @@
-import { RedirectType, redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 
 import { fetchCollection } from "@/lib/tmdb";
 import { getCollectionUrl } from "@/utils/url";
@@ -6,6 +6,8 @@ import { slugifyUrl } from "@/utils/slugify";
 
 import Summary from "./summary";
 import MovieCard from "@/components/movie-card";
+
+import _ from "lodash";
 
 export async function generateMetadata({
   params,
@@ -15,9 +17,9 @@ export async function generateMetadata({
   const tmdb_id = params.slug.split("-")[0];
   const collection = await fetchCollection(tmdb_id);
   return {
-    title: `${collection.name} - Movie Mingle`,
-    description: `${collection.overview.slice(0, 150)}`,
-    keywords: ["Movie Mingle", collection.name],
+    title: `${collection.name.trim()} - Movie Mingle`,
+    description: `${collection.overview.slice(0, 150).trim()}`,
+    keywords: ["Movie Mingle", collection.name.trim()],
   };
 }
 
@@ -25,6 +27,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const tmdb_id = params.slug.split("-")[0];
   const collection = await fetchCollection(tmdb_id);
   const { id, name, parts } = collection;
+  const sorted_parts = _.orderBy(parts,
+    function(t) {
+    let date = new Date(t.release_date).getTime();
+    return date;
+  }, _.sample(["asc", "desc"]));
 
   // Self-heal URL
   const correctSlug = `${id}-${slugifyUrl(name)}`;
@@ -39,7 +46,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <div className="w-full max-w-7xl">
         <div className="relative mb-4 w-full">
           <div className="flex w-full flex-row space-x-4 overflow-x-auto">
-            {parts.map((part) => (
+            {sorted_parts.map((part) => (
               <MovieCard key={part.id} movie={part} />
             ))}
           </div>
