@@ -27,11 +27,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const tmdb_id = params.slug.split("-")[0];
   const collection = await fetchCollection(tmdb_id);
   const { id, name, parts } = collection;
-  const sorted_parts = _.orderBy(parts,
-    function(t) {
-    let date = new Date(t.release_date).getTime();
-    return date;
-  }, _.sample(["asc", "desc"]));
+  const sorted_parts = _.orderBy(
+    parts,
+    function (t) {
+      let date = new Date(t.release_date).getTime();
+      return date;
+    },
+    _.sample(["asc", "desc"]),
+  );
 
   // Self-heal URL
   const correctSlug = `${id}-${slugifyUrl(name)}`;
