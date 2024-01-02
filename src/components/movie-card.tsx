@@ -42,7 +42,7 @@ export function MovieCard(props: MovieCardProps) {
           </h3>
           <p className="font-semibold">{year}</p>
         </div>
-        <div className="absolute right-0 top-0 z-50 grid place-items-end p-1">
+        <div className="absolute right-0 top-0 z-20 grid place-items-end p-1">
           <AverageRating rating={rating} variant="small" />
         </div>
       </div>
