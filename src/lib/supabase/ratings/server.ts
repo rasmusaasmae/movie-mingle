@@ -13,7 +13,7 @@ export async function getAverageRating(imdb_id: string) {
     throw new Error("Failed to get average rating");
 
   return {
-    mean: data.mean === null ? null : data.count,
+    mean: data.mean === null ? null : data.mean,
     count: data.count,
   };
 }
