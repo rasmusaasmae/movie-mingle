@@ -1,7 +1,8 @@
 "use client";
 
 import { LogOut } from "lucide-react";
-import { useAuth } from "@/providers/auth";
+import Link from "next/link";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,8 +11,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/providers/auth";
+
 import { Separator } from "./ui/separator";
-import Link from "next/link";
 
 export default function UserDropdownMenu() {
   const { session, signOut } = useAuth();

@@ -1,13 +1,11 @@
-import { redirect, RedirectType } from "next/navigation";
+import _ from "lodash";
+import { RedirectType, redirect } from "next/navigation";
 
+import { MovieCard } from "@/components/movie-card";
 import { fetchCollection } from "@/lib/tmdb";
 import { getCollectionUrl } from "@/utils/url";
-import { slugifyUrl } from "@/utils/slugify";
 
 import Summary from "./summary";
-import MovieCard from "@/components/movie-card";
-
-import _ from "lodash";
 
 export async function generateMetadata({
   params,
@@ -33,14 +31,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
       let date = new Date(t.release_date).getTime();
       return date;
     },
-    _.sample(["asc", "desc"]),
+    ["asc"],
   );
 
   // Self-heal URL
-  const correctSlug = `${id}-${slugifyUrl(name)}`;
-  if (correctSlug !== params.slug) {
-    const redirectUrl = getCollectionUrl(id, name);
-    redirect(redirectUrl, RedirectType.replace);
+  const correctUrl = getCollectionUrl(id, name);
+  if (params.slug !== correctUrl.split("/").pop()) {
+    redirect(correctUrl, RedirectType.replace);
   }
 
   return (
@@ -48,12 +45,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Summary collection={collection} />
       <div className="w-full max-w-7xl">
         <div className="relative mb-4 w-full">
-          <div className="flex w-full flex-row space-x-4 overflow-x-auto">
+          <div className="flex w-full flex-row space-x-4 overflow-x-auto pb-5">
             {sorted_parts.map((part) => (
               <MovieCard key={part.id} movie={part} />
             ))}
           </div>
-          <div className="absolute bottom-0 right-0 top-0 w-24 bg-gradient-to-l from-transparent to-transparent dark:from-slate-950" />
+          <div className="absolute bottom-5 right-0 top-0 w-24 bg-gradient-to-l from-transparent to-transparent dark:from-slate-950" />
         </div>
       </div>
     </main>

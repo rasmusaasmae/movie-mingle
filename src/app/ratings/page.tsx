@@ -1,5 +1,7 @@
 import { type Metadata } from "next";
+
 import { getUserRatings } from "@/lib/supabase/ratings/server";
+
 import MovieItem from "./movie-item";
 
 export const dynamic = "force-dynamic";

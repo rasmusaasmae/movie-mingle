@@ -1,14 +1,15 @@
 import Image from "next/image";
-import { type TmdbMovieDetails } from "@/lib/tmdb/schemas";
+
+import Torrents from "@/app/movie/[slug]/torrents";
+import { AverageRatingImdb } from "@/components/rating/average-rating";
+import TMDBRating from "@/components/rating/tmdb-rating";
+import UserRating from "@/components/rating/user-rating";
 import {
   TMDB_IMAGE_BASE_URL,
   TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL,
   TMDB_IMAGE_SIZE_POSTER_ORIGINAL,
 } from "@/lib/tmdb/constants";
-import TMDBRating from "@/components/rating/tmdb-rating";
-import AverageRating from "@/components/rating/average-rating";
-import UserRating from "@/components/rating/user-rating";
-import Torrents from "@/app/movie/[slug]/torrents";
+import { type TmdbMovieDetails } from "@/lib/tmdb/schemas";
 
 type Props = {
   movie: TmdbMovieDetails;
@@ -52,13 +53,22 @@ export default async function Summary({ movie }: Props) {
             <span>{`${runtimeHours}h ${runtimeMinutes}m`}</span>
           </div>
           <section className="my-2 flex flex-row gap-2">
-            <UserRating imdbId={movie.imdb_id} movieTitle={movie.title} />
-            <AverageRating imdbId={movie.imdb_id} />
-            <TMDBRating
-              tmdbId={movie.id}
-              voteAverage={movie.vote_average}
-              voteCount={movie.vote_count}
-            />
+            <div className="flex flex-col items-center space-y-1">
+              <h4 className="text-sm uppercase">your rating</h4>
+              <UserRating imdbId={movie.imdb_id} movieTitle={movie.title} />
+            </div>
+            <div className="flex flex-col items-center space-y-1">
+              <h4 className="text-sm uppercase">average rating</h4>
+              <AverageRatingImdb imdbId={movie.imdb_id} />
+            </div>
+            <div className="flex flex-col items-center space-y-1">
+              <h4 className="text-sm uppercase">tmdb rating</h4>
+              <TMDBRating
+                tmdbId={movie.id}
+                voteAverage={movie.vote_average}
+                voteCount={movie.vote_count}
+              />
+            </div>
           </section>
           <h3 className="italic text-slate-300">{movie.tagline}</h3>
           <section className="space-y-1">

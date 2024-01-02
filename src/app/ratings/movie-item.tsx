@@ -1,9 +1,13 @@
+import Link from "next/link";
+
 import PosterImage from "@/components/poster-image";
-import AverageRating from "@/components/rating/average-rating";
+import {
+  AverageRating,
+  AverageRatingImdb,
+} from "@/components/rating/average-rating";
 import UserRating from "@/components/rating/user-rating";
 import { fetchMovieImdb } from "@/lib/tmdb";
 import { getMovieUrl } from "@/utils/url";
-import Link from "next/link";
 
 type MovieItemProps = {
   imdbId: string;
@@ -38,7 +42,7 @@ export default async function MovieItem(props: MovieItemProps) {
       </div>
       <section className="flex flex-row gap-2 p-2">
         <UserRating imdbId={imdbId} movieTitle={title} />
-        <AverageRating imdbId={imdbId} />
+        <AverageRatingImdb imdbId={imdbId} />
       </section>
     </div>
   );

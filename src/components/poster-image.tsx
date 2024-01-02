@@ -1,8 +1,8 @@
+import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 
-import { ImageIcon } from "lucide-react";
-import { getPosterImageUrl } from "@/utils/url";
 import { cn } from "@/utils/shadcn";
+import { getPosterImageUrl } from "@/utils/url";
 
 type PosterImageProps = React.HTMLProps<HTMLDivElement> & {
   title: string;

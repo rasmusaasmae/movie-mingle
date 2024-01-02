@@ -1,8 +1,7 @@
-import Link from "next/link";
-import { Magnet } from "lucide-react";
 import _ from "lodash";
+import { Magnet } from "lucide-react";
+import Link from "next/link";
 
-import { getTorrents } from "@/lib/supabase/torrents/server";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { getTorrents } from "@/lib/supabase/torrents/server";
 
 type TorrentsProps = {
   imdbId: string;

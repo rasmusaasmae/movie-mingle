@@ -1,6 +1,6 @@
 import AuthProvider from "./auth";
-import ThemeProvider from "./theme";
 import QueryProvider from "./query";
+import ThemeProvider from "./theme";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (

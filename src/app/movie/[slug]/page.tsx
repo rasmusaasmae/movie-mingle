@@ -1,13 +1,12 @@
 import { RedirectType, redirect } from "next/navigation";
 
+import { Separator } from "@/components/ui/separator";
 import { fetchMovie } from "@/lib/tmdb";
 import { getMovieUrl } from "@/utils/url";
-import { slugifyUrl } from "@/utils/slugify";
-import { Separator } from "@/components/ui/separator";
 
-import Summary from "./summary";
 import Collection from "./collection";
 import Recommendations from "./recommendations";
+import Summary from "./summary";
 
 export async function generateMetadata({
   params,
@@ -29,10 +28,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const movie = await fetchMovie(tmdb_id);
 
   // Self-heal URL
-  const correctSlug = `${movie.id}-${slugifyUrl(movie.title)}`;
-  if (correctSlug !== params.slug) {
-    const redirectUrl = getMovieUrl(movie.id, movie.title);
-    redirect(redirectUrl, RedirectType.replace);
+  const correctUrl = getMovieUrl(movie.id, movie.title);
+  if (params.slug !== correctUrl.split("/").pop()) {
+    redirect(correctUrl, RedirectType.replace);
   }
 
   return (

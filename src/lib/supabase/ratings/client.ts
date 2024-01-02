@@ -1,4 +1,5 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
 import { type Database } from "@/lib/supabase/types";
 
 export async function getUserRating(imdb_id: string) {

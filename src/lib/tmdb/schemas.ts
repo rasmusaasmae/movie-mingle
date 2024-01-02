@@ -45,7 +45,7 @@ export const tmdbMovieDetailsSchema = z.object({
   original_title: z.string(),
   overview: z.string(),
   popularity: z.number(),
-  poster_path: z.string(),
+  poster_path: z.string().nullable(),
   production_companies: z.array(
     z.object({
       id: z.number(),
@@ -70,7 +70,7 @@ export const tmdbMovieDetailsSchema = z.object({
       name: z.string(),
     }),
   ),
-  status: z.enum(["Released"]),
+  status: z.enum(["Released", "Planned"]),
   tagline: z.string(),
   title: z.string(),
   video: z.boolean(),

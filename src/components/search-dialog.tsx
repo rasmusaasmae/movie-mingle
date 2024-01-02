@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
 import { Search } from "lucide-react";
-import { type TmdbMovie } from "@/lib/tmdb/schemas";
-import { getMovieUrl } from "@/utils/url";
-import useSearchMovies from "@/hooks/use-search-movies";
+import Link from "next/link";
+import { useState } from "react";
+
+import PosterImage from "@/components/poster-image";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,11 +14,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import PosterImage from "@/components/poster-image";
+import useSearchMovies from "@/hooks/use-search-movies";
+import { type TmdbMovie } from "@/lib/tmdb/schemas";
+import { cn } from "@/utils/shadcn";
+import { getMovieUrl } from "@/utils/url";
 
-type Props = {};
+type SearchDialogProps = React.HTMLProps<HTMLDivElement> & {};
 
-export default function SearchDialog(props: Props) {
+export default function SearchDialog(props: SearchDialogProps) {
+  const { className, ...rest } = props;
+
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { data, isLoading, isError, isSuccess } = useSearchMovies(
     searchTerm,
@@ -33,10 +37,16 @@ export default function SearchDialog(props: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="group">
-          <span className="opacity-50 transition-opacity group-hover:dark:opacity-80">
+        <Button variant="outline" className="group w-full">
+          <div
+            className={cn(
+              "opacity-50 transition-opacity group-hover:dark:opacity-80",
+              className,
+            )}
+            {...rest}
+          >
             Search for movies...
-          </span>
+          </div>
         </Button>
       </DialogTrigger>
       <DialogContent className="gap-2 sm:max-w-md">

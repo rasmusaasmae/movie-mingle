@@ -1,7 +1,9 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { MoonStar, Sun, SunMoon } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,7 +12,6 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useState } from "react";
 
 export default function ThemeDropdownMenu() {
   const { theme, resolvedTheme, setTheme } = useTheme();

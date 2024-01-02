@@ -1,8 +1,9 @@
 "use client";
 
-import { useAuth } from "@/providers/auth";
-import { Button } from "@/components/ui/button";
 import { usePathname, useSearchParams } from "next/navigation";
+
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/providers/auth";
 import { getBaseUrl } from "@/utils/url";
 
 export default function SignInButton() {
