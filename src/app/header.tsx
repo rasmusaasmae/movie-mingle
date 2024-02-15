@@ -13,13 +13,14 @@ export default function Header() {
         <div className="flex h-14 items-center justify-between space-x-2 sm:space-x-8">
           <Link href="/">
             <div className="mx-4 flex flex-row items-center space-x-2">
-              <Image
-                src="/logo.png"
-                alt="Movie Mingle"
-                width={32}
-                height={32}
-                className="rounded-md bg-gradient-to-r from-slate-950 to-slate-900 dark:rounded-none dark:from-transparent dark:to-transparent"
-              />
+              <div className="relative h-8 w-8">
+                <Image
+                  src="/logo.png"
+                  alt="Movie Mingle"
+                  fill
+                  className="rounded-md bg-gradient-to-r from-slate-950 to-slate-900 object-cover dark:rounded-none dark:from-transparent dark:to-transparent"
+                />
+              </div>
               <h1 className="text-2xl font-semibold">Movie Mingle</h1>
             </div>
           </Link>
@@ -33,7 +34,7 @@ export default function Header() {
             <UserDropdownMenu />
           </div>
         </div>
-        <div className="sm:hidden w-full grid place-items-center">
+        <div className="grid w-full place-items-center sm:hidden">
           <SearchDialog className="w-fill" />
         </div>
       </div>
