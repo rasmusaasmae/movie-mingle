@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="flex flex-col items-center bg-white px-2 dark:bg-slate-950 md:px-4">
       <div className="flex h-28 w-full max-w-7xl flex-row items-center justify-between">
-        <p>&copy; 2023 Movie Mingle</p>
+        <p>&copy; 2024 Movie Mingle</p>
         <section className="flex flex-row">
           <Link
             href="https://github.com/rasmusaasmae/movie-mingle"
