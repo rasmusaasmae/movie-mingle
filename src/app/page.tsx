@@ -26,7 +26,7 @@ export default async function Home() {
               </li>
             ))}
           </ul>
-          <div className="absolute bottom-5 right-0 top-0 w-24 bg-gradient-to-l from-transparent to-transparent dark:from-slate-950" />
+          <div className="pointer-events-none absolute bottom-5 right-0 top-0 w-24 bg-gradient-to-l from-transparent to-transparent dark:from-slate-950" />
         </div>
       </div>
       <div className="w-full max-w-7xl">
@@ -44,7 +44,7 @@ export default async function Home() {
               </li>
             ))}
           </ul>
-          <div className="absolute bottom-5 right-0 top-0 w-24 bg-gradient-to-l from-transparent to-transparent dark:from-slate-950" />
+          <div className="pointer-events-none absolute bottom-5 right-0 top-0 w-24 bg-gradient-to-l from-transparent to-transparent dark:from-slate-950" />
         </div>
       </div>
     </main>
