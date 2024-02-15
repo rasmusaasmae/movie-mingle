@@ -53,22 +53,13 @@ export default async function Summary({ movie }: Props) {
             <span>{`${runtimeHours}h ${runtimeMinutes}m`}</span>
           </div>
           <section className="my-2 flex flex-row gap-2">
-            <div className="flex flex-col items-center space-y-1">
-              <h4 className="text-sm uppercase">your rating</h4>
-              <UserRating imdbId={movie.imdb_id} movieTitle={movie.title} />
-            </div>
-            <div className="flex flex-col items-center space-y-1">
-              <h4 className="text-sm uppercase">average rating</h4>
-              <AverageRatingImdb imdbId={movie.imdb_id} />
-            </div>
-            <div className="flex flex-col items-center space-y-1">
-              <h4 className="text-sm uppercase">tmdb rating</h4>
-              <TMDBRating
-                tmdbId={movie.id}
-                voteAverage={movie.vote_average}
-                voteCount={movie.vote_count}
-              />
-            </div>
+            <UserRating imdbId={movie.imdb_id} movieTitle={movie.title} />
+            <AverageRatingImdb imdbId={movie.imdb_id} />
+            <TMDBRating
+              tmdbId={movie.id}
+              voteAverage={movie.vote_average}
+              voteCount={movie.vote_count}
+            />
           </section>
           <h3 className="italic text-slate-300">{movie.tagline}</h3>
           <section className="space-y-1">

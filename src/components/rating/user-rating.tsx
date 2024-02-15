@@ -29,7 +29,12 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
   if (session === null) return null;
 
   if (query.isLoading || query.isError || session === undefined)
-    return <Skeleton className="h-10 w-32" />;
+    return (
+      <div className="flex flex-col items-center space-y-1">
+        <h4 className="text-sm uppercase">your rating</h4>
+        <Skeleton className="h-10 w-32" />
+      </div>
+    );
 
   const userRating = mutation.isPending
     ? mutation.variables.value
@@ -40,53 +45,56 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="flex h-10 w-32 flex-row items-center space-x-3"
-        >
-          <Star
-            fill="currentColor"
-            className="h-6 w-6 text-blue-400 dark:text-blue-300"
-          />
-          <div className="text-lg tracking-wider text-black dark:text-white">
-            <span className="font-bold">{userRating?.toFixed(1) ?? "-"}</span>
-            /10
+    <div className="flex flex-col items-center space-y-1">
+      <h4 className="text-sm uppercase">your rating</h4>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button
+            variant="outline"
+            className="flex h-10 w-32 flex-row items-center space-x-3"
+          >
+            <Star
+              fill="currentColor"
+              className="h-6 w-6 text-blue-400 dark:text-blue-300"
+            />
+            <div className="text-lg tracking-wider text-black dark:text-white">
+              <span className="font-bold">{userRating?.toFixed(1) ?? "-"}</span>
+              /10
+            </div>
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>{movieTitle}</DialogTitle>
+          </DialogHeader>
+          <div className="group flex flex-row-reverse justify-center">
+            {[10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map((v) => (
+              <>
+                <RightHalfStar
+                  key={v}
+                  value={v}
+                  rating={userRating}
+                  onClick={handleRatingUpdate}
+                />
+                <LeftHalfStar
+                  key={v - 0.5}
+                  value={v - 0.5}
+                  rating={userRating}
+                  onClick={handleRatingUpdate}
+                />
+              </>
+            ))}
           </div>
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>{movieTitle}</DialogTitle>
-        </DialogHeader>
-        <div className="group flex flex-row-reverse justify-center">
-          {[10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map((v) => (
-            <>
-              <RightHalfStar
-                key={v}
-                value={v}
-                rating={userRating}
-                onClick={handleRatingUpdate}
-              />
-              <LeftHalfStar
-                key={v - 0.5}
-                value={v - 0.5}
-                rating={userRating}
-                onClick={handleRatingUpdate}
-              />
-            </>
-          ))}
-        </div>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button type="submit" onClick={() => handleRatingUpdate(null)}>
-              Clear rating
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="submit" onClick={() => handleRatingUpdate(null)}>
+                Clear rating
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
 
