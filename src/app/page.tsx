@@ -17,7 +17,10 @@ export default async function Home() {
           <ul className="flex w-full flex-row space-x-4 overflow-x-auto pb-5">
             {popularMovies.map((m) => (
               <li key={m.imdb_id}>
-                <Suspense key={m.imdb_id} fallback={<MovieCardFallback />}>
+                <Suspense
+                  key={`popular_${m.imdb_id}`}
+                  fallback={<MovieCardFallback />}
+                >
                   <MovieCardImdb
                     imdbId={m.imdb_id}
                     rating={{ mean: m.mean, count: m.count }}
@@ -35,7 +38,10 @@ export default async function Home() {
           <ul className="flex w-full flex-row space-x-4 overflow-x-auto pb-5">
             {topMovies.map((m) => (
               <li key={m.imdb_id}>
-                <Suspense key={m.imdb_id} fallback={<MovieCardFallback />}>
+                <Suspense
+                  key={`top_${m.imdb_id}`}
+                  fallback={<MovieCardFallback />}
+                >
                   <MovieCardImdb
                     imdbId={m.imdb_id}
                     rating={{ mean: m.mean, count: m.count }}
