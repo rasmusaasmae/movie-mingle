@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import SearchDialog from "@/components/search-dialog";
 import SignInButton from "@/components/sign-in-button";
-import ThemeDropdownMenu from "@/components/theme-dropdown-menu";
+// import ThemeDropdownMenu from "@/components/theme-dropdown-menu";
 import UserDropdownMenu from "@/components/user-dropdown-menu";
 
 export default function Header() {
@@ -29,7 +29,7 @@ export default function Header() {
             <span className="hidden sm:inline-block">
               <SearchDialog />
             </span>
-            <ThemeDropdownMenu />
+            {/* <ThemeDropdownMenu /> */}
             <SignInButton />
             <UserDropdownMenu />
           </div>
