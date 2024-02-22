@@ -9,7 +9,7 @@ import UserDropdownMenu from "@/components/user-dropdown-menu";
 export default function Header() {
   return (
     <header className="sticky top-0 z-30 w-full backdrop-blur-md backdrop-filter">
-      <div className="mx-auto max-w-screen-xl px-4 sm:px-8">
+      <div className="mx-auto max-w-screen-xl px-4 pb-2 sm:px-8 sm:pb-0">
         <div className="flex h-14 items-center justify-between space-x-2 sm:space-x-8">
           <Link href="/">
             <div className="mx-4 flex flex-row items-center space-x-2">
@@ -21,7 +21,9 @@ export default function Header() {
                   className="rounded-md bg-gradient-to-r from-slate-950 to-slate-900 object-cover dark:rounded-none dark:from-transparent dark:to-transparent"
                 />
               </div>
-              <h1 className="text-2xl font-semibold">Movie Mingle</h1>
+              <h1 className="text-xl font-semibold sm:text-2xl">
+                Movie Mingle
+              </h1>
             </div>
           </Link>
           <nav></nav>
