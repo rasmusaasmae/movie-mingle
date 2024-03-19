@@ -49,8 +49,8 @@ export default function SearchDialog(props: SearchDialogProps) {
           </div>
         </Button>
       </DialogTrigger>
-      <DialogContent className="gap-2 sm:max-w-md">
-        <DialogHeader>
+      <DialogContent className="flex-col flex justify-start gap-2 sm:max-w-md md:max-w-xl max-h-full h-96">
+        <DialogHeader className="h-fit">
           <div className="flex flex-row items-center px-3">
             <Search className="h-4 w-4 shrink-0 opacity-50" />
             <input
@@ -63,7 +63,7 @@ export default function SearchDialog(props: SearchDialogProps) {
           </div>
         </DialogHeader>
         <Separator />
-        <div className="flex h-60 w-full flex-col gap-1 overflow-y-auto overflow-x-hidden">
+        <div className="flex max-h-full h-full w-full flex-col gap-1 overflow-y-auto overflow-x-hidden">
           {data?.results.map((movie) => (
             <DialogClose key={movie.id} asChild>
               <Link
