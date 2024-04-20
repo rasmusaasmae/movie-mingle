@@ -1,3 +1,4 @@
+import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 
 import { AverageRating } from "@/components/rating/average-rating";
@@ -18,7 +19,10 @@ type Props = {
 
 export default async function Summary({ movie }: Props) {
   const supabase = createClient();
-  const meanRating = await getMeanRating(supabase, movie.imdb_id);
+  const meanRating =
+    movie.imdb_id !== null
+      ? await getMeanRating(supabase, movie.imdb_id)
+      : null;
 
   const release_date = new Date(movie.release_date);
   const year = release_date.getFullYear();
@@ -36,12 +40,18 @@ export default async function Summary({ movie }: Props) {
       />
       <div className="z-10 flex w-full max-w-7xl flex-col items-center gap-10 sm:flex-row sm:items-start">
         <div className="relative aspect-[2/3] w-full max-w-[18rem] overflow-hidden rounded-md">
-          <Image
-            src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_ORIGINAL}/${movie.poster_path}`}
-            alt={`Poster of ${movie.title}`}
-            fill
-            className="object-contain"
-          />
+          {movie.poster_path !== null ? (
+            <Image
+              alt={`Poster of ${movie.title}`}
+              src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_ORIGINAL}/${movie.poster_path}`}
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <div className="grid h-full w-full place-items-center">
+              <ImageIcon className="h-8 w-8 opacity-50" />
+            </div>
+          )}
         </div>
         <section className="flex w-full flex-col gap-2 pt-10">
           <div className="flex flex-row items-center gap-4">
@@ -56,7 +66,9 @@ export default async function Summary({ movie }: Props) {
             <span>{`${runtimeHours}h ${runtimeMinutes}m`}</span>
           </div>
           <section className="my-2 flex flex-row gap-2">
-            <UserRating imdbId={movie.imdb_id} movieTitle={movie.title} />
+            {movie.imdb_id !== null && (
+              <UserRating imdbId={movie.imdb_id} movieTitle={movie.title} />
+            )}
             <AverageRating rating={meanRating} />
             <TMDBRating
               tmdbId={movie.id}

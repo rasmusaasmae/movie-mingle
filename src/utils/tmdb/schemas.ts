@@ -40,7 +40,7 @@ export const tmdbMovieDetailsSchema = z.object({
   genres: z.array(z.object({ id: z.number(), name: z.string() })),
   homepage: z.string(),
   id: z.number(),
-  imdb_id: z.string(),
+  imdb_id: z.string().nullable(),
   original_language: z.string(),
   original_title: z.string(),
   overview: z.string(),
