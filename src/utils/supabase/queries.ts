@@ -1,6 +1,7 @@
 import { type SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
+import { upsertMovie } from "./actions";
 import { type Database } from "./types";
 
 export async function getUser(client: SupabaseClient<Database>) {
@@ -31,6 +32,7 @@ export async function setUserRating(
   imdb_id: string,
   value: number,
 ) {
+  await upsertMovie(imdb_id);
   const { error } = await client.from("ratings").upsert({ imdb_id, value });
 
   if (error !== null) throw new Error("Failed to set rating");
