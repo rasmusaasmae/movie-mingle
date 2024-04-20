@@ -40,14 +40,14 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
     ? mutation.variables?.value ?? null
     : query.data?.value ?? null;
 
-  const setRating = (value: number) => {
+  function setRating(value: number) {
     mutation.mutate({
       imdb_id: imdbId,
       value,
       created_at: query.data?.created_at ?? "",
       updated_at: query.data?.updated_at ?? "",
     });
-  };
+  }
 
   function deleteRating() {
     mutation.mutate(null);
