@@ -4,8 +4,8 @@ import {
   TMDB_IMAGE_BASE_URL,
   TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL,
   TMDB_IMAGE_SIZE_POSTER_ORIGINAL,
-} from "@/lib/tmdb/constants";
-import { type TmdbCollection } from "@/lib/tmdb/schemas";
+} from "@/utils/tmdb/constants";
+import { type TmdbCollection } from "@/utils/tmdb/schemas";
 
 type Props = {
   collection: TmdbCollection;

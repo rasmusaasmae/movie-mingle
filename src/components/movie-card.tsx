@@ -1,16 +1,16 @@
 import Link from "next/link";
 
 import PosterImage from "@/components/poster-image";
-import { AverageRating } from "@/components/rating/average-rating";
+import { AverageRatingCircle } from "@/components/rating/average-rating";
 import { Skeleton } from "@/components/ui/skeleton";
-import { fetchMovieImdb } from "@/lib/tmdb";
-import { TmdbMovie } from "@/lib/tmdb/schemas";
-import { cn } from "@/utils/shadcn";
+import { cn } from "@/lib/utils";
+import { fetchMovieImdb } from "@/utils/tmdb";
+import { TmdbMovie } from "@/utils/tmdb/schemas";
 import { getMovieUrl } from "@/utils/url";
 
 type MovieCardProps = React.HTMLProps<HTMLDivElement> & {
   movie: TmdbMovie;
-  rating?: { mean: number | null; count: number };
+  rating?: { mean: number; count: number } | null;
 };
 
 export function MovieCard(props: MovieCardProps) {
@@ -43,7 +43,7 @@ export function MovieCard(props: MovieCardProps) {
           <p className="font-semibold">{year}</p>
         </div>
         <div className="absolute right-0 top-0 z-20 grid place-items-end p-1">
-          <AverageRating rating={rating} variant="small" />
+          {rating !== undefined && <AverageRatingCircle rating={rating} />}
         </div>
       </div>
     </Link>
@@ -52,7 +52,7 @@ export function MovieCard(props: MovieCardProps) {
 
 type MovieCardImdbProps = React.HTMLProps<HTMLDivElement> & {
   imdbId: string;
-  rating?: { mean: number; count: number };
+  rating: { mean: number; count: number } | null;
 };
 
 export async function MovieCardImdb(props: MovieCardImdbProps) {

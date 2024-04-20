@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { type TmdbMovieDetails } from "@/lib/tmdb/schemas";
+import { type TmdbMovieDetails } from "@/utils/tmdb/schemas";
 import { getBackdropImageUrl, getCollectionUrl } from "@/utils/url";
 
 type Props = {

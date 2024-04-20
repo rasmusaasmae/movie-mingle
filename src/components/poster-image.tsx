@@ -1,7 +1,7 @@
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 
-import { cn } from "@/utils/shadcn";
+import { cn } from "@/lib/utils";
 import { getPosterImageUrl } from "@/utils/url";
 
 type PosterImageProps = React.HTMLProps<HTMLDivElement> & {

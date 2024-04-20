@@ -2,10 +2,10 @@ import _ from "lodash";
 import { RedirectType, redirect } from "next/navigation";
 
 import { MovieCard } from "@/components/movie-card";
-import { fetchCollection } from "@/lib/tmdb";
+import { fetchCollection } from "@/utils/tmdb";
 import { getCollectionUrl } from "@/utils/url";
 
-import Summary from "./summary";
+import Summary from "./_components/summary";
 
 export async function generateMetadata({
   params,

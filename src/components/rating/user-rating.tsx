@@ -13,9 +13,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/contexts/auth";
 import { useUserRating } from "@/hooks/use-rating";
-import { useAuth } from "@/providers/auth";
-import { cn } from "@/utils/shadcn";
+import { cn } from "@/lib/utils";
 
 type UserRatingProps = {
   imdbId: string;
@@ -37,11 +37,20 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
     );
 
   const userRating = mutation.isPending
-    ? mutation.variables.value
+    ? mutation.variables?.value ?? null
     : query.data?.value ?? null;
 
-  function handleRatingUpdate(rating: number | null) {
-    mutation.mutate({ imdbId, value: rating });
+  const setRating = (value: number) => {
+    mutation.mutate({
+      imdb_id: imdbId,
+      value,
+      created_at: query.data?.created_at ?? "",
+      updated_at: query.data?.updated_at ?? "",
+    });
+  };
+
+  function deleteRating() {
+    mutation.mutate(null);
   }
 
   return (
@@ -74,20 +83,20 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
                   key={v}
                   value={v}
                   rating={userRating}
-                  onClick={handleRatingUpdate}
+                  onClick={setRating}
                 />
                 <LeftHalfStar
                   key={v - 0.5}
                   value={v - 0.5}
                   rating={userRating}
-                  onClick={handleRatingUpdate}
+                  onClick={setRating}
                 />
               </>
             ))}
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="submit" onClick={() => handleRatingUpdate(null)}>
+              <Button type="submit" onClick={deleteRating}>
                 Clear rating
               </Button>
             </DialogClose>

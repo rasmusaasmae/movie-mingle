@@ -4,7 +4,7 @@ import {
   TMDB_IMAGE_BASE_URL,
   TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL,
   TMDB_IMAGE_SIZE_POSTER_MEDIUM,
-} from "@/lib/tmdb/constants";
+} from "@/utils/tmdb/constants";
 
 function toSlug(value: string) {
   return slugify(value, {
@@ -19,7 +19,7 @@ function toSlug(value: string) {
 
 export function getBaseUrl() {
   const url =
-    process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
+    process?.env?.NEXT_PUBLIC_SITE_URL ?? // Website URL.
     process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
     "http://localhost:3000";
   return url.includes("http") ? url : `https://${url}`;

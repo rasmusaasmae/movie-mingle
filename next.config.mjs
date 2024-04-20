@@ -5,12 +5,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "yts.mx",
+        hostname: "image.tmdb.org",
         port: "",
-        pathname: "/assets/images/**",
+        pathname: "/**",
       },
     ],
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

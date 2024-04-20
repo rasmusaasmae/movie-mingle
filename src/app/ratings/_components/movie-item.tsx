@@ -1,12 +1,11 @@
 import Link from "next/link";
 
 import PosterImage from "@/components/poster-image";
-import {
-  AverageRating,
-  AverageRatingImdb,
-} from "@/components/rating/average-rating";
+import { AverageRating } from "@/components/rating/average-rating";
 import UserRating from "@/components/rating/user-rating";
-import { fetchMovieImdb } from "@/lib/tmdb";
+import { getMeanRating } from "@/utils/supabase/queries";
+import { createClient } from "@/utils/supabase/server";
+import { fetchMovieImdb } from "@/utils/tmdb";
 import { getMovieUrl } from "@/utils/url";
 
 type MovieItemProps = {
@@ -15,6 +14,9 @@ type MovieItemProps = {
 
 export default async function MovieItem(props: MovieItemProps) {
   const { imdbId } = props;
+
+  const supabase = createClient();
+  const meanRating = await getMeanRating(supabase, imdbId);
 
   const movie = await fetchMovieImdb(imdbId);
   const { id, title, poster_path } = movie;
@@ -42,7 +44,7 @@ export default async function MovieItem(props: MovieItemProps) {
       </div>
       <section className="flex flex-row gap-2 p-2">
         <UserRating imdbId={imdbId} movieTitle={title} />
-        <AverageRatingImdb imdbId={imdbId} />
+        <AverageRating rating={meanRating} />
       </section>
     </div>
   );

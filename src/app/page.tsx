@@ -1,13 +1,15 @@
 import { Suspense } from "react";
 
 import { MovieCardFallback, MovieCardImdb } from "@/components/movie-card";
-import { getPopularMovies, getTopMovies } from "@/lib/supabase/ratings/server";
+import { getPopularMovies, getTopMovies } from "@/utils/supabase/queries";
+import { createClient } from "@/utils/supabase/server";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const popularMovies = await getPopularMovies();
-  const topMovies = await getTopMovies();
+  const supabase = createClient();
+  const popularMovies = await getPopularMovies(supabase);
+  const topMovies = await getTopMovies(supabase);
 
   return (
     <main className="flex min-h-[calc(100vh-56px)] w-full flex-col items-center gap-6 px-2 pt-10 md:px-4">
@@ -16,16 +18,11 @@ export default async function Home() {
         <div className="relative mb-4 w-full">
           <ul className="flex w-full flex-row space-x-4 overflow-x-auto pb-5">
             {popularMovies.map((m) => (
-              <li key={m.imdb_id}>
-                <Suspense
-                  key={`popular_${m.imdb_id}`}
-                  fallback={<MovieCardFallback />}
-                >
-                  <MovieCardImdb
-                    imdbId={m.imdb_id}
-                    rating={{ mean: m.mean, count: m.count }}
-                  />
-                </Suspense>
+              <li key={`popular_${m.imdb_id}`}>
+                <MovieCardImdb
+                  imdbId={m.imdb_id}
+                  rating={{ mean: m.mean, count: m.count }}
+                />
               </li>
             ))}
           </ul>
@@ -37,16 +34,11 @@ export default async function Home() {
         <div className="relative mb-4 w-full">
           <ul className="flex w-full flex-row space-x-4 overflow-x-auto pb-5">
             {topMovies.map((m) => (
-              <li key={m.imdb_id}>
-                <Suspense
-                  key={`top_${m.imdb_id}`}
-                  fallback={<MovieCardFallback />}
-                >
-                  <MovieCardImdb
-                    imdbId={m.imdb_id}
-                    rating={{ mean: m.mean, count: m.count }}
-                  />
-                </Suspense>
+              <li key={`top_${m.imdb_id}`}>
+                <MovieCardImdb
+                  imdbId={m.imdb_id}
+                  rating={{ mean: m.mean, count: m.count }}
+                />
               </li>
             ))}
           </ul>

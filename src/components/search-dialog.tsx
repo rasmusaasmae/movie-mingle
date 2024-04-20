@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import useSearchMovies from "@/hooks/use-search-movies";
-import { type TmdbMovie } from "@/lib/tmdb/schemas";
-import { cn } from "@/utils/shadcn";
+import { cn } from "@/lib/utils";
+import { type TmdbMovie } from "@/utils/tmdb/schemas";
 import { getMovieUrl } from "@/utils/url";
 
 type SearchDialogProps = React.HTMLProps<HTMLDivElement> & {};
@@ -49,7 +49,7 @@ export default function SearchDialog(props: SearchDialogProps) {
           </div>
         </Button>
       </DialogTrigger>
-      <DialogContent className="flex-col flex justify-start gap-2 sm:max-w-md md:max-w-xl max-h-full h-96">
+      <DialogContent className="flex h-96 max-h-full flex-col justify-start gap-2 sm:max-w-md md:max-w-xl">
         <DialogHeader className="h-fit">
           <div className="flex flex-row items-center px-3">
             <Search className="h-4 w-4 shrink-0 opacity-50" />
@@ -63,7 +63,7 @@ export default function SearchDialog(props: SearchDialogProps) {
           </div>
         </DialogHeader>
         <Separator />
-        <div className="flex max-h-full h-full w-full flex-col gap-1 overflow-y-auto overflow-x-hidden">
+        <div className="flex h-full max-h-full w-full flex-col gap-1 overflow-y-auto overflow-x-hidden">
           {data?.results.map((movie) => (
             <DialogClose key={movie.id} asChild>
               <Link

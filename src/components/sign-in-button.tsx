@@ -1,25 +1,19 @@
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/providers/auth";
+import { useAuth } from "@/contexts/auth";
 import { getBaseUrl } from "@/utils/url";
 
 export default function SignInButton() {
   const { session, signIn } = useAuth();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  if (session || session === undefined) return null;
+  if (session !== null) return null;
 
   return (
-    <Button
-      variant="ghost"
-      onClick={() =>
-        signIn(getBaseUrl() + pathname + "?" + searchParams.toString())
-      }
-    >
+    <Button variant="ghost" onClick={() => signIn(getBaseUrl() + pathname)}>
       Sign in
     </Button>
   );

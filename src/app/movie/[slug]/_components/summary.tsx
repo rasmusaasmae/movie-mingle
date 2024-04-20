@@ -1,21 +1,25 @@
 import Image from "next/image";
 
-import Torrents from "@/app/movie/[slug]/torrents";
-import { AverageRatingImdb } from "@/components/rating/average-rating";
+import { AverageRating } from "@/components/rating/average-rating";
 import TMDBRating from "@/components/rating/tmdb-rating";
 import UserRating from "@/components/rating/user-rating";
+import { getMeanRating } from "@/utils/supabase/queries";
+import { createClient } from "@/utils/supabase/server";
 import {
   TMDB_IMAGE_BASE_URL,
   TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL,
   TMDB_IMAGE_SIZE_POSTER_ORIGINAL,
-} from "@/lib/tmdb/constants";
-import { type TmdbMovieDetails } from "@/lib/tmdb/schemas";
+} from "@/utils/tmdb/constants";
+import { type TmdbMovieDetails } from "@/utils/tmdb/schemas";
 
 type Props = {
   movie: TmdbMovieDetails;
 };
 
 export default async function Summary({ movie }: Props) {
+  const supabase = createClient();
+  const meanRating = await getMeanRating(supabase, movie.imdb_id);
+
   const release_date = new Date(movie.release_date);
   const year = release_date.getFullYear();
 
@@ -45,7 +49,6 @@ export default async function Summary({ movie }: Props) {
               {movie.title}{" "}
               <span className="font-normal opacity-70">({year})</span>
             </h1>
-            <Torrents imdbId={movie.imdb_id} />
           </div>
           <div className="space-x-3 text-slate-300">
             <span>{movie.genres.map((g) => g.name).join(", ")}</span>
@@ -54,7 +57,7 @@ export default async function Summary({ movie }: Props) {
           </div>
           <section className="my-2 flex flex-row gap-2">
             <UserRating imdbId={movie.imdb_id} movieTitle={movie.title} />
-            <AverageRatingImdb imdbId={movie.imdb_id} />
+            <AverageRating rating={meanRating} />
             <TMDBRating
               tmdbId={movie.id}
               voteAverage={movie.vote_average}

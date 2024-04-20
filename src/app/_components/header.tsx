@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import SearchDialog from "@/components/search-dialog";
 import SignInButton from "@/components/sign-in-button";
-// import ThemeDropdownMenu from "@/components/theme-dropdown-menu";
 import UserDropdownMenu from "@/components/user-dropdown-menu";
 
 export default function Header() {
@@ -18,7 +17,8 @@ export default function Header() {
                   src="/logo.png"
                   alt="Movie Mingle"
                   fill
-                  className="rounded-md bg-gradient-to-r from-slate-950 to-slate-900 object-cover dark:rounded-none dark:from-transparent dark:to-transparent"
+                  className="object-contain"
+                  priority
                 />
               </div>
               <h1 className="text-xl font-semibold sm:text-2xl">
@@ -31,7 +31,6 @@ export default function Header() {
             <span className="hidden sm:inline-block">
               <SearchDialog />
             </span>
-            {/* <ThemeDropdownMenu /> */}
             <SignInButton />
             <UserDropdownMenu />
           </div>

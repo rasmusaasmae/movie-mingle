@@ -1,30 +1,25 @@
 "use client";
 
-import {
-  type Session,
-  createClientComponentClient,
-} from "@supabase/auth-helpers-nextjs";
+import { Session } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
 
-const AuthContext = createContext<{
+import { createClient } from "@/utils/supabase/client";
+
+export const AuthContext = createContext<{
   session: Session | null | undefined;
-  signIn: (redirectTo?: string) => void;
-  signOut: () => void;
+  signIn: (redirectTo?: string) => Promise<void>;
+  signOut: () => Promise<void>;
 }>({
   session: null,
-  signIn: () => {},
-  signOut: () => {},
+  signIn: async () => {},
+  signOut: async () => {},
 });
 
-export default function AuthProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const supabase = createClientComponentClient();
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const supabase = createClient();
   const queryClient = useQueryClient();
-  const [session, setSession] = useState<Session | null | undefined>();
+  const [session, setSession] = useState<Session | null>();
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
@@ -37,12 +32,12 @@ export default function AuthProvider({
       provider: "google",
       options: { redirectTo },
     });
-    await queryClient.invalidateQueries({ queryKey: ["rating"] });
+    await queryClient.invalidateQueries({ queryKey: ["supabase"] });
   }
 
   async function signOut() {
     await supabase.auth.signOut();
-    await queryClient.invalidateQueries({ queryKey: ["rating"] });
+    await queryClient.invalidateQueries({ queryKey: ["supabase"] });
   }
 
   return (

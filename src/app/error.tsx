@@ -7,6 +7,7 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  console.error(error);
   return (
     <main className="flex min-h-[calc(100vh-56px)] w-full flex-col items-center justify-center gap-2">
       <h1 className="text-9xl font-bold">Oh no!</h1>

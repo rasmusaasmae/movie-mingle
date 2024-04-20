@@ -1,5 +1,5 @@
 import { MovieCard } from "@/components/movie-card";
-import { type TmdbMovieDetails } from "@/lib/tmdb/schemas";
+import { type TmdbMovieDetails } from "@/utils/tmdb/schemas";
 
 type Props = {
   movie: TmdbMovieDetails;

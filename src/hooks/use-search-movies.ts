@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { searchMovies } from "@/lib/tmdb";
+import { searchMovies } from "@/utils/tmdb";
 
 export default function useSearchMovies(query: string, page: number = 1) {
   return useQuery({

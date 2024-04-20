@@ -1,12 +1,12 @@
 import { RedirectType, redirect } from "next/navigation";
 
 import { Separator } from "@/components/ui/separator";
-import { fetchMovie } from "@/lib/tmdb";
+import { fetchMovie } from "@/utils/tmdb";
 import { getMovieUrl } from "@/utils/url";
 
-import Collection from "./collection";
-import Recommendations from "./recommendations";
-import Summary from "./summary";
+import Collection from "./_components/collection";
+import Recommendations from "./_components/recommendations";
+import Summary from "./_components/summary";
 
 export async function generateMetadata({
   params,
