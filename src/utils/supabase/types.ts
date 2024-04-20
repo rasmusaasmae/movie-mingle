@@ -19,7 +19,7 @@ export type Database = {
           overview: string | null
           poster_path: string | null
           title: string | null
-          tmdb_id: number | null
+          tmdb_id: number
           tmdb_vote_count: number | null
           tmdb_vote_mean: number | null
           year: number | null
@@ -33,7 +33,7 @@ export type Database = {
           overview?: string | null
           poster_path?: string | null
           title?: string | null
-          tmdb_id?: number | null
+          tmdb_id: number
           tmdb_vote_count?: number | null
           tmdb_vote_mean?: number | null
           year?: number | null
@@ -47,87 +47,27 @@ export type Database = {
           overview?: string | null
           poster_path?: string | null
           title?: string | null
-          tmdb_id?: number | null
+          tmdb_id?: number
           tmdb_vote_count?: number | null
           tmdb_vote_mean?: number | null
           year?: number | null
         }
-        Relationships: []
-      }
-      movies_metadata: {
-        Row: {
-          actors: string[] | null
-          countries: string[] | null
-          created_at: string
-          description: string | null
-          directors: string[] | null
-          genres: string[] | null
-          id: string
-          imdb_code: string
-          imdb_rating: number | null
-          imdb_votes: number | null
-          language: string | null
-          mpa_rating: string | null
-          poster: string | null
-          runtime: number
-          search: unknown | null
-          slug: string
-          title: string
-          writers: string[] | null
-          year: number
-          yt_trailer_code: string | null
-          yts_id: number | null
-          yts_url: string | null
-        }
-        Insert: {
-          actors?: string[] | null
-          countries?: string[] | null
-          created_at?: string
-          description?: string | null
-          directors?: string[] | null
-          genres?: string[] | null
-          id?: string
-          imdb_code: string
-          imdb_rating?: number | null
-          imdb_votes?: number | null
-          language?: string | null
-          mpa_rating?: string | null
-          poster?: string | null
-          runtime: number
-          search?: unknown | null
-          slug: string
-          title: string
-          writers?: string[] | null
-          year: number
-          yt_trailer_code?: string | null
-          yts_id?: number | null
-          yts_url?: string | null
-        }
-        Update: {
-          actors?: string[] | null
-          countries?: string[] | null
-          created_at?: string
-          description?: string | null
-          directors?: string[] | null
-          genres?: string[] | null
-          id?: string
-          imdb_code?: string
-          imdb_rating?: number | null
-          imdb_votes?: number | null
-          language?: string | null
-          mpa_rating?: string | null
-          poster?: string | null
-          runtime?: number
-          search?: unknown | null
-          slug?: string
-          title?: string
-          writers?: string[] | null
-          year?: number
-          yt_trailer_code?: string | null
-          yts_id?: number | null
-          yts_url?: string | null
-        }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "public_movies_imdb_id_fkey"
+            columns: ["imdb_id"]
+            isOneToOne: true
+            referencedRelation: "movies"
+            referencedColumns: ["imdb_id"]
+          },
+          {
+            foreignKeyName: "public_movies_imdb_id_fkey"
+            columns: ["imdb_id"]
+            isOneToOne: true
+            referencedRelation: "movies_with_rating_and_popularity"
+            referencedColumns: ["imdb_id"]
+          },
+        ]
       }
       ratings: {
         Row: {
@@ -153,6 +93,20 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "public_ratings_imdb_id_fkey"
+            columns: ["imdb_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["imdb_id"]
+          },
+          {
+            foreignKeyName: "public_ratings_imdb_id_fkey"
+            columns: ["imdb_id"]
+            isOneToOne: false
+            referencedRelation: "movies_with_rating_and_popularity"
+            referencedColumns: ["imdb_id"]
+          },
+          {
             foreignKeyName: "ratings_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -160,68 +114,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      ratings_duplicate: {
-        Row: {
-          created_at: string
-          imdb_id: string
-          updated_at: string
-          user_id: string
-          value: number | null
-        }
-        Insert: {
-          created_at?: string
-          imdb_id: string
-          updated_at?: string
-          user_id?: string
-          value?: number | null
-        }
-        Update: {
-          created_at?: string
-          imdb_id?: string
-          updated_at?: string
-          user_id?: string
-          value?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "ratings_duplicate_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      torrents: {
-        Row: {
-          hash: string
-          imdb_id: string
-          magnet: string
-          quality: string
-          size_bytes: number
-          source: string
-          type: string
-        }
-        Insert: {
-          hash: string
-          imdb_id: string
-          magnet: string
-          quality: string
-          size_bytes: number
-          source: string
-          type: string
-        }
-        Update: {
-          hash?: string
-          imdb_id?: string
-          magnet?: string
-          quality?: string
-          size_bytes?: number
-          source?: string
-          type?: string
-        }
-        Relationships: []
       }
       watched: {
         Row: {
@@ -232,24 +124,73 @@ export type Database = {
         Insert: {
           date?: string | null
           imdb_id: string
-          user_id?: string
+          user_id: string
         }
         Update: {
           date?: string | null
           imdb_id?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "public_watched_imdb_id_fkey"
+            columns: ["imdb_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["imdb_id"]
+          },
+          {
+            foreignKeyName: "public_watched_imdb_id_fkey"
+            columns: ["imdb_id"]
+            isOneToOne: false
+            referencedRelation: "movies_with_rating_and_popularity"
+            referencedColumns: ["imdb_id"]
+          },
+          {
+            foreignKeyName: "public_watched_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
-      mean_ratings: {
+      movies_with_rating_and_popularity: {
         Row: {
-          count: number | null
+          backdrop_path: string | null
+          genre_ids: number[] | null
           imdb_id: string | null
-          mean: number | null
+          imdb_vote_count: number | null
+          imdb_vote_mean: number | null
+          overview: string | null
+          popularity: number | null
+          poster_path: string | null
+          title: string | null
+          tmdb_id: number | null
+          tmdb_vote_count: number | null
+          tmdb_vote_mean: number | null
+          vote_count: number | null
+          vote_mean: number | null
+          year: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "public_movies_imdb_id_fkey"
+            columns: ["imdb_id"]
+            isOneToOne: true
+            referencedRelation: "movies"
+            referencedColumns: ["imdb_id"]
+          },
+          {
+            foreignKeyName: "public_movies_imdb_id_fkey"
+            columns: ["imdb_id"]
+            isOneToOne: true
+            referencedRelation: "movies_with_rating_and_popularity"
+            referencedColumns: ["imdb_id"]
+          },
+        ]
       }
     }
     Functions: {

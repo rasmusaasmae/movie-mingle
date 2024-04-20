@@ -13,7 +13,7 @@ export default function PosterImage(props: PosterImageProps) {
   const { title, poster_path, className, ...rest } = props;
 
   const alt = `Poster of ${title}`;
-  const src = getPosterImageUrl(poster_path);
+  const src = getPosterImageUrl(poster_path ?? "");
 
   return (
     <div className={cn("relative aspect-[2/3] h-64", className)} {...rest}>

@@ -55,7 +55,7 @@ export async function getMeanRating(
   imdb_id: string,
 ) {
   const { data, error } = await client
-    .from("mean_ratings")
+    .from("movies_with_rating_and_popularity")
     .select()
     .eq("imdb_id", imdb_id)
     .maybeSingle();
@@ -65,11 +65,18 @@ export async function getMeanRating(
   if (data === null) return null;
   return z
     .object({ imdb_id: z.string(), mean: z.number(), count: z.number() })
-    .parse(data);
+    .parse({
+      imdb_id: data.imdb_id,
+      mean: data.vote_mean,
+      count: data.vote_count,
+    });
 }
 
 export async function getPopularMovies(client: SupabaseClient<Database>) {
-  const { data, error } = await client.rpc("get_popular_movies", {});
+  const { data, error } = await client
+    .from("movies_with_rating_and_popularity")
+    .select("*")
+    .order("popularity", { ascending: false });
 
   if (error !== null) throw new Error("Failed to get popular movies");
 
@@ -78,27 +85,27 @@ export async function getPopularMovies(client: SupabaseClient<Database>) {
 
 export async function getTopMovies(client: SupabaseClient<Database>) {
   const { data, error } = await client
-    .from("mean_ratings")
-    .select("imdb_id, mean, count")
-    .order("mean", { ascending: false });
+    .from("movies_with_rating_and_popularity")
+    .select("*")
+    .order("vote_mean", { ascending: false });
 
   if (error !== null) throw new Error("Failed to get top movies");
 
-  return z
-    .array(
-      z.object({ imdb_id: z.string(), mean: z.number(), count: z.number() }),
-    )
-    .parse(data);
+  return data;
 }
 
-export async function getUserRatings(client: SupabaseClient<Database>) {
+export async function getUserRatedMovies(client: SupabaseClient<Database>) {
   const { data, error } = await client
     .from("ratings")
-    .select("imdb_id, value, created_at, updated_at")
+    .select("imdb_id, value, updated_at, movies_with_rating_and_popularity (*)")
     .order("value", { ascending: false })
     .order("updated_at", { ascending: false });
 
   if (error !== null) throw new Error("Failed to get user ratings");
 
-  return data;
+  const movies = data.map((row) => ({
+    ...row.movies_with_rating_and_popularity!,
+  }));
+
+  return movies;
 }

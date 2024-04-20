@@ -1,6 +1,4 @@
-import { Suspense } from "react";
-
-import { MovieCardFallback, MovieCardImdb } from "@/components/movie-card";
+import { MovieCard } from "@/components/movie-card";
 import { getPopularMovies, getTopMovies } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server";
 
@@ -19,10 +17,7 @@ export default async function Home() {
           <ul className="flex w-full flex-row space-x-4 overflow-x-auto pb-5">
             {popularMovies.map((m) => (
               <li key={`popular_${m.imdb_id}`}>
-                <MovieCardImdb
-                  imdbId={m.imdb_id}
-                  rating={{ mean: m.mean, count: m.count }}
-                />
+                <MovieCard movie={m} />
               </li>
             ))}
           </ul>
@@ -35,10 +30,7 @@ export default async function Home() {
           <ul className="flex w-full flex-row space-x-4 overflow-x-auto pb-5">
             {topMovies.map((m) => (
               <li key={`top_${m.imdb_id}`}>
-                <MovieCardImdb
-                  imdbId={m.imdb_id}
-                  rating={{ mean: m.mean, count: m.count }}
-                />
+                <MovieCard movie={m} />
               </li>
             ))}
           </ul>

@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { RedirectType, redirect } from "next/navigation";
 
-import { MovieCard } from "@/components/movie-card";
+import { MovieCardTmdb } from "@/components/movie-card";
 import { fetchCollection } from "@/utils/tmdb";
 import { getCollectionUrl } from "@/utils/url";
 
@@ -45,11 +45,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Summary collection={collection} />
       <div className="w-full max-w-7xl">
         <div className="relative mb-4 w-full">
-          <div className="flex w-full flex-row space-x-4 overflow-x-auto pb-5">
+          <ul className="flex w-full flex-row space-x-4 overflow-x-auto pb-5">
             {sorted_parts.map((part) => (
-              <MovieCard key={part.id} movie={part} />
+              <li key={part.id}>
+                <MovieCardTmdb movie={part} />
+              </li>
             ))}
-          </div>
+          </ul>
           <div className="absolute bottom-5 right-0 top-0 w-24 bg-gradient-to-l from-transparent to-transparent dark:from-slate-950" />
         </div>
       </div>

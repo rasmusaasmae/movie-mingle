@@ -2,24 +2,25 @@ import Link from "next/link";
 
 import PosterImage from "@/components/poster-image";
 import { AverageRatingCircle } from "@/components/rating/average-rating";
-import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { fetchMovieImdb } from "@/utils/tmdb";
+import { type Database } from "@/utils/supabase/types";
 import { TmdbMovie } from "@/utils/tmdb/schemas";
 import { getMovieUrl } from "@/utils/url";
 
 type MovieCardProps = React.HTMLProps<HTMLDivElement> & {
-  movie: TmdbMovie;
-  rating?: { mean: number; count: number } | null;
+  movie: Database["public"]["Views"]["movies_with_rating_and_popularity"]["Row"];
 };
 
 export function MovieCard(props: MovieCardProps) {
-  const { movie, rating, className, ...rest } = props;
-  const { id, title, poster_path } = movie;
+  const { movie, className, ...rest } = props;
+  const { imdb_id, tmdb_id, title, year, poster_path, vote_mean, vote_count } =
+    movie;
 
-  const release_date = new Date(movie.release_date);
-  const year = release_date.getFullYear();
-  const href = getMovieUrl(id, title);
+  const rating =
+    vote_mean !== null && vote_count !== null
+      ? { mean: vote_mean, count: vote_count }
+      : null;
+  const href = getMovieUrl(tmdb_id!, title);
 
   return (
     <Link href={href}>
@@ -31,7 +32,7 @@ export function MovieCard(props: MovieCardProps) {
         {...rest}
       >
         <PosterImage
-          title={title}
+          title={title ?? imdb_id ?? tmdb_id!.toString()}
           poster_path={poster_path}
           className="h-full transition-opacity group-hover:opacity-30 dark:group-hover:opacity-20"
         />
@@ -42,28 +43,56 @@ export function MovieCard(props: MovieCardProps) {
           </h3>
           <p className="font-semibold">{year}</p>
         </div>
-        <div className="absolute right-0 top-0 z-20 grid place-items-end p-1">
-          {rating !== undefined && <AverageRatingCircle rating={rating} />}
-        </div>
+        {rating !== null && (
+          <div className="absolute right-0 top-0 z-20 grid place-items-end p-1">
+            {<AverageRatingCircle rating={rating} />}
+          </div>
+        )}
       </div>
     </Link>
   );
 }
 
-type MovieCardImdbProps = React.HTMLProps<HTMLDivElement> & {
-  imdbId: string;
-  rating: { mean: number; count: number } | null;
+type MovieCardTmdbProps = React.HTMLProps<HTMLDivElement> & {
+  movie: TmdbMovie;
 };
 
-export async function MovieCardImdb(props: MovieCardImdbProps) {
-  const { imdbId, ...rest } = props;
-  const movie = await fetchMovieImdb(imdbId);
-  return <MovieCard movie={movie} {...rest} />;
-}
+export async function MovieCardTmdb(props: MovieCardTmdbProps) {
+  const { movie, ...rest } = props;
+  const {
+    id: tmdb_id,
+    title,
+    release_date,
+    overview,
+    genre_ids,
+    poster_path,
+    backdrop_path,
+    vote_count: tmdb_vote_count,
+    vote_average: tmdb_vote_mean,
+  } = movie;
 
-type MovieCardFallbackProps = React.HTMLProps<HTMLDivElement> & {};
+  const year = new Date(release_date).getFullYear();
 
-export function MovieCardFallback(props: MovieCardFallbackProps) {
-  const { className, ...rest } = props;
-  return <Skeleton className={cn("aspect-[2/3] h-72", className)} {...rest} />;
+  return (
+    <MovieCard
+      movie={{
+        imdb_id: null,
+        tmdb_id,
+        title,
+        year,
+        overview,
+        genre_ids,
+        poster_path,
+        backdrop_path,
+        imdb_vote_count: null,
+        imdb_vote_mean: null,
+        tmdb_vote_count,
+        tmdb_vote_mean,
+        vote_mean: null,
+        vote_count: null,
+        popularity: null,
+      }}
+      {...rest}
+    />
+  );
 }

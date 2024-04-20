@@ -3,34 +3,30 @@ import Link from "next/link";
 import PosterImage from "@/components/poster-image";
 import { AverageRating } from "@/components/rating/average-rating";
 import UserRating from "@/components/rating/user-rating";
-import { getMeanRating } from "@/utils/supabase/queries";
-import { createClient } from "@/utils/supabase/server";
-import { fetchMovieImdb } from "@/utils/tmdb";
+import { Database } from "@/utils/supabase/types";
 import { getMovieUrl } from "@/utils/url";
 
 type MovieItemProps = {
-  imdbId: string;
+  movie: Database["public"]["Views"]["movies_with_rating_and_popularity"]["Row"];
 };
 
 export default async function MovieItem(props: MovieItemProps) {
-  const { imdbId } = props;
+  const { movie } = props;
+  const { imdb_id, tmdb_id, title, year, poster_path, vote_mean, vote_count } =
+    movie;
 
-  const supabase = createClient();
-  const meanRating = await getMeanRating(supabase, imdbId);
-
-  const movie = await fetchMovieImdb(imdbId);
-  const { id, title, poster_path } = movie;
-
-  const release_date = new Date(movie.release_date);
-  const year = release_date.getFullYear();
-  const href = getMovieUrl(id, title);
+  const rating =
+    vote_mean !== null && vote_count !== null
+      ? { mean: vote_mean, count: vote_count }
+      : null;
+  const href = getMovieUrl(tmdb_id!, title);
 
   return (
     <div className="flex h-24 w-full flex-row justify-between overflow-hidden rounded-md border border-slate-500">
       <div className="flex h-full flex-row gap-2">
         <Link href={href} className="h-full">
           <PosterImage
-            title={title}
+            title={title ?? imdb_id ?? tmdb_id!.toString()}
             poster_path={poster_path}
             className="h-full"
           />
@@ -43,8 +39,8 @@ export default async function MovieItem(props: MovieItemProps) {
         </section>
       </div>
       <section className="flex flex-row gap-2 p-2">
-        <UserRating imdbId={imdbId} movieTitle={title} />
-        <AverageRating rating={meanRating} />
+        <UserRating imdbId={imdb_id!} movieTitle={title ?? imdb_id!} />
+        <AverageRating rating={rating} />
       </section>
     </div>
   );

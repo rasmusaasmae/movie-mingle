@@ -1,4 +1,4 @@
-import { MovieCard } from "@/components/movie-card";
+import { MovieCardTmdb } from "@/components/movie-card";
 import { type TmdbMovieDetails } from "@/utils/tmdb/schemas";
 
 type Props = {
@@ -22,11 +22,13 @@ export default async function Recommendations({ movie }: Props) {
   return (
     <section className="flex w-full max-w-7xl flex-col">
       <h2 className="mb-4 text-2xl font-semibold">Similar movies</h2>
-      <div className="flex w-full flex-row space-x-4 overflow-x-auto pb-4">
+      <ul className="flex w-full flex-row space-x-4 overflow-x-auto pb-4">
         {recommendations.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <li key={movie.id}>
+            <MovieCardTmdb movie={movie} />
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

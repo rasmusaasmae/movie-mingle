@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 
-import { getUserRatings } from "@/utils/supabase/queries";
+import { getUserRatedMovies } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server";
 
 import MovieItem from "./_components/movie-item";
@@ -16,13 +16,13 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const supabase = createClient();
-  const userRatings = await getUserRatings(supabase);
+  const movies = await getUserRatedMovies(supabase);
 
   return (
     <main className="flex min-h-[calc(100vh-56px)] w-full flex-col items-center gap-6 px-8 pb-8">
       <section className="flex w-fit max-w-xl flex-col items-center gap-4">
-        {userRatings.map((rating) => (
-          <MovieItem key={rating.imdb_id} imdbId={rating.imdb_id} />
+        {movies.map((m) => (
+          <MovieItem key={m.imdb_id} movie={m} />
         ))}
       </section>
     </main>

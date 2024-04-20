@@ -25,15 +25,16 @@ export function getBaseUrl() {
   return url.includes("http") ? url : `https://${url}`;
 }
 
-export function getMovieUrl(id: number, title: string) {
-  return `/movie/${id}-${toSlug(title)}`;
+export function getMovieUrl(tmdb_id: number, title: string | null) {
+  if (title === null) return `/movie/${tmdb_id}`;
+  return `/movie/${tmdb_id}-${toSlug(title)}`;
 }
 
-export function getCollectionUrl(id: number, name: string) {
-  return `/collection/${id}-${toSlug(name)}`;
+export function getCollectionUrl(tmdb_id: number, name: string) {
+  return `/collection/${tmdb_id}-${toSlug(name)}`;
 }
 
-export function getPosterImageUrl(poster_path: string | null) {
+export function getPosterImageUrl(poster_path: string) {
   return `${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_MEDIUM}/${poster_path}`;
 }
 
