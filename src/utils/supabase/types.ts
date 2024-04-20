@@ -11,18 +11,45 @@ export type Database = {
     Tables: {
       movies: {
         Row: {
+          backdrop_path: string | null
+          genre_ids: number[] | null
           imdb_id: string
+          imdb_vote_count: number | null
+          imdb_vote_mean: number | null
+          overview: string | null
+          poster_path: string | null
           title: string | null
+          tmdb_id: number | null
+          tmdb_vote_count: number | null
+          tmdb_vote_mean: number | null
           year: number | null
         }
         Insert: {
+          backdrop_path?: string | null
+          genre_ids?: number[] | null
           imdb_id: string
+          imdb_vote_count?: number | null
+          imdb_vote_mean?: number | null
+          overview?: string | null
+          poster_path?: string | null
           title?: string | null
+          tmdb_id?: number | null
+          tmdb_vote_count?: number | null
+          tmdb_vote_mean?: number | null
           year?: number | null
         }
         Update: {
+          backdrop_path?: string | null
+          genre_ids?: number[] | null
           imdb_id?: string
+          imdb_vote_count?: number | null
+          imdb_vote_mean?: number | null
+          overview?: string | null
+          poster_path?: string | null
           title?: string | null
+          tmdb_id?: number | null
+          tmdb_vote_count?: number | null
+          tmdb_vote_mean?: number | null
           year?: number | null
         }
         Relationships: []
