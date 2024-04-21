@@ -3,12 +3,12 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="flex flex-col items-center bg-white px-2 dark:bg-slate-950 md:px-4">
-      <div className="flex h-28 w-full max-w-7xl flex-row items-center justify-between">
+    <footer className="flex flex-col items-center bg-white dark:bg-slate-950 md:px-6">
+      <div className="flex w-full max-w-7xl flex-col-reverse items-start justify-between gap-4 px-6 py-6 md:flex-row md:items-center md:px-0 md:py-10">
         <section>
           <p>&copy; 2024 Movie Mingle</p>
         </section>
-        <section className="flex flex-row">
+        <section className="flex h-7 flex-row">
           <Link
             href="https://github.com/rasmusaasmae/movie-mingle"
             className="flex flex-row items-center gap-1 transition-all hover:text-lg hover:font-semibold hover:text-black dark:hover:text-white"
