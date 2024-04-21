@@ -91,6 +91,7 @@ export async function MovieCardTmdb(props: MovieCardTmdbProps) {
         vote_mean: null,
         vote_count: null,
         popularity: null,
+        last_rated: null,
       }}
       {...rest}
     />

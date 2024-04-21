@@ -1,22 +1,22 @@
 import { MovieCard } from "@/components/movie-card";
-import { getPopularMovies, getTopMovies } from "@/utils/supabase/queries";
+import { getRecentMovies, getTopMovies } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const supabase = createClient();
-  const popularMovies = await getPopularMovies(supabase);
+  const recentMovies = await getRecentMovies(supabase);
   const topMovies = await getTopMovies(supabase);
 
   return (
     <main className="flex min-h-[calc(100vh-56px)] w-full flex-col items-center gap-6 px-2 pt-10 md:px-4">
       <div className="w-full max-w-7xl">
-        <h2 className="mb-4 text-2xl font-semibold">Popular movies</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Recently rated</h2>
         <div className="relative mb-4 w-full">
           <ul className="flex w-full flex-row space-x-4 overflow-x-auto pb-5">
-            {popularMovies.map((m) => (
-              <li key={`popular_${m.imdb_id}`}>
+            {recentMovies.map((m) => (
+              <li key={`recent_${m.imdb_id}`}>
                 <MovieCard movie={m} />
               </li>
             ))}

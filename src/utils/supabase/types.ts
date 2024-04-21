@@ -164,6 +164,7 @@ export type Database = {
           imdb_id: string | null
           imdb_vote_count: number | null
           imdb_vote_mean: number | null
+          last_rated: string | null
           overview: string | null
           popularity: number | null
           poster_path: string | null
@@ -194,31 +195,6 @@ export type Database = {
       }
     }
     Functions: {
-      get_average_rating: {
-        Args: {
-          imdb_id: string
-        }
-        Returns: {
-          mean: number
-          count: number
-        }[]
-      }
-      get_popular_movies: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          imdb_id: string
-          mean: number
-          count: number
-        }[]
-      }
-      get_top_movies: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          imdb_id: string
-          mean: number
-          count: number
-        }[]
-      }
       search_movies: {
         Args: {
           title_query: string
@@ -248,7 +224,7 @@ export type Database = {
       }
     }
     Enums: {
-      type: "movie" | "series"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never

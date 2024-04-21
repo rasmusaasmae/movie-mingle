@@ -83,6 +83,17 @@ export async function getPopularMovies(client: SupabaseClient<Database>) {
   return data;
 }
 
+export async function getRecentMovies(client: SupabaseClient<Database>) {
+  const { data, error } = await client
+    .from("movies_with_rating_and_popularity")
+    .select("*")
+    .order("last_rated", { ascending: false });
+
+  if (error !== null) throw new Error("Failed to get top movies");
+
+  return data;
+}
+
 export async function getTopMovies(client: SupabaseClient<Database>) {
   const { data, error } = await client
     .from("movies_with_rating_and_popularity")
