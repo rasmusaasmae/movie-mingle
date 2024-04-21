@@ -4,235 +4,235 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   public: {
     Tables: {
       movies: {
         Row: {
-          backdrop_path: string | null
-          genre_ids: number[] | null
-          imdb_id: string
-          imdb_vote_count: number | null
-          imdb_vote_mean: number | null
-          overview: string | null
-          poster_path: string | null
-          title: string | null
-          tmdb_id: number
-          tmdb_vote_count: number | null
-          tmdb_vote_mean: number | null
-          year: number | null
-        }
+          backdrop_path: string | null;
+          genre_ids: number[] | null;
+          imdb_id: string;
+          imdb_vote_count: number | null;
+          imdb_vote_mean: number | null;
+          overview: string | null;
+          poster_path: string | null;
+          title: string | null;
+          tmdb_id: number;
+          tmdb_vote_count: number | null;
+          tmdb_vote_mean: number | null;
+          year: number | null;
+        };
         Insert: {
-          backdrop_path?: string | null
-          genre_ids?: number[] | null
-          imdb_id: string
-          imdb_vote_count?: number | null
-          imdb_vote_mean?: number | null
-          overview?: string | null
-          poster_path?: string | null
-          title?: string | null
-          tmdb_id: number
-          tmdb_vote_count?: number | null
-          tmdb_vote_mean?: number | null
-          year?: number | null
-        }
+          backdrop_path?: string | null;
+          genre_ids?: number[] | null;
+          imdb_id: string;
+          imdb_vote_count?: number | null;
+          imdb_vote_mean?: number | null;
+          overview?: string | null;
+          poster_path?: string | null;
+          title?: string | null;
+          tmdb_id: number;
+          tmdb_vote_count?: number | null;
+          tmdb_vote_mean?: number | null;
+          year?: number | null;
+        };
         Update: {
-          backdrop_path?: string | null
-          genre_ids?: number[] | null
-          imdb_id?: string
-          imdb_vote_count?: number | null
-          imdb_vote_mean?: number | null
-          overview?: string | null
-          poster_path?: string | null
-          title?: string | null
-          tmdb_id?: number
-          tmdb_vote_count?: number | null
-          tmdb_vote_mean?: number | null
-          year?: number | null
-        }
+          backdrop_path?: string | null;
+          genre_ids?: number[] | null;
+          imdb_id?: string;
+          imdb_vote_count?: number | null;
+          imdb_vote_mean?: number | null;
+          overview?: string | null;
+          poster_path?: string | null;
+          title?: string | null;
+          tmdb_id?: number;
+          tmdb_vote_count?: number | null;
+          tmdb_vote_mean?: number | null;
+          year?: number | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "public_movies_imdb_id_fkey"
-            columns: ["imdb_id"]
-            isOneToOne: true
-            referencedRelation: "movies"
-            referencedColumns: ["imdb_id"]
+            foreignKeyName: "public_movies_imdb_id_fkey";
+            columns: ["imdb_id"];
+            isOneToOne: true;
+            referencedRelation: "movies";
+            referencedColumns: ["imdb_id"];
           },
           {
-            foreignKeyName: "public_movies_imdb_id_fkey"
-            columns: ["imdb_id"]
-            isOneToOne: true
-            referencedRelation: "movies_with_rating_and_popularity"
-            referencedColumns: ["imdb_id"]
+            foreignKeyName: "public_movies_imdb_id_fkey";
+            columns: ["imdb_id"];
+            isOneToOne: true;
+            referencedRelation: "movies_with_rating_and_popularity";
+            referencedColumns: ["imdb_id"];
           },
-        ]
-      }
+        ];
+      };
       ratings: {
         Row: {
-          created_at: string
-          imdb_id: string
-          updated_at: string
-          user_id: string
-          value: number
-        }
+          created_at: string;
+          imdb_id: string;
+          updated_at: string;
+          user_id: string;
+          value: number;
+        };
         Insert: {
-          created_at?: string
-          imdb_id: string
-          updated_at?: string
-          user_id?: string
-          value: number
-        }
+          created_at?: string;
+          imdb_id: string;
+          updated_at?: string;
+          user_id?: string;
+          value: number;
+        };
         Update: {
-          created_at?: string
-          imdb_id?: string
-          updated_at?: string
-          user_id?: string
-          value?: number
-        }
+          created_at?: string;
+          imdb_id?: string;
+          updated_at?: string;
+          user_id?: string;
+          value?: number;
+        };
         Relationships: [
           {
-            foreignKeyName: "public_ratings_imdb_id_fkey"
-            columns: ["imdb_id"]
-            isOneToOne: false
-            referencedRelation: "movies"
-            referencedColumns: ["imdb_id"]
+            foreignKeyName: "public_ratings_imdb_id_fkey";
+            columns: ["imdb_id"];
+            isOneToOne: false;
+            referencedRelation: "movies";
+            referencedColumns: ["imdb_id"];
           },
           {
-            foreignKeyName: "public_ratings_imdb_id_fkey"
-            columns: ["imdb_id"]
-            isOneToOne: false
-            referencedRelation: "movies_with_rating_and_popularity"
-            referencedColumns: ["imdb_id"]
+            foreignKeyName: "public_ratings_imdb_id_fkey";
+            columns: ["imdb_id"];
+            isOneToOne: false;
+            referencedRelation: "movies_with_rating_and_popularity";
+            referencedColumns: ["imdb_id"];
           },
           {
-            foreignKeyName: "ratings_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: "ratings_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       watched: {
         Row: {
-          date: string | null
-          imdb_id: string
-          user_id: string
-        }
+          date: string | null;
+          imdb_id: string;
+          user_id: string;
+        };
         Insert: {
-          date?: string | null
-          imdb_id: string
-          user_id: string
-        }
+          date?: string | null;
+          imdb_id: string;
+          user_id: string;
+        };
         Update: {
-          date?: string | null
-          imdb_id?: string
-          user_id?: string
-        }
+          date?: string | null;
+          imdb_id?: string;
+          user_id?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "public_watched_imdb_id_fkey"
-            columns: ["imdb_id"]
-            isOneToOne: false
-            referencedRelation: "movies"
-            referencedColumns: ["imdb_id"]
+            foreignKeyName: "public_watched_imdb_id_fkey";
+            columns: ["imdb_id"];
+            isOneToOne: false;
+            referencedRelation: "movies";
+            referencedColumns: ["imdb_id"];
           },
           {
-            foreignKeyName: "public_watched_imdb_id_fkey"
-            columns: ["imdb_id"]
-            isOneToOne: false
-            referencedRelation: "movies_with_rating_and_popularity"
-            referencedColumns: ["imdb_id"]
+            foreignKeyName: "public_watched_imdb_id_fkey";
+            columns: ["imdb_id"];
+            isOneToOne: false;
+            referencedRelation: "movies_with_rating_and_popularity";
+            referencedColumns: ["imdb_id"];
           },
           {
-            foreignKeyName: "public_watched_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: "public_watched_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           },
-        ]
-      }
-    }
+        ];
+      };
+    };
     Views: {
       movies_with_rating_and_popularity: {
         Row: {
-          backdrop_path: string | null
-          genre_ids: number[] | null
-          imdb_id: string | null
-          imdb_vote_count: number | null
-          imdb_vote_mean: number | null
-          last_rated: string | null
-          overview: string | null
-          popularity: number | null
-          poster_path: string | null
-          title: string | null
-          tmdb_id: number | null
-          tmdb_vote_count: number | null
-          tmdb_vote_mean: number | null
-          vote_count: number | null
-          vote_mean: number | null
-          year: number | null
-        }
+          backdrop_path: string | null;
+          genre_ids: number[] | null;
+          imdb_id: string | null;
+          imdb_vote_count: number | null;
+          imdb_vote_mean: number | null;
+          last_rated: string | null;
+          overview: string | null;
+          popularity: number | null;
+          poster_path: string | null;
+          title: string | null;
+          tmdb_id: number | null;
+          tmdb_vote_count: number | null;
+          tmdb_vote_mean: number | null;
+          vote_count: number | null;
+          vote_mean: number | null;
+          year: number | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "public_movies_imdb_id_fkey"
-            columns: ["imdb_id"]
-            isOneToOne: true
-            referencedRelation: "movies"
-            referencedColumns: ["imdb_id"]
+            foreignKeyName: "public_movies_imdb_id_fkey";
+            columns: ["imdb_id"];
+            isOneToOne: true;
+            referencedRelation: "movies";
+            referencedColumns: ["imdb_id"];
           },
           {
-            foreignKeyName: "public_movies_imdb_id_fkey"
-            columns: ["imdb_id"]
-            isOneToOne: true
-            referencedRelation: "movies_with_rating_and_popularity"
-            referencedColumns: ["imdb_id"]
+            foreignKeyName: "public_movies_imdb_id_fkey";
+            columns: ["imdb_id"];
+            isOneToOne: true;
+            referencedRelation: "movies_with_rating_and_popularity";
+            referencedColumns: ["imdb_id"];
           },
-        ]
-      }
-    }
+        ];
+      };
+    };
     Functions: {
       search_movies: {
         Args: {
-          title_query: string
-        }
+          title_query: string;
+        };
         Returns: {
-          id: string
-          title: string
-          slug: string
-          year: number
-          runtime: number
-          language: string
-          mpa_rating: string
-          description: string
-          imdb_code: string
-          imdb_rating: number
-          imdb_votes: number
-          yt_trailer_code: string
-          poster: string
-          genres: string[]
-          average_rating: number
-          user_rating: number
-          directors: string[]
-          writers: string[]
-          actors: string[]
-          countries: string[]
-        }[]
-      }
-    }
+          id: string;
+          title: string;
+          slug: string;
+          year: number;
+          runtime: number;
+          language: string;
+          mpa_rating: string;
+          description: string;
+          imdb_code: string;
+          imdb_rating: number;
+          imdb_votes: number;
+          yt_trailer_code: string;
+          poster: string;
+          genres: string[];
+          average_rating: number;
+          user_rating: number;
+          directors: string[];
+          writers: string[];
+          actors: string[];
+          countries: string[];
+        }[];
+      };
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
-type PublicSchema = Database[Extract<keyof Database, "public">]
+type PublicSchema = Database[Extract<keyof Database, "public">];
 
 export type Tables<
   PublicTableNameOrOptions extends
@@ -245,7 +245,7 @@ export type Tables<
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
@@ -253,11 +253,11 @@ export type Tables<
         PublicSchema["Views"])
     ? (PublicSchema["Tables"] &
         PublicSchema["Views"])[PublicTableNameOrOptions] extends {
-        Row: infer R
+        Row: infer R;
       }
       ? R
       : never
-    : never
+    : never;
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -268,17 +268,17 @@ export type TablesInsert<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Insert: infer I
+        Insert: infer I;
       }
       ? I
       : never
-    : never
+    : never;
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -289,17 +289,17 @@ export type TablesUpdate<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Update: infer U
+        Update: infer U;
       }
       ? U
       : never
-    : never
+    : never;
 
 export type Enums<
   PublicEnumNameOrOptions extends
@@ -312,4 +312,4 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
-    : never
+    : never;
