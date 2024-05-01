@@ -98,6 +98,7 @@ export async function getTopMovies(client: SupabaseClient<Database>) {
   const { data, error } = await client
     .from("movies_with_rating_and_popularity")
     .select("*")
+    .gt("vote_count", 1)
     .order("vote_mean", { ascending: false });
 
   if (error !== null) throw new Error("Failed to get top movies");
