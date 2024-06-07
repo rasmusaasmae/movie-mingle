@@ -11,7 +11,7 @@ type Props = {
 export default async function Collection({ collection }: Props) {
   if (collection === null) return null;
 
-  const src = getBackdropImageUrl(collection.backdrop_path);
+  const src = getBackdropImageUrl(collection.backdrop_path ?? "");
   const href = getCollectionUrl(collection.id, collection.name);
 
   return (
