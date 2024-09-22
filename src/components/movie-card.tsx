@@ -26,7 +26,7 @@ export function MovieCard(props: MovieCardProps) {
     <Link href={href}>
       <div
         className={cn(
-          "group relative aspect-[2/3] h-72 overflow-hidden rounded-md bg-slate-50 dark:bg-slate-950",
+          "group relative aspect-[2/3] h-72 overflow-hidden rounded-md bg-slate-50 text-lg dark:bg-slate-950",
           className,
         )}
         {...rest}
@@ -38,9 +38,7 @@ export function MovieCard(props: MovieCardProps) {
         />
 
         <div className="absolute left-0 right-0 top-1/2 m-1 grid -translate-y-1/2 place-items-center opacity-0 transition-opacity group-hover:opacity-100">
-          <h3 className="line-clamp-3 text-center text-lg font-bold">
-            {title}
-          </h3>
+          <h3 className="line-clamp-3 text-center font-bold">{title}</h3>
           <p className="font-semibold">{year}</p>
         </div>
         {rating !== null && (
