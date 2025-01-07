@@ -1,4 +1,5 @@
 import { type SupabaseClient } from "@supabase/supabase-js";
+import { format } from "date-fns";
 import { z } from "zod";
 
 import { upsertMovie } from "./actions";
@@ -48,6 +49,46 @@ export async function deleteUserRating(
     .eq("imdb_id", imdb_id);
 
   if (error !== null) throw new Error("Failed to delete rating");
+}
+
+export async function getWatchDate(
+  client: SupabaseClient<Database>,
+  imdbId: string,
+) {
+  const { data, error } = await client
+    .from("watched")
+    .select("imdb_id, date")
+    .eq("imdb_id", imdbId)
+    .maybeSingle();
+
+  if (error !== null) throw new Error("Failed to get watch date");
+
+  return data;
+}
+
+export async function setWatchDate(
+  client: SupabaseClient<Database>,
+  imdbId: string,
+  date: Date,
+) {
+  await upsertMovie(imdbId);
+
+  const dateString = format(date, "yyyy-MM-dd");
+
+  const { error } = await client
+    .from("watched")
+    .upsert({ imdb_id: imdbId, date: dateString });
+
+  if (error !== null) throw new Error("Failed to set watch date");
+}
+
+export async function deleteWatchDate(
+  client: SupabaseClient<Database>,
+  imdbId: string,
+) {
+  const { error } = await client.from("watched").delete().eq("imdb_id", imdbId);
+
+  if (error !== null) throw new Error("Failed to delete watch date");
 }
 
 export async function getMeanRating(

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { AverageRating } from "@/components/rating/average-rating";
 import TMDBRating from "@/components/rating/tmdb-rating";
 import UserRating from "@/components/rating/user-rating";
+import WatchDate from "@/components/watch-date";
 import { getMeanRating } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server";
 import {
@@ -75,6 +76,7 @@ export default async function Summary({ movie }: Props) {
               voteAverage={movie.vote_average}
               voteCount={movie.vote_count}
             />
+            {movie.imdb_id !== null && <WatchDate imdbId={movie.imdb_id} />}
           </section>
           <h3 className="italic text-slate-300">{movie.tagline}</h3>
           <section className="space-y-1">
