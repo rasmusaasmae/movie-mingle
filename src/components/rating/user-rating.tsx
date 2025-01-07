@@ -1,6 +1,7 @@
 "use client";
 
 import { Star } from "lucide-react";
+import { Fragment } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -37,20 +38,15 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
     );
 
   const userRating = mutation.isPending
-    ? mutation.variables?.value ?? null
-    : query.data?.value ?? null;
+    ? mutation.variables.value
+    : (query.data?.value ?? null);
 
   function setRating(value: number) {
-    mutation.mutate({
-      imdb_id: imdbId,
-      value,
-      created_at: query.data?.created_at ?? "",
-      updated_at: query.data?.updated_at ?? "",
-    });
+    mutation.mutate({ value });
   }
 
   function deleteRating() {
-    mutation.mutate(null);
+    mutation.mutate({ value: null });
   }
 
   return (
@@ -78,20 +74,20 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
           </DialogHeader>
           <div className="group flex flex-row-reverse justify-center">
             {[10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map((v) => (
-              <>
+              <Fragment key={`rating_group_${v}`}>
                 <RightHalfStar
-                  key={v}
+                  key={`rating_value_${v}`}
                   value={v}
                   rating={userRating}
                   onClick={setRating}
                 />
                 <LeftHalfStar
-                  key={v - 0.5}
+                  key={`rating_value_${v - 0.5}`}
                   value={v - 0.5}
                   rating={userRating}
                   onClick={setRating}
                 />
-              </>
+              </Fragment>
             ))}
           </div>
           <DialogFooter>

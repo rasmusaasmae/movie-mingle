@@ -15,12 +15,12 @@ export async function getUser(client: SupabaseClient<Database>) {
 
 export async function getUserRating(
   client: SupabaseClient<Database>,
-  imdb_id: string,
+  imdbId: string,
 ) {
   const { data, error } = await client
     .from("ratings")
     .select("imdb_id, value, created_at, updated_at")
-    .eq("imdb_id", imdb_id)
+    .eq("imdb_id", imdbId)
     .maybeSingle();
 
   if (error !== null) throw new Error("Failed to get user rating");
@@ -30,23 +30,23 @@ export async function getUserRating(
 
 export async function setUserRating(
   client: SupabaseClient<Database>,
-  imdb_id: string,
+  imdbId: string,
   value: number,
 ) {
-  await upsertMovie(imdb_id);
-  const { error } = await client.from("ratings").upsert({ imdb_id, value });
+  await upsertMovie(imdbId);
+
+  const { error } = await client
+    .from("ratings")
+    .upsert({ imdb_id: imdbId, value });
 
   if (error !== null) throw new Error("Failed to set rating");
 }
 
 export async function deleteUserRating(
   client: SupabaseClient<Database>,
-  imdb_id: string,
+  imdbId: string,
 ) {
-  const { error } = await client
-    .from("ratings")
-    .delete()
-    .eq("imdb_id", imdb_id);
+  const { error } = await client.from("ratings").delete().eq("imdb_id", imdbId);
 
   if (error !== null) throw new Error("Failed to delete rating");
 }
@@ -93,21 +93,21 @@ export async function deleteWatchDate(
 
 export async function getMeanRating(
   client: SupabaseClient<Database>,
-  imdb_id: string,
+  imdbId: string,
 ) {
   const { data, error } = await client
     .from("movies_with_rating_and_popularity")
     .select()
-    .eq("imdb_id", imdb_id)
+    .eq("imdb_id", imdbId)
     .maybeSingle();
 
   if (error !== null) throw new Error("Failed to get mean rating");
 
   if (data === null) return null;
   return z
-    .object({ imdb_id: z.string(), mean: z.number(), count: z.number() })
+    .object({ imdbId: z.string(), mean: z.number(), count: z.number() })
     .parse({
-      imdb_id: data.imdb_id,
+      imdbId: data.imdb_id,
       mean: data.vote_mean,
       count: data.vote_count,
     });

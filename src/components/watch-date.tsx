@@ -34,13 +34,13 @@ export default function WatchDate(props: WatchDateProps) {
     );
 
   const date = mutation.isPending
-    ? mutation.variables
+    ? mutation.variables.date
     : query.data?.date
       ? new Date(query.data.date)
       : undefined;
 
   function setDate(date?: Date) {
-    mutation.mutate(date);
+    mutation.mutate({ date });
   }
 
   return (

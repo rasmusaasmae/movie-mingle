@@ -68,8 +68,8 @@ export async function searchMovies(query: string, page: number = 1) {
   return searchResults;
 }
 
-export async function fetchMovieImdb(imdb_id: string) {
-  const url = `${TMDB_BASE_URL}/find/${imdb_id}?external_source=imdb_id`;
+export async function fetchMovieImdb(imdbId: string) {
+  const url = `${TMDB_BASE_URL}/find/${imdbId}?external_source=imdb_id`;
   const options = {
     method: "GET",
     headers: {

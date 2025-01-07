@@ -10,15 +10,16 @@ import {
 export function useWatchDate(imdbId: string) {
   const supabase = createClient();
   const queryClient = useQueryClient();
+
   const query = useQuery({
     queryKey: ["supabase", "watch-date", imdbId],
     queryFn: async () => await getWatchDate(supabase, imdbId),
   });
 
   const mutation = useMutation({
-    mutationFn: async (date?: Date) => {
+    mutationFn: async ({ date }: { date?: Date }) => {
       if (!date) return await deleteWatchDate(supabase, imdbId);
-      return setWatchDate(supabase, imdbId, date);
+      return await setWatchDate(supabase, imdbId, date);
     },
     onSettled: async () => {
       return await queryClient.invalidateQueries({
@@ -26,5 +27,6 @@ export function useWatchDate(imdbId: string) {
       });
     },
   });
+
   return { query, mutation };
 }

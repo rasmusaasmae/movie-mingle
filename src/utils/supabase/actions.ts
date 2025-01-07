@@ -6,7 +6,7 @@ import { fetchMovieImdb } from "@/utils/tmdb";
 
 import { Database } from "./types";
 
-export async function upsertMovie(imdb_id: string) {
+export async function upsertMovie(imdbId: string) {
   const {
     id: tmdb_id,
     title,
@@ -17,15 +17,16 @@ export async function upsertMovie(imdb_id: string) {
     genre_ids,
     vote_count: tmdb_vote_count,
     vote_average: tmdb_vote_mean,
-  } = await fetchMovieImdb(imdb_id);
+  } = await fetchMovieImdb(imdbId);
   const year = new Date(release_date).getFullYear();
 
   const client = createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
   );
+
   await client.from("movies").upsert({
-    imdb_id,
+    imdb_id: imdbId,
     tmdb_id,
     title,
     year,

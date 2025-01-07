@@ -7,26 +7,26 @@ import {
   setUserRating,
 } from "@/utils/supabase/queries";
 
-export function useUserRating(imdb_id: string) {
+export function useUserRating(imdbId: string) {
   const supabase = createClient();
   const queryClient = useQueryClient();
+
   const query = useQuery({
-    queryKey: ["supabase", "user-rating", imdb_id],
-    queryFn: async () => await getUserRating(supabase, imdb_id),
+    queryKey: ["supabase", "user-rating", imdbId],
+    queryFn: async () => await getUserRating(supabase, imdbId),
   });
 
   const mutation = useMutation({
-    mutationFn: async (
-      userRating: Awaited<ReturnType<typeof getUserRating>>,
-    ) => {
-      if (userRating === null) return await deleteUserRating(supabase, imdb_id);
-      return setUserRating(supabase, imdb_id, userRating.value);
+    mutationFn: async ({ value }: { value: number | null }) => {
+      if (value === null) return await deleteUserRating(supabase, imdbId);
+      return await setUserRating(supabase, imdbId, value);
     },
     onSettled: async () => {
       return await queryClient.invalidateQueries({
-        queryKey: ["supabase", "user-rating", imdb_id],
+        queryKey: ["supabase", "user-rating", imdbId],
       });
     },
   });
+
   return { query, mutation };
 }

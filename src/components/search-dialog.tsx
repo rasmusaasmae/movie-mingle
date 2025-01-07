@@ -58,7 +58,7 @@ export default function SearchDialog(props: SearchDialogProps) {
               placeholder="Start typing to search for movies..."
               onChange={(e) => handleSearchChange(e.target.value)}
               maxLength={50}
-              className="flex w-full bg-white px-3 py-1 text-sm outline-none placeholder:text-slate-500  dark:bg-slate-950 dark:placeholder:text-slate-400"
+              className="flex w-full bg-white px-3 py-1 text-sm outline-none placeholder:text-slate-500 dark:bg-slate-950 dark:placeholder:text-slate-400"
             />
           </div>
         </DialogHeader>

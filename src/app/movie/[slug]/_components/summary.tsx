@@ -36,6 +36,7 @@ export default async function Summary({ movie }: Props) {
       <Image
         alt={`Backdrop of ${movie.title}`}
         src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${movie.backdrop_path}`}
+        priority
         fill
         className="pointer-events-none aspect-video h-full object-cover object-[50%_20%] opacity-25"
       />
@@ -45,6 +46,7 @@ export default async function Summary({ movie }: Props) {
             <Image
               alt={`Poster of ${movie.title}`}
               src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_ORIGINAL}/${movie.poster_path}`}
+              priority
               fill
               className="object-cover"
             />
