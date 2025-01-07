@@ -19,7 +19,7 @@ type Props = {
 };
 
 export default async function Summary({ movie }: Props) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const meanRating =
     movie.imdb_id !== null
       ? await getMeanRating(supabase, movie.imdb_id)

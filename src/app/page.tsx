@@ -5,7 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const recentMovies = await getRecentMovies(supabase);
   const topMovies = await getTopMovies(supabase);
 

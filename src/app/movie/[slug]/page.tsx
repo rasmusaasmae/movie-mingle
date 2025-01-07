@@ -11,9 +11,10 @@ import Summary from "./_components/summary";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const tmdb_id = params.slug.split("-")[0];
+  const { slug } = await params;
+  const tmdb_id = slug.split("-")[0];
   const movie = await fetchMovie(tmdb_id);
   const year = movie.release_date.split("-")[0];
   return {
@@ -23,13 +24,19 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const tmdb_id = params.slug.split("-")[0];
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  const tmdb_id = slug.split("-")[0];
   const movie = await fetchMovie(tmdb_id);
 
   // Self-heal URL
   const correctUrl = getMovieUrl(movie.id, movie.title);
-  if (params.slug !== correctUrl.split("/").pop()) {
+  if (slug !== correctUrl.split("/").pop()) {
     redirect(correctUrl, RedirectType.replace);
   }
 

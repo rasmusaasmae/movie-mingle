@@ -10,9 +10,10 @@ import Summary from "./_components/summary";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const tmdb_id = params.slug.split("-")[0];
+  const { slug } = await params;
+  const tmdb_id = slug.split("-")[0];
   const collection = await fetchCollection(tmdb_id);
   return {
     title: `${collection.name.trim()} - Movie Mingle`,
@@ -21,8 +22,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const tmdb_id = params.slug.split("-")[0];
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  const tmdb_id = slug.split("-")[0];
   const collection = await fetchCollection(tmdb_id);
   const { id, name, parts } = collection;
   const sorted_parts = _.orderBy(
@@ -36,7 +43,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   // Self-heal URL
   const correctUrl = getCollectionUrl(id, name);
-  if (params.slug !== correctUrl.split("/").pop()) {
+  if (slug !== correctUrl.split("/").pop()) {
     redirect(correctUrl, RedirectType.replace);
   }
 

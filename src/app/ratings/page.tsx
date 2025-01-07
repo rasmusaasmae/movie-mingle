@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const movies = await getUserRatedMovies(supabase);
 
   return (
