@@ -27,13 +27,11 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
   const { query, mutation } = useUserRating(imdbId);
   const { session } = useAuth();
 
-  if (session === null) return null;
-
   if (query.isLoading || query.isError || session === undefined)
     return (
       <div className="flex flex-col items-center space-y-1">
         <h4 className="text-sm uppercase">your rating</h4>
-        <Skeleton className="h-10 w-32" />
+        <Skeleton className="h-10 w-40" />
       </div>
     );
 
@@ -53,19 +51,25 @@ export default function UserRating({ imdbId, movieTitle }: UserRatingProps) {
     <div className="flex flex-col items-center space-y-1">
       <h4 className="text-sm uppercase">your rating</h4>
       <Dialog>
-        <DialogTrigger asChild>
+        <DialogTrigger asChild disabled={!session}>
           <Button
             variant="outline"
-            className="flex h-10 w-32 flex-row items-center space-x-3"
+            className="flex h-10 min-w-40 flex-row items-center space-x-3"
           >
             <Star
               fill="currentColor"
               className="h-6 w-6 text-blue-400 dark:text-blue-300"
             />
-            <div className="text-lg tracking-wider text-black dark:text-white">
-              <span className="font-bold">{userRating?.toFixed(1) ?? "-"}</span>
-              /10
-            </div>
+            {!session ? (
+              <span>Not signed in</span>
+            ) : (
+              <div className="text-lg tracking-wider text-black dark:text-white">
+                <span className="font-bold">
+                  {userRating?.toFixed(1) ?? "-"}
+                </span>
+                /10
+              </div>
+            )}
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

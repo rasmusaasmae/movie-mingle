@@ -51,10 +51,7 @@ export default function WatchDate(props: WatchDateProps) {
           <Button
             variant="outline"
             disabled={!session || query.isLoading}
-            className={cn(
-              "h-10 min-w-40 justify-center text-left font-normal",
-              (!session || !date) && "text-muted-foreground",
-            )}
+            className="flex h-10 min-w-40 flex-row items-center space-x-3"
           >
             <CalendarIcon />
             {!session ? (

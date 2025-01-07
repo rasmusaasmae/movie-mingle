@@ -29,7 +29,7 @@ export default async function TMDBRating({
             <Button
               asChild
               variant="outline"
-              className="flex h-10 w-32 flex-row space-x-3"
+              className="flex h-10 min-w-40 flex-row space-x-3"
             >
               <Link
                 href={`https://www.themoviedb.org/movie/${tmdbId}`}
