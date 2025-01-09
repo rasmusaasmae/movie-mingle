@@ -28,7 +28,7 @@ export function AverageRating(props: AverageRatingProps) {
           <TooltipTrigger asChild>
             <Button
               variant="outline"
-              className="flex h-10 min-w-36 cursor-default flex-row items-center space-x-3"
+              className="flex h-10 min-w-40 cursor-default flex-row items-center space-x-3"
             >
               <Star
                 fill="currentColor"

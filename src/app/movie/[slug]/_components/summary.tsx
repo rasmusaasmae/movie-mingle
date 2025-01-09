@@ -68,7 +68,7 @@ export default async function Summary({ movie }: Props) {
             <span>•</span>
             <span>{`${runtimeHours}h ${runtimeMinutes}m`}</span>
           </div>
-          <section className="my-2 flex flex-row gap-2">
+          <section className="my-2 flex gap-2 flex-wrap">
             {movie.imdb_id !== null && (
               <UserRating imdbId={movie.imdb_id} movieTitle={movie.title} />
             )}
