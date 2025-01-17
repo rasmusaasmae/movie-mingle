@@ -103,7 +103,8 @@ export async function getMeanRating(
 
   if (error !== null) throw new Error("Failed to get mean rating");
 
-  if (data === null) return null;
+  if (data === null || data.vote_mean === null) return null;
+
   return z
     .object({ imdbId: z.string(), mean: z.number(), count: z.number() })
     .parse({
