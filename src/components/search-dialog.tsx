@@ -1,5 +1,6 @@
 "use client";
 
+import { DialogTitle } from "@radix-ui/react-dialog";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -10,10 +11,12 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import { VisuallyHidden } from "@/components/ui/visually-hidden";
 import useSearchMovies from "@/hooks/use-search-movies";
 import { cn } from "@/lib/utils";
 import { type TmdbMovie } from "@/utils/tmdb/schemas";
@@ -51,7 +54,10 @@ export default function SearchDialog(props: SearchDialogProps) {
       </DialogTrigger>
       <DialogContent className="flex h-96 max-h-full flex-col justify-start gap-2 sm:max-w-md md:max-w-xl">
         <DialogHeader className="h-fit">
-          <div className="flex flex-row items-center px-3">
+          <VisuallyHidden>
+            <DialogTitle>Search movies</DialogTitle>
+          </VisuallyHidden>
+          <DialogDescription className="flex flex-row items-center px-3">
             <Search className="h-4 w-4 shrink-0 opacity-50" />
             <input
               type="text"
@@ -60,7 +66,7 @@ export default function SearchDialog(props: SearchDialogProps) {
               maxLength={50}
               className="flex w-full bg-white px-3 py-1 text-sm outline-none placeholder:text-slate-500 dark:bg-slate-950 dark:placeholder:text-slate-400"
             />
-          </div>
+          </DialogDescription>
         </DialogHeader>
         <Separator />
         <div className="flex h-full max-h-full w-full flex-col gap-1 overflow-y-auto overflow-x-hidden">
