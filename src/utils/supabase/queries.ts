@@ -129,9 +129,10 @@ export async function getRecentMovies(client: SupabaseClient<Database>) {
   const { data, error } = await client
     .from("movies_with_rating_and_popularity")
     .select("*")
-    .order("last_rated", { ascending: false });
+    .gt("vote_count", 0)
+    .order("last_rated", { ascending: false, nullsFirst: false });
 
-  if (error !== null) throw new Error("Failed to get top movies");
+  if (error !== null) throw new Error("Failed to get recent movies");
 
   return data;
 }
