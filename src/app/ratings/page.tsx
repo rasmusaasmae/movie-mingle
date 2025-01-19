@@ -1,5 +1,6 @@
 import { type Metadata } from "next";
 
+import RatingDistribution from "@/components/rating-distribution";
 import { getUserRatedMovies } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server";
 
@@ -20,6 +21,9 @@ export default async function Page() {
 
   return (
     <main className="flex min-h-[calc(100vh-56px)] w-full flex-col items-center gap-6 px-8 pb-8">
+      <section className="flex w-fit max-w-7xl flex-col items-center gap-4">
+        <RatingDistribution />
+      </section>
       <section className="flex w-fit max-w-xl flex-col items-center gap-4">
         {movies.map((m) => (
           <MovieItem key={m.imdb_id} movie={m} />

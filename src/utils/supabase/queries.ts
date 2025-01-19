@@ -1,5 +1,6 @@
 import { type SupabaseClient } from "@supabase/supabase-js";
 import { format } from "date-fns";
+import _ from "lodash";
 import { z } from "zod";
 
 import { upsertMovie } from "./actions";
@@ -145,6 +146,69 @@ export async function getTopMovies(client: SupabaseClient<Database>) {
     .order("vote_mean", { ascending: false });
 
   if (error !== null) throw new Error("Failed to get top movies");
+
+  return data;
+}
+
+export async function getRatingDistribution(client: SupabaseClient<Database>) {
+  const { data: totalData, error: totalError } = await client.rpc(
+    "get_rating_distribution",
+  );
+  if (totalError !== null)
+    throw new Error("Failed to get total rating distribution");
+  const { data: userData, error: userError } = await client.rpc(
+    "get_user_rating_distribution",
+  );
+  if (userError !== null)
+    throw new Error("Failed to get user rating distribution");
+
+  const userTotal = userData.reduce((acc, e) => acc + e.count, 0);
+  const totalTotal = totalData.reduce((acc, e) => acc + e.count, 0);
+
+  const groups = _.uniq([...totalData, ...userData].map((e) => e.value));
+  const data = _.chain(groups)
+    .sortBy(Number)
+    .map((value) => {
+      const total = totalData.find((e) => e.value === value);
+      const userRating = userData.find((e) => e.value === value);
+      return {
+        value,
+        userCount: userRating?.count ?? 0,
+        userPercentage: ((userRating?.count ?? 0) / userTotal) * 100,
+        otherCount: (total?.count ?? 0) - (userRating?.count ?? 0),
+        otherPercentage:
+          (((total?.count ?? 0) - (userRating?.count ?? 0)) /
+            (totalTotal - userTotal)) *
+          100,
+        totalCount: total?.count ?? 0,
+        totalPercentage: ((total?.count ?? 0) / totalTotal) * 100,
+      };
+    })
+    .value();
+
+  return data;
+}
+
+export async function getRatingStatistics(client: SupabaseClient<Database>) {
+  const { data, error } = await client
+    .rpc("get_rating_statistics")
+    .maybeSingle();
+
+  if (error !== null || data === null)
+    throw new Error("Failed to get rating statistics");
+
+  return data;
+}
+
+export async function getUserRatingStatistics(
+  client: SupabaseClient<Database>,
+) {
+  const { data, error } = await client
+    .rpc("get_user_rating_statistics")
+    .maybeSingle();
+
+  if (error !== null || data === null)
+    throw new Error("Failed to get user rating statistics");
 
   return data;
 }
