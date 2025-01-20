@@ -213,6 +213,20 @@ export async function getUserRatingStatistics(
   return data;
 }
 
+export async function getMovieRatingDistribution(
+  client: SupabaseClient<Database>,
+  imdbId: string,
+) {
+  const { data, error } = await client.rpc("get_movie_rating_distribution", {
+    imdb_id: imdbId,
+  });
+
+  if (error !== null || data === null)
+    throw new Error("Failed to get movie rating distribution");
+
+  return data;
+}
+
 export async function getUserRatedMovies(client: SupabaseClient<Database>) {
   const { data, error } = await client
     .from("ratings")

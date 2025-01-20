@@ -40,7 +40,7 @@ export default async function MovieItem(props: MovieItemProps) {
       </div>
       <section className="flex flex-row gap-2 p-2">
         <UserRating imdbId={imdb_id!} movieTitle={title ?? imdb_id!} />
-        <AverageRating rating={rating} />
+        <AverageRating imdbId={imdb_id!} rating={rating} />
       </section>
     </div>
   );

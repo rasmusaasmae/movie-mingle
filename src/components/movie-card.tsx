@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import PosterImage from "@/components/poster-image";
-import { AverageRatingCircle } from "@/components/rating/average-rating";
+import AverageRatingCircle from "@/components/rating/average-rating-circle";
 import { cn } from "@/lib/utils";
 import { type Database } from "@/utils/supabase/types";
 import { TmdbMovie } from "@/utils/tmdb/schemas";

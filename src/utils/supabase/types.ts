@@ -181,6 +181,15 @@ export type Database = {
       }
     }
     Functions: {
+      get_movie_rating_distribution: {
+        Args: {
+          imdb_id: string
+        }
+        Returns: {
+          value: number
+          count: number
+        }[]
+      }
       get_rating_distribution: {
         Args: Record<PropertyKey, never>
         Returns: {

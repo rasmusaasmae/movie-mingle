@@ -68,11 +68,13 @@ export default async function Summary({ movie }: Props) {
             <span>•</span>
             <span>{`${runtimeHours}h ${runtimeMinutes}m`}</span>
           </div>
-          <section className="my-2 flex gap-2 flex-wrap">
+          <section className="my-2 flex flex-wrap gap-2">
             {movie.imdb_id !== null && (
               <UserRating imdbId={movie.imdb_id} movieTitle={movie.title} />
             )}
-            <AverageRating rating={meanRating} />
+            {movie.imdb_id !== null && (
+              <AverageRating imdbId={movie.imdb_id} rating={meanRating} />
+            )}
             <TMDBRating
               tmdbId={movie.id}
               voteAverage={movie.vote_average}
