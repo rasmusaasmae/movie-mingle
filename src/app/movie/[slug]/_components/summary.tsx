@@ -32,7 +32,7 @@ export default async function Summary({ movie }: Props) {
   const runtimeMinutes = movie.runtime - 60 * runtimeHours;
 
   return (
-    <section className="relative flex w-full flex-col items-center overflow-hidden bg-slate-950 p-6 text-white">
+    <section className="bg-background relative flex w-full flex-col items-center overflow-hidden p-6">
       <Image
         alt={`Backdrop of ${movie.title}`}
         src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${movie.backdrop_path}`}
@@ -60,10 +60,12 @@ export default async function Summary({ movie }: Props) {
           <div className="flex flex-row items-center gap-4">
             <h1 className="text-3xl font-bold">
               {movie.title}{" "}
-              <span className="font-normal opacity-70">({year})</span>
+              <span className="text-muted-foreground font-normal">
+                ({year})
+              </span>
             </h1>
           </div>
-          <div className="space-x-3 text-slate-300">
+          <div className="text-muted-foreground space-x-3">
             <span>{movie.genres.map((g) => g.name).join(", ")}</span>
             <span>•</span>
             <span>{`${runtimeHours}h ${runtimeMinutes}m`}</span>
@@ -82,7 +84,7 @@ export default async function Summary({ movie }: Props) {
             />
             {movie.imdb_id !== null && <WatchDate imdbId={movie.imdb_id} />}
           </section>
-          <h3 className="italic text-slate-300">{movie.tagline}</h3>
+          <h3 className="text-muted-foreground italic">{movie.tagline}</h3>
           <section className="space-y-1">
             <h2 className="text-lg font-semibold">Overview</h2>
             <p className="text-sm">{movie.overview}</p>

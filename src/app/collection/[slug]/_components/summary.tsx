@@ -12,9 +12,9 @@ type Props = {
 };
 
 export default async function Summary({ collection }: Props) {
-  const { id, name, overview, backdrop_path, poster_path } = collection;
+  const { name, overview, backdrop_path, poster_path } = collection;
   return (
-    <section className="relative flex w-full flex-col items-center overflow-hidden bg-slate-950 p-6 text-white">
+    <section className="bg-background relative flex w-full flex-col items-center overflow-hidden p-6">
       <Image
         alt={`Backdrop of ${name}`}
         src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${backdrop_path}`}

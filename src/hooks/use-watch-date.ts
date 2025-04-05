@@ -7,26 +7,30 @@ import {
   setWatchDate,
 } from "@/utils/supabase/queries";
 
-export function useWatchDate(imdbId: string) {
+function useGetWatchDate(imdbId: string) {
   const supabase = createClient();
-  const queryClient = useQueryClient();
 
-  const query = useQuery({
+  return useQuery({
     queryKey: ["supabase", "watch-date", imdbId],
     queryFn: async () => await getWatchDate(supabase, imdbId),
   });
+}
 
-  const mutation = useMutation({
-    mutationFn: async ({ date }: { date?: Date }) => {
+function useSetWatchDate() {
+  const supabase = createClient();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ imdbId, date }: { imdbId: string; date?: Date }) => {
       if (!date) return await deleteWatchDate(supabase, imdbId);
       return await setWatchDate(supabase, imdbId, date);
     },
-    onSettled: async () => {
+    onSettled: async (_data, _error, variables) => {
       return await queryClient.invalidateQueries({
-        queryKey: ["supabase", "watch-date", imdbId],
+        queryKey: ["supabase", "watch-date", variables.imdbId],
       });
     },
   });
-
-  return { query, mutation };
 }
+
+export { useGetWatchDate, useSetWatchDate };

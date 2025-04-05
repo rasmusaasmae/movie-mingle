@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/auth";
 import { getBaseUrl } from "@/utils/url";
 
-export default function SignInButton() {
+function SignInButton() {
   const { session, signIn } = useAuth();
   const pathname = usePathname();
 
@@ -18,3 +18,5 @@ export default function SignInButton() {
     </Button>
   );
 }
+
+export { SignInButton };

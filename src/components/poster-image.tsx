@@ -9,16 +9,18 @@ type PosterImageProps = React.HTMLProps<HTMLDivElement> & {
   poster_path: string | null;
 };
 
-export default function PosterImage(props: PosterImageProps) {
+function PosterImage(props: PosterImageProps) {
   const { title, poster_path, className, ...rest } = props;
-
-  const alt = `Poster of ${title}`;
-  const src = getPosterImageUrl(poster_path ?? "");
 
   return (
     <div className={cn("relative aspect-[2/3] h-64", className)} {...rest}>
       {poster_path !== null ? (
-        <Image alt={alt} src={src} fill className="object-cover" />
+        <Image
+          alt={`Poster of ${title}`}
+          src={getPosterImageUrl(poster_path)}
+          fill
+          className="object-cover"
+        />
       ) : (
         <div className="grid h-full w-full place-items-center">
           <ImageIcon className="h-8 w-8 opacity-50" />
@@ -27,3 +29,5 @@ export default function PosterImage(props: PosterImageProps) {
     </div>
   );
 }
+
+export { PosterImage };

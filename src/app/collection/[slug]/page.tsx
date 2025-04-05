@@ -35,7 +35,7 @@ export default async function Page({
   const sorted_parts = _.orderBy(
     parts,
     function (t) {
-      let date = new Date(t.release_date).getTime();
+      const date = new Date(t.release_date).getTime();
       return date;
     },
     ["asc"],
@@ -52,14 +52,13 @@ export default async function Page({
       <Summary collection={collection} />
       <div className="w-full max-w-7xl">
         <div className="relative mb-4 w-full">
-          <ul className="flex w-full flex-row space-x-4 overflow-x-auto pb-5">
+          <ul className="flex w-full flex-row space-x-4 overflow-x-auto mask-r-from-80% pb-5">
             {sorted_parts.map((part) => (
               <li key={part.id}>
                 <MovieCardTmdb movie={part} />
               </li>
             ))}
           </ul>
-          <div className="absolute bottom-5 right-0 top-0 w-24 bg-gradient-to-l from-transparent to-transparent dark:from-slate-950" />
         </div>
       </div>
     </main>

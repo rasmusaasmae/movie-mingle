@@ -127,7 +127,7 @@ function RightHalfStar({ value, rating, onClick }: RateButtonProps) {
       >
         <Star
           fill="currentColor"
-          className="absolute right-0 top-0 h-6 w-6 text-inherit"
+          className="absolute top-0 right-0 h-6 w-6 text-inherit"
         />
       </button>
     </DialogClose>
@@ -147,7 +147,7 @@ function LeftHalfStar({ value, rating, onClick }: RateButtonProps) {
       >
         <Star
           fill="currentColor"
-          className="absolute left-0 top-0 h-6 w-6 text-inherit"
+          className="absolute top-0 left-0 h-6 w-6 text-inherit"
         />
       </button>
     </DialogClose>

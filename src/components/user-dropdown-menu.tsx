@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut } from "lucide-react";
+import { LogOutIcon } from "lucide-react";
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,14 +15,13 @@ import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/contexts/auth";
 
 export default function UserDropdownMenu() {
-  const auth = useAuth();
-  if (!auth.session) return null;
-  const avatarUrl = auth.session.user.user_metadata.avatar_url;
-  const fullName = auth.session.user.user_metadata.full_name ?? "";
+  const { session, signOut } = useAuth();
 
-  async function signOut() {
-    await auth.signOut();
-  }
+  if (!session) return null;
+
+  const avatarUrl = `${session.user.user_metadata.avatar_url}`;
+  const fullName = `${session.user.user_metadata.full_name}`;
+  const initials = fullName.length > 0 ? fullName[0] : "";
 
   return (
     <DropdownMenu>
@@ -30,17 +29,17 @@ export default function UserDropdownMenu() {
         <Button variant="ghost" size="icon">
           <Avatar className="h-7 w-7">
             <AvatarImage src={avatarUrl} />
-            <AvatarFallback>{fullName[0]}</AvatarFallback>
+            <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem asChild>
-          <Link href="/ratings">Your Ratings</Link>
+          <Link href="/ratings">Your ratings</Link>
         </DropdownMenuItem>
         <Separator />
         <DropdownMenuItem onClick={signOut} className="cursor-pointer">
-          <LogOut className="mr-2 h-4 w-4" />
+          <LogOutIcon className="mr-2 h-4 w-4" />
           <span>Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

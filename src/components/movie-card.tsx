@@ -1,10 +1,11 @@
 import Link from "next/link";
 
-import PosterImage from "@/components/poster-image";
+import { PosterImage } from "@/components/poster-image";
 import AverageRatingCircle from "@/components/rating/average-rating-circle";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type Database } from "@/utils/supabase/types";
-import { TmdbMovie } from "@/utils/tmdb/schemas";
+import { type TmdbMovie } from "@/utils/tmdb/schemas";
 import { getMovieUrl } from "@/utils/url";
 
 type MovieCardProps = React.HTMLProps<HTMLDivElement> & {
@@ -26,7 +27,7 @@ export function MovieCard(props: MovieCardProps) {
     <Link href={href}>
       <div
         className={cn(
-          "group relative aspect-[2/3] h-72 overflow-hidden rounded-md bg-slate-50 text-lg dark:bg-slate-950",
+          "group bg-background relative aspect-[2/3] h-72 overflow-hidden rounded-md text-lg",
           className,
         )}
         {...rest}
@@ -37,12 +38,12 @@ export function MovieCard(props: MovieCardProps) {
           className="h-full transition-opacity group-hover:opacity-30 dark:group-hover:opacity-20"
         />
 
-        <div className="absolute left-0 right-0 top-1/2 m-1 grid -translate-y-1/2 place-items-center opacity-0 transition-opacity group-hover:opacity-100">
+        <div className="absolute top-1/2 right-0 left-0 m-1 grid -translate-y-1/2 place-items-center opacity-0 transition-opacity group-hover:opacity-100">
           <h3 className="line-clamp-3 text-center font-bold">{title}</h3>
           <p className="font-semibold">{year}</p>
         </div>
         {rating !== null && (
-          <div className="absolute right-0 top-0 z-20 grid place-items-end p-1">
+          <div className="absolute top-0 right-0 z-20 grid place-items-end p-1">
             {<AverageRatingCircle rating={rating} />}
           </div>
         )}
@@ -77,7 +78,7 @@ export async function MovieCardTmdb(props: MovieCardTmdbProps) {
         imdb_id: null,
         tmdb_id,
         title,
-        year,
+        year: isNaN(year) ? null : year,
         overview,
         genre_ids,
         poster_path,
@@ -94,4 +95,8 @@ export async function MovieCardTmdb(props: MovieCardTmdbProps) {
       {...rest}
     />
   );
+}
+
+export function MovieCardSkeleton(props: React.HTMLProps<HTMLDivElement>) {
+  return <Skeleton className="aspect-[2/3] h-72 rounded-md" {...props} />;
 }

@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/popover";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/contexts/auth";
-import { useWatchDate } from "@/hooks/use-watch-date";
-import { cn } from "@/lib/utils";
+import { useGetWatchDate, useSetWatchDate } from "@/hooks/use-watch-date";
 
 type WatchDateProps = {
   imdbId: string;
@@ -21,7 +20,8 @@ type WatchDateProps = {
 
 export default function WatchDate(props: WatchDateProps) {
   const { imdbId } = props;
-  const { query, mutation } = useWatchDate(imdbId);
+  const query = useGetWatchDate(imdbId);
+  const mutation = useSetWatchDate();
 
   const { session } = useAuth();
 
@@ -39,10 +39,6 @@ export default function WatchDate(props: WatchDateProps) {
       ? new Date(query.data.date)
       : undefined;
 
-  function setDate(date?: Date) {
-    mutation.mutate({ date });
-  }
-
   return (
     <div className="flex flex-col items-center space-y-1">
       <h4 className="text-sm uppercase">watched</h4>
@@ -51,7 +47,7 @@ export default function WatchDate(props: WatchDateProps) {
           <Button
             variant="outline"
             disabled={!session || query.isLoading}
-            className="flex h-10 min-w-40 flex-row items-center space-x-3"
+            className="flex h-10 min-w-40 cursor-pointer flex-row items-center space-x-3"
           >
             <CalendarIcon />
             {!session ? (
@@ -65,10 +61,10 @@ export default function WatchDate(props: WatchDateProps) {
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
           <Calendar
+            selected={date}
+            onSelect={(date) => mutation.mutate({ imdbId, date })}
             mode="single"
             weekStartsOn={1}
-            selected={date}
-            onSelect={setDate}
             initialFocus
           />
         </PopoverContent>

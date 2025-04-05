@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import PosterImage from "@/components/poster-image";
+import { PosterImage } from "@/components/poster-image";
 import { AverageRating } from "@/components/rating/average-rating";
 import UserRating from "@/components/rating/user-rating";
 import { Database } from "@/utils/supabase/types";
