@@ -1,38 +1,34 @@
-import { ImageIcon } from "lucide-react";
-import Image from "next/image";
-
-import { AverageRating } from "@/components/rating/average-rating";
-import TMDBRating from "@/components/rating/tmdb-rating";
-import UserRating from "@/components/rating/user-rating";
-import WatchDate from "@/components/watch-date";
-import { getMeanRating } from "@/utils/supabase/queries";
-import { createClient } from "@/utils/supabase/server";
 import {
   TMDB_IMAGE_BASE_URL,
   TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL,
   TMDB_IMAGE_SIZE_POSTER_ORIGINAL,
-} from "@/utils/tmdb/constants";
-import { type TmdbMovieDetails } from "@/utils/tmdb/schemas";
+} from '@/utils/tmdb/constants'
+import { AverageRating } from '@/components/rating/average-rating'
+import Image from 'next/image'
+import { ImageIcon } from 'lucide-react'
+import TMDBRating from '@/components/rating/tmdb-rating'
+import { type TmdbMovieDetails } from '@/utils/tmdb/schemas'
+import UserRating from '@/components/rating/user-rating'
+import WatchDate from '@/components/watch-date'
+import { createClient } from '@/utils/supabase/server'
+import { getMeanRating } from '@/utils/supabase/queries'
 
 type Props = {
-  movie: TmdbMovieDetails;
-};
+  movie: TmdbMovieDetails
+}
 
 export default async function Summary({ movie }: Props) {
-  const supabase = await createClient();
-  const meanRating =
-    movie.imdb_id !== null
-      ? await getMeanRating(supabase, movie.imdb_id)
-      : null;
+  const supabase = await createClient()
+  const meanRating = movie.imdb_id !== null ? await getMeanRating(supabase, movie.imdb_id) : null
 
-  const release_date = new Date(movie.release_date);
-  const year = release_date.getFullYear();
+  const release_date = new Date(movie.release_date)
+  const year = release_date.getFullYear()
 
-  const runtimeHours = Math.floor(movie.runtime / 60);
-  const runtimeMinutes = movie.runtime - 60 * runtimeHours;
+  const runtimeHours = Math.floor(movie.runtime / 60)
+  const runtimeMinutes = movie.runtime - 60 * runtimeHours
 
   return (
-    <section className="bg-background relative flex w-full flex-col items-center overflow-hidden p-6">
+    <section className="relative flex w-full flex-col items-center overflow-hidden bg-background p-6">
       <Image
         alt={`Backdrop of ${movie.title}`}
         src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${movie.backdrop_path}`}
@@ -41,7 +37,7 @@ export default async function Summary({ movie }: Props) {
         className="pointer-events-none aspect-video h-full object-cover object-[50%_20%] opacity-25"
       />
       <div className="z-10 flex w-full max-w-7xl flex-col items-center gap-10 sm:flex-row sm:items-start">
-        <div className="relative aspect-[2/3] w-full max-w-[18rem] overflow-hidden rounded-md">
+        <div className="relative aspect-2/3 w-full max-w-[18rem] overflow-hidden rounded-md">
           {movie.poster_path !== null ? (
             <Image
               alt={`Poster of ${movie.title}`}
@@ -59,14 +55,11 @@ export default async function Summary({ movie }: Props) {
         <section className="flex w-full flex-col gap-2 pt-10">
           <div className="flex flex-row items-center gap-4">
             <h1 className="text-3xl font-bold">
-              {movie.title}{" "}
-              <span className="text-muted-foreground font-normal">
-                ({year})
-              </span>
+              {movie.title} <span className="font-normal text-muted-foreground">({year})</span>
             </h1>
           </div>
-          <div className="text-muted-foreground space-x-3">
-            <span>{movie.genres.map((g) => g.name).join(", ")}</span>
+          <div className="space-x-3 text-muted-foreground">
+            <span>{movie.genres.map((g) => g.name).join(', ')}</span>
             <span>•</span>
             <span>{`${runtimeHours}h ${runtimeMinutes}m`}</span>
           </div>
@@ -74,9 +67,7 @@ export default async function Summary({ movie }: Props) {
             {movie.imdb_id !== null && (
               <UserRating imdbId={movie.imdb_id} movieTitle={movie.title} />
             )}
-            {movie.imdb_id !== null && (
-              <AverageRating imdbId={movie.imdb_id} rating={meanRating} />
-            )}
+            {movie.imdb_id !== null && <AverageRating imdbId={movie.imdb_id} rating={meanRating} />}
             <TMDBRating
               tmdbId={movie.id}
               voteAverage={movie.vote_average}
@@ -92,5 +83,5 @@ export default async function Summary({ movie }: Props) {
         </section>
       </div>
     </section>
-  );
+  )
 }

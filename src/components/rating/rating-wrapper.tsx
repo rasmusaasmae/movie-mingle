@@ -1,7 +1,7 @@
 type RatingWrapperProps = {
-  children: React.ReactNode;
-  title: string;
-};
+  children: React.ReactNode
+  title: string
+}
 
 export default function RatingWrapper({ children, title }: RatingWrapperProps) {
   return (
@@ -9,5 +9,5 @@ export default function RatingWrapper({ children, title }: RatingWrapperProps) {
       <h4 className="text-sm uppercase">{title}</h4>
       {children}
     </div>
-  );
+  )
 }

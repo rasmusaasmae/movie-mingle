@@ -1,13 +1,13 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image'
+import Link from 'next/link'
 
-import { SearchDialog } from "@/components/search-dialog";
-import { SignInButton } from "@/components/sign-in-button";
-import UserDropdownMenu from "@/components/user-dropdown-menu";
+import { SearchDialog } from '@/components/search-dialog'
+import { SignInButton } from '@/components/sign-in-button'
+import UserDropdownMenu from '@/components/user-dropdown-menu'
 
 export default function Header() {
   return (
-    <header className="bg-background/70 sticky top-0 z-30 w-full backdrop-blur-md backdrop-filter">
+    <header className="sticky top-0 z-30 w-full bg-background/70 backdrop-blur-md backdrop-filter">
       <div className="mx-auto max-w-screen-xl px-4 pb-2 sm:px-8 sm:pb-0">
         <div className="flex h-14 items-center justify-between space-x-2 sm:space-x-8">
           <Link href="/">
@@ -21,9 +21,7 @@ export default function Header() {
                   priority
                 />
               </div>
-              <h1 className="text-xl font-semibold sm:text-2xl">
-                Movie Mingle
-              </h1>
+              <h1 className="text-xl font-semibold sm:text-2xl">Movie Mingle</h1>
             </div>
           </Link>
           <nav></nav>
@@ -35,5 +33,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  );
+  )
 }

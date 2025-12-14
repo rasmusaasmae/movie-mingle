@@ -1,0 +1,17 @@
+{
+  "jsPlugins": ["eslint-plugin-better-tailwindcss"],
+  "rules": {
+    "sort-imports": "error",
+    "better-tailwindcss/enforce-consistent-class-order": [
+      "error",
+      { "entryPoint": "src/app/globals.css" }
+    ],
+    "better-tailwindcss/no-conflicting-classes": ["error", { "entryPoint": "src/app/globals.css" }],
+    "better-tailwindcss/no-duplicate-classes": ["error", { "entryPoint": "src/app/globals.css" }],
+    "better-tailwindcss/no-unnecessary-whitespace": [
+      "error",
+      { "entryPoint": "src/app/globals.css" }
+    ],
+    "better-tailwindcss/no-unregistered-classes": ["error", { "entryPoint": "src/app/globals.css" }]
+  }
+}

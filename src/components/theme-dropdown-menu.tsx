@@ -1,25 +1,24 @@
-"use client";
+'use client'
 
-import { MoonStar, Sun, SunMoon } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu'
+import { MoonStar, Sun, SunMoon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { useTheme } from 'next-themes'
 
 export default function ThemeDropdownMenu() {
-  const { theme, resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState<boolean>(false);
+  const { theme, resolvedTheme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState<boolean>(false)
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
   return (
     <DropdownMenu>
@@ -27,9 +26,9 @@ export default function ThemeDropdownMenu() {
         <Button variant="outline" size="icon" disabled={!mounted}>
           {!mounted ? (
             <SunMoon className="h-4 w-4" />
-          ) : resolvedTheme === "dark" ? (
+          ) : resolvedTheme === 'dark' ? (
             <MoonStar className="h-4 w-4" />
-          ) : resolvedTheme === "light" ? (
+          ) : resolvedTheme === 'light' ? (
             <Sun className="h-4 w-4" />
           ) : (
             <SunMoon className="h-4 w-4" />
@@ -44,5 +43,5 @@ export default function ThemeDropdownMenu() {
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

@@ -1,33 +1,29 @@
-import Link from "next/link";
-
-import { PosterImage } from "@/components/poster-image";
-import AverageRatingCircle from "@/components/rating/average-rating-circle";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-import { type Database } from "@/utils/supabase/types";
-import { type TmdbMovie } from "@/utils/tmdb/schemas";
-import { getMovieUrl } from "@/utils/url";
+import AverageRatingCircle from '@/components/rating/average-rating-circle'
+import { type Database } from '@/utils/supabase/types'
+import Link from 'next/link'
+import { PosterImage } from '@/components/poster-image'
+import { Skeleton } from '@/components/ui/skeleton'
+import { type TmdbMovie } from '@/utils/tmdb/schemas'
+import { cn } from '@/lib/utils'
+import { getMovieUrl } from '@/utils/url'
 
 type MovieCardProps = React.HTMLProps<HTMLDivElement> & {
-  movie: Database["public"]["Views"]["movies_with_rating_and_popularity"]["Row"];
-};
+  movie: Database['public']['Views']['movies_with_rating_and_popularity']['Row']
+}
 
 export function MovieCard(props: MovieCardProps) {
-  const { movie, className, ...rest } = props;
-  const { imdb_id, tmdb_id, title, year, poster_path, vote_mean, vote_count } =
-    movie;
+  const { movie, className, ...rest } = props
+  const { imdb_id, tmdb_id, title, year, poster_path, vote_mean, vote_count } = movie
 
   const rating =
-    vote_mean !== null && vote_count !== null
-      ? { mean: vote_mean, count: vote_count }
-      : null;
-  const href = getMovieUrl(tmdb_id!, title);
+    vote_mean !== null && vote_count !== null ? { mean: vote_mean, count: vote_count } : null
+  const href = getMovieUrl(tmdb_id!, title)
 
   return (
     <Link href={href}>
       <div
         className={cn(
-          "group bg-background relative aspect-[2/3] h-72 overflow-hidden rounded-md text-lg",
+          'group relative aspect-[2/3] h-72 overflow-hidden rounded-md bg-background text-lg',
           className,
         )}
         {...rest}
@@ -49,15 +45,15 @@ export function MovieCard(props: MovieCardProps) {
         )}
       </div>
     </Link>
-  );
+  )
 }
 
 type MovieCardTmdbProps = React.HTMLProps<HTMLDivElement> & {
-  movie: TmdbMovie;
-};
+  movie: TmdbMovie
+}
 
 export async function MovieCardTmdb(props: MovieCardTmdbProps) {
-  const { movie, ...rest } = props;
+  const { movie, ...rest } = props
   const {
     id: tmdb_id,
     title,
@@ -68,9 +64,9 @@ export async function MovieCardTmdb(props: MovieCardTmdbProps) {
     backdrop_path,
     vote_count: tmdb_vote_count,
     vote_average: tmdb_vote_mean,
-  } = movie;
+  } = movie
 
-  const year = new Date(release_date).getFullYear();
+  const year = new Date(release_date).getFullYear()
 
   return (
     <MovieCard
@@ -94,9 +90,9 @@ export async function MovieCardTmdb(props: MovieCardTmdbProps) {
       }}
       {...rest}
     />
-  );
+  )
 }
 
 export function MovieCardSkeleton(props: React.HTMLProps<HTMLDivElement>) {
-  return <Skeleton className="aspect-[2/3] h-72 rounded-md" {...props} />;
+  return <Skeleton className="aspect-[2/3] h-72 rounded-md" {...props} />
 }

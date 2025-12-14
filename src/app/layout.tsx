@@ -1,41 +1,37 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-
-import Footer from "@/app/_components/footer";
-import Header from "@/app/_components/header";
-import QueryProvider from "@/app/_components/query-provider";
-import ThemeProvider from "@/app/_components/theme-provider";
-import { Separator } from "@/components/ui/separator";
-import { AuthProvider } from "@/contexts/auth";
-
-import "./globals.css";
+import './globals.css'
+import { Geist, Geist_Mono } from 'next/font/google'
+import { AuthProvider } from '@/contexts/auth'
+import Footer from '@/app/_components/footer'
+import Header from '@/app/_components/header'
+import type { Metadata } from 'next'
+import QueryProvider from '@/app/_components/query-provider'
+import { Separator } from '@/components/ui/separator'
+import { ThemeProvider } from '@/app/_components/theme-provider'
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
+})
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
+})
 export const metadata: Metadata = {
-  title: "Movie Mingle",
+  title: 'Movie Mingle',
   description:
-    "Movie Mingle is an invite-only movie rating website for the few true and honest movie raters out there.",
-  keywords: ["Movies", "User Ratings", "Synopsis", "Photos", "Reviews"],
-};
+    'Movie Mingle is an invite-only movie rating website for the few true and honest movie raters out there.',
+  keywords: ['Movies', 'User Ratings', 'Synopsis', 'Photos', 'Reviews'],
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <QueryProvider>
           <AuthProvider>
             <ThemeProvider
@@ -53,5 +49,5 @@ export default function RootLayout({
         </QueryProvider>
       </body>
     </html>
-  );
+  )
 }

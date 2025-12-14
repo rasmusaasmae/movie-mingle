@@ -1,15 +1,6 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  Line,
-  LineChart,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
 
 import {
   ChartConfig,
@@ -18,57 +9,54 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from '@/components/ui/chart'
 
 const chartConfig = {
   value: {
-    label: "Rating",
+    label: 'Rating',
   },
   userCount: {
-    label: "You",
-    color: "hsl(var(--chart-2))",
+    label: 'You',
+    color: 'hsl(var(--chart-2))',
   },
   userPercentage: {
-    label: "You",
-    color: "hsl(var(--chart-2))",
+    label: 'You',
+    color: 'hsl(var(--chart-2))',
   },
   totalCount: {
-    label: "Total",
-    color: "hsl(var(--chart-1))",
+    label: 'Total',
+    color: 'hsl(var(--chart-1))',
   },
   totalPercentage: {
-    label: "Total",
-    color: "hsl(var(--chart-1))",
+    label: 'Total',
+    color: 'hsl(var(--chart-1))',
   },
   otherCount: {
-    label: "Others",
-    color: "hsl(var(--chart-3))",
+    label: 'Others',
+    color: 'hsl(var(--chart-3))',
   },
   otherPercentage: {
-    label: "Others",
-    color: "hsl(var(--chart-3))",
+    label: 'Others',
+    color: 'hsl(var(--chart-3))',
   },
-} satisfies ChartConfig;
+} satisfies ChartConfig
 
 type RatingDistributionChartProps = {
   data: {
-    value: number;
-    userCount: number;
-    userPercentage: number;
-    totalCount: number;
-    totalPercentage: number;
-    otherCount: number;
-    otherPercentage: number;
-  }[];
-};
+    value: number
+    userCount: number
+    userPercentage: number
+    totalCount: number
+    totalPercentage: number
+    otherCount: number
+    otherPercentage: number
+  }[]
+}
 
-export default function RatingDistributionChart(
-  props: RatingDistributionChartProps,
-) {
-  const [usePercentage, setUsePercentage] = useState(true);
-  const userDataKey = usePercentage ? "userPercentage" : "userCount";
-  const totalDataKey = usePercentage ? "totalPercentage" : "totalCount";
-  const otherDataKey = usePercentage ? "otherPercentage" : "otherCount";
+export default function RatingDistributionChart(props: RatingDistributionChartProps) {
+  const usePercentage = true
+  const userDataKey = usePercentage ? 'userPercentage' : 'userCount'
+  const otherDataKey = usePercentage ? 'otherPercentage' : 'otherCount'
 
   return (
     <ChartContainer config={chartConfig}>
@@ -81,13 +69,7 @@ export default function RatingDistributionChart(
         }}
       >
         <CartesianGrid vertical={false} />
-        <XAxis
-          dataKey="value"
-          tickLine={false}
-          axisLine={false}
-          tickMargin={8}
-          interval={1}
-        />
+        <XAxis dataKey="value" tickLine={false} axisLine={false} tickMargin={8} interval={1} />
         <YAxis tickFormatter={(tick) => `${tick}%`} />
         <ChartTooltip
           cursor={false}
@@ -95,19 +77,19 @@ export default function RatingDistributionChart(
             <ChartTooltipContent
               hideLabel
               formatter={(value, name) => (
-                <div className="text-muted-foreground flex min-w-[100px] items-center text-xs">
+                <div className="flex min-w-[100px] items-center text-xs text-muted-foreground">
                   <div
                     className="mr-1 h-2.5 w-2.5 shrink-0 rounded-[2px] bg-[--color-bg]"
                     style={
                       {
-                        "--color-bg": `var(--color-${name})`,
+                        '--color-bg': `var(--color-${name})`,
                       } as React.CSSProperties
                     }
                   />
                   {chartConfig[name as keyof typeof chartConfig]?.label || name}
-                  <div className="text-foreground ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums">
+                  <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium text-foreground tabular-nums">
                     {Number(value).toFixed(1)}
-                    <span className="text-muted-foreground font-normal">%</span>
+                    <span className="font-normal text-muted-foreground">%</span>
                   </div>
                 </div>
               )}
@@ -138,5 +120,5 @@ export default function RatingDistributionChart(
         /> */}
       </LineChart>
     </ChartContainer>
-  );
+  )
 }

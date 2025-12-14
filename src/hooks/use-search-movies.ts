@@ -1,12 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-
-import { searchMovies } from "@/utils/tmdb";
+import { searchMovies } from '@/utils/tmdb'
+import { useQuery } from '@tanstack/react-query'
 
 function useSearchMovies(query: string, page: number = 1) {
   return useQuery({
-    queryKey: ["tmdb", "search-movies", { query, page }],
+    queryKey: ['tmdb', 'search-movies', { query, page }],
     queryFn: async () => await searchMovies(query, page),
-  });
+  })
 }
 
-export { useSearchMovies };
+export { useSearchMovies }

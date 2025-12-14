@@ -1,50 +1,37 @@
-import _ from "lodash";
-import { RedirectType, redirect } from "next/navigation";
+import { RedirectType, redirect } from 'next/navigation'
+import { MovieCardTmdb } from '@/components/movie-card'
+import Summary from './_components/summary'
+import { alphabetical } from 'radash'
+import { fetchCollection } from '@/utils/tmdb'
+import { getCollectionUrl } from '@/utils/url'
 
-import { MovieCardTmdb } from "@/components/movie-card";
-import { fetchCollection } from "@/utils/tmdb";
-import { getCollectionUrl } from "@/utils/url";
-
-import Summary from "./_components/summary";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const tmdb_id = slug.split("-")[0];
-  const collection = await fetchCollection(tmdb_id);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const tmdb_id = slug.split('-')[0]
+  const collection = await fetchCollection(tmdb_id)
   return {
     title: `${collection.name.trim()} - Movie Mingle`,
     description: `${collection.overview.slice(0, 150).trim()}`,
-    keywords: ["Movie Mingle", collection.name.trim()],
-  };
+    keywords: ['Movie Mingle', collection.name.trim()],
+  }
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
 
-  const tmdb_id = slug.split("-")[0];
-  const collection = await fetchCollection(tmdb_id);
-  const { id, name, parts } = collection;
-  const sorted_parts = _.orderBy(
+  const tmdb_id = slug.split('-')[0]
+  const collection = await fetchCollection(tmdb_id)
+  const { id, name, parts } = collection
+  const sorted_parts = alphabetical(
     parts,
-    function (t) {
-      const date = new Date(t.release_date).getTime();
-      return date;
-    },
-    ["asc"],
-  );
+    (t) => new Date(t.release_date).getTime().toString(),
+    'asc',
+  )
 
   // Self-heal URL
-  const correctUrl = getCollectionUrl(id, name);
-  if (slug !== correctUrl.split("/").pop()) {
-    redirect(correctUrl, RedirectType.replace);
+  const correctUrl = getCollectionUrl(id, name)
+  if (slug !== correctUrl.split('/').pop()) {
+    redirect(correctUrl, RedirectType.replace)
   }
 
   return (
@@ -62,5 +49,5 @@ export default async function Page({
         </div>
       </div>
     </main>
-  );
+  )
 }

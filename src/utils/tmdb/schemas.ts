@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 const tmdbMovieSchema = z.object({
   adult: z.boolean(),
@@ -15,15 +15,15 @@ const tmdbMovieSchema = z.object({
   video: z.boolean(),
   vote_average: z.number(),
   vote_count: z.number(),
-  media_type: z.enum(["movie"]).optional(),
-});
+  media_type: z.enum(['movie']).optional(),
+})
 
 const recommendations = z.object({
   page: z.number(),
   results: z.array(tmdbMovieSchema),
   total_pages: z.number(),
   total_results: z.number(),
-});
+})
 
 export const tmdbMovieDetailsSchema = z.object({
   adult: z.boolean(),
@@ -70,21 +70,21 @@ export const tmdbMovieDetailsSchema = z.object({
       name: z.string(),
     }),
   ),
-  status: z.enum(["Released", "Planned"]),
+  status: z.enum(['Released', 'Planned']),
   tagline: z.string(),
   title: z.string(),
   video: z.boolean(),
   vote_average: z.number(),
   vote_count: z.number(),
   recommendations: recommendations.optional(),
-});
+})
 
 export const tmdbSearchMovieSchema = z.object({
   page: z.number(),
   results: z.array(tmdbMovieSchema),
   total_pages: z.number(),
   total_results: z.number(),
-});
+})
 
 export const tmdbCollectionSchema = z.object({
   id: z.number(),
@@ -93,12 +93,12 @@ export const tmdbCollectionSchema = z.object({
   poster_path: z.string().nullable(),
   backdrop_path: z.string().nullable(),
   parts: z.array(tmdbMovieSchema),
-});
+})
 
 export const tmdbSearchExternalSchema = z.object({
   movie_results: z.array(tmdbMovieSchema),
-});
+})
 
-export type TmdbMovie = z.infer<typeof tmdbMovieSchema>;
-export type TmdbMovieDetails = z.infer<typeof tmdbMovieDetailsSchema>;
-export type TmdbCollection = z.infer<typeof tmdbCollectionSchema>;
+export type TmdbMovie = z.infer<typeof tmdbMovieSchema>
+export type TmdbMovieDetails = z.infer<typeof tmdbMovieDetailsSchema>
+export type TmdbCollection = z.infer<typeof tmdbCollectionSchema>

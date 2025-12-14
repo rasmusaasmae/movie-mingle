@@ -1,24 +1,17 @@
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { getMovieRatingDistribution } from "@/utils/supabase/queries";
-import { createClient } from "@/utils/supabase/server";
-
-import MovieRatingDistributionChart from "./movie-rating-distribution-chart";
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import MovieRatingDistributionChart from './movie-rating-distribution-chart'
+import { createClient } from '@/utils/supabase/server'
+import { getMovieRatingDistribution } from '@/utils/supabase/queries'
 
 type MovieRatingDistributionProps = {
-  imdbId: string;
-  children: React.ReactNode;
-};
+  imdbId: string
+  children: React.ReactNode
+}
 
-export default async function MovieRatingDistribution(
-  props: MovieRatingDistributionProps,
-) {
-  const { imdbId, children } = props;
-  const supabase = await createClient();
-  const data = await getMovieRatingDistribution(supabase, imdbId);
+export default async function MovieRatingDistribution(props: MovieRatingDistributionProps) {
+  const { imdbId, children } = props
+  const supabase = await createClient()
+  const data = await getMovieRatingDistribution(supabase, imdbId)
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
@@ -26,5 +19,5 @@ export default async function MovieRatingDistribution(
         <MovieRatingDistributionChart data={data} />
       </PopoverContent>
     </Popover>
-  );
+  )
 }

@@ -1,27 +1,26 @@
-"use client";
+'use client'
 
-import { LogOutIcon } from "lucide-react";
-import Link from "next/link";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
-import { useAuth } from "@/contexts/auth";
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { LogOutIcon } from 'lucide-react'
+import { Separator } from '@/components/ui/separator'
+import { useAuth } from '@/contexts/auth'
 
 export default function UserDropdownMenu() {
-  const { session, signOut } = useAuth();
+  const { session, signOut } = useAuth()
 
-  if (!session) return null;
+  if (!session) return null
 
-  const avatarUrl = `${session.user.user_metadata.avatar_url}`;
-  const fullName = `${session.user.user_metadata.full_name}`;
-  const initials = fullName.length > 0 ? fullName[0] : "";
+  const avatarUrl = `${session.user.user_metadata.avatar_url}`
+  const fullName = `${session.user.user_metadata.full_name}`
+  const initials = fullName.length > 0 ? fullName[0] : ''
 
   return (
     <DropdownMenu>
@@ -44,5 +43,5 @@ export default function UserDropdownMenu() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

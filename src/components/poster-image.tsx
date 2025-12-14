@@ -1,19 +1,18 @@
-import { ImageIcon } from "lucide-react";
-import Image from "next/image";
-
-import { cn } from "@/lib/utils";
-import { getPosterImageUrl } from "@/utils/url";
+import Image from 'next/image'
+import { ImageIcon } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { getPosterImageUrl } from '@/utils/url'
 
 type PosterImageProps = React.HTMLProps<HTMLDivElement> & {
-  title: string;
-  poster_path: string | null;
-};
+  title: string
+  poster_path: string | null
+}
 
 function PosterImage(props: PosterImageProps) {
-  const { title, poster_path, className, ...rest } = props;
+  const { title, poster_path, className, ...rest } = props
 
   return (
-    <div className={cn("relative aspect-[2/3] h-64", className)} {...rest}>
+    <div className={cn('relative aspect-[2/3] h-64', className)} {...rest}>
       {poster_path !== null ? (
         <Image
           alt={`Poster of ${title}`}
@@ -27,7 +26,7 @@ function PosterImage(props: PosterImageProps) {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export { PosterImage };
+export { PosterImage }

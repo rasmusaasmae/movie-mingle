@@ -1,20 +1,19 @@
-import Image from "next/image";
-
 import {
   TMDB_IMAGE_BASE_URL,
   TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL,
   TMDB_IMAGE_SIZE_POSTER_ORIGINAL,
-} from "@/utils/tmdb/constants";
-import { type TmdbCollection } from "@/utils/tmdb/schemas";
+} from '@/utils/tmdb/constants'
+import Image from 'next/image'
+import { type TmdbCollection } from '@/utils/tmdb/schemas'
 
 type Props = {
-  collection: TmdbCollection;
-};
+  collection: TmdbCollection
+}
 
 export default async function Summary({ collection }: Props) {
-  const { name, overview, backdrop_path, poster_path } = collection;
+  const { name, overview, backdrop_path, poster_path } = collection
   return (
-    <section className="bg-background relative flex w-full flex-col items-center overflow-hidden p-6">
+    <section className="relative flex w-full flex-col items-center overflow-hidden bg-background p-6">
       <Image
         alt={`Backdrop of ${name}`}
         src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${backdrop_path}`}
@@ -41,5 +40,5 @@ export default async function Summary({ collection }: Props) {
         </section>
       </div>
     </section>
-  );
+  )
 }

@@ -1,43 +1,34 @@
-import { RedirectType, redirect } from "next/navigation";
+import { RedirectType, redirect } from 'next/navigation'
 
-import { Separator } from "@/components/ui/separator";
-import { fetchMovie } from "@/utils/tmdb";
-import { getMovieUrl } from "@/utils/url";
+import Collection from './_components/collection'
+import Recommendations from './_components/recommendations'
+import { Separator } from '@/components/ui/separator'
+import Summary from './_components/summary'
+import { fetchMovie } from '@/utils/tmdb'
+import { getMovieUrl } from '@/utils/url'
 
-import Collection from "./_components/collection";
-import Recommendations from "./_components/recommendations";
-import Summary from "./_components/summary";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const tmdb_id = slug.split("-")[0];
-  const movie = await fetchMovie(tmdb_id);
-  const year = movie.release_date.split("-")[0];
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const tmdb_id = slug.split('-')[0]
+  const movie = await fetchMovie(tmdb_id)
+  const year = movie.release_date.split('-')[0]
   return {
     title: `${movie.title} (${year}) - Movie Mingle`,
     description: `${movie.overview.slice(0, 150)}`,
-    keywords: ["Movie Mingle", movie.title, year],
-  };
+    keywords: ['Movie Mingle', movie.title, year],
+  }
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
 
-  const tmdb_id = slug.split("-")[0];
-  const movie = await fetchMovie(tmdb_id);
+  const tmdb_id = slug.split('-')[0]
+  const movie = await fetchMovie(tmdb_id)
 
   // Self-heal URL
-  const correctUrl = getMovieUrl(movie.id, movie.title);
-  if (slug !== correctUrl.split("/").pop()) {
-    redirect(correctUrl, RedirectType.replace);
+  const correctUrl = getMovieUrl(movie.id, movie.title)
+  if (slug !== correctUrl.split('/').pop()) {
+    redirect(correctUrl, RedirectType.replace)
   }
 
   return (
@@ -49,5 +40,5 @@ export default async function Page({
         <Recommendations movie={movie} />
       </div>
     </main>
-  );
+  )
 }

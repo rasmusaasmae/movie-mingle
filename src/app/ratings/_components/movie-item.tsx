@@ -1,25 +1,21 @@
-import Link from "next/link";
-
-import { PosterImage } from "@/components/poster-image";
-import { AverageRating } from "@/components/rating/average-rating";
-import UserRating from "@/components/rating/user-rating";
-import { Database } from "@/utils/supabase/types";
-import { getMovieUrl } from "@/utils/url";
+import { AverageRating } from '@/components/rating/average-rating'
+import { Database } from '@/utils/supabase/types'
+import Link from 'next/link'
+import { PosterImage } from '@/components/poster-image'
+import UserRating from '@/components/rating/user-rating'
+import { getMovieUrl } from '@/utils/url'
 
 type MovieItemProps = {
-  movie: Database["public"]["Views"]["movies_with_rating_and_popularity"]["Row"];
-};
+  movie: Database['public']['Views']['movies_with_rating_and_popularity']['Row']
+}
 
 export default async function MovieItem(props: MovieItemProps) {
-  const { movie } = props;
-  const { imdb_id, tmdb_id, title, year, poster_path, vote_mean, vote_count } =
-    movie;
+  const { movie } = props
+  const { imdb_id, tmdb_id, title, year, poster_path, vote_mean, vote_count } = movie
 
   const rating =
-    vote_mean !== null && vote_count !== null
-      ? { mean: vote_mean, count: vote_count }
-      : null;
-  const href = getMovieUrl(tmdb_id!, title);
+    vote_mean !== null && vote_count !== null ? { mean: vote_mean, count: vote_count } : null
+  const href = getMovieUrl(tmdb_id!, title)
 
   return (
     <div className="flex h-24 w-full flex-row justify-between overflow-hidden rounded-md border border-slate-500">
@@ -43,5 +39,5 @@ export default async function MovieItem(props: MovieItemProps) {
         <AverageRating imdbId={imdb_id!} rating={rating} />
       </section>
     </div>
-  );
+  )
 }

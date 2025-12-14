@@ -1,23 +1,21 @@
-import { type Metadata } from "next";
+import { type Metadata } from 'next'
 
-import RatingDistribution from "@/components/rating-distribution";
-import { getUserRatedMovies } from "@/utils/supabase/queries";
-import { createClient } from "@/utils/supabase/server";
+import MovieItem from './_components/movie-item'
+import RatingDistribution from '@/components/rating-distribution'
+import { createClient } from '@/utils/supabase/server'
+import { getUserRatedMovies } from '@/utils/supabase/queries'
 
-import MovieItem from "./_components/movie-item";
-
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: "Your Ratings - Movie Mingle",
-  description:
-    "Your Ratings is a list of all the movies you have rated on Movie Mingle.",
-  keywords: ["Movies", "User Ratings", "Synopsis"],
-};
+  title: 'Your Ratings - Movie Mingle',
+  description: 'Your Ratings is a list of all the movies you have rated on Movie Mingle.',
+  keywords: ['Movies', 'User Ratings', 'Synopsis'],
+}
 
 export default async function Page() {
-  const supabase = await createClient();
-  const movies = await getUserRatedMovies(supabase);
+  const supabase = await createClient()
+  const movies = await getUserRatedMovies(supabase)
 
   return (
     <main className="flex min-h-[calc(100vh-56px)] w-full flex-col items-center gap-6 px-8 pb-8">
@@ -30,5 +28,5 @@ export default async function Page() {
         ))}
       </section>
     </main>
-  );
+  )
 }

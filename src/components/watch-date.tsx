@@ -1,29 +1,24 @@
-"use client";
+'use client'
 
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useAuth } from "@/contexts/auth";
-import { useGetWatchDate, useSetWatchDate } from "@/hooks/use-watch-date";
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { useGetWatchDate, useSetWatchDate } from '@/hooks/use-watch-date'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { CalendarIcon } from 'lucide-react'
+import { Skeleton } from '@/components/ui/skeleton'
+import { format } from 'date-fns'
+import { useAuth } from '@/contexts/auth'
 
 type WatchDateProps = {
-  imdbId: string;
-};
+  imdbId: string
+}
 
 export default function WatchDate(props: WatchDateProps) {
-  const { imdbId } = props;
-  const query = useGetWatchDate(imdbId);
-  const mutation = useSetWatchDate();
+  const { imdbId } = props
+  const query = useGetWatchDate(imdbId)
+  const mutation = useSetWatchDate()
 
-  const { session } = useAuth();
+  const { session } = useAuth()
 
   if (query.isLoading || query.isError || session === undefined)
     return (
@@ -31,13 +26,13 @@ export default function WatchDate(props: WatchDateProps) {
         <h4 className="text-sm uppercase">watched</h4>
         <Skeleton className="h-10 w-40" />
       </div>
-    );
+    )
 
   const date = mutation.isPending
     ? mutation.variables.date
     : query.data?.date
       ? new Date(query.data.date)
-      : undefined;
+      : undefined
 
   return (
     <div className="flex flex-col items-center space-y-1">
@@ -53,7 +48,7 @@ export default function WatchDate(props: WatchDateProps) {
             {!session ? (
               <span>Not signed in </span>
             ) : date ? (
-              format(date, "dd / MM / yyyy")
+              format(date, 'dd / MM / yyyy')
             ) : (
               <span>Pick a date</span>
             )}
@@ -70,5 +65,5 @@ export default function WatchDate(props: WatchDateProps) {
         </PopoverContent>
       </Popover>
     </div>
-  );
+  )
 }
