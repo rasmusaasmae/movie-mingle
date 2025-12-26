@@ -1,3 +1,5 @@
+'use server'
+
 import {
   Collection,
   Movie,
@@ -11,12 +13,14 @@ import {
 import { TMDB_BASE_URL } from './constants'
 import { z } from 'zod'
 
+// TODO: Add validation to server action inputs
+
 const tmdbFetch = async <T>(path: string, schema: z.ZodSchema<T>): Promise<T> => {
   const res = await fetch(`${TMDB_BASE_URL}${path}`, {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_KEY}`,
+      Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
     },
   })
 

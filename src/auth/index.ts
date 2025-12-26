@@ -3,7 +3,6 @@ import { db } from '@/db'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 
 export const auth = betterAuth({
-  baseURL: process.env.NEXT_PUBLIC_APP_URL,
   database: drizzleAdapter(db, {
     provider: 'pg',
   }),
