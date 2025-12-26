@@ -47,19 +47,7 @@ for (const m of movies) {
         created_at,
         updated_at
     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,now(),now())
-    ON CONFLICT (imdb_id) DO UPDATE SET
-        tmdb_id = EXCLUDED.tmdb_id,
-        title = EXCLUDED.title,
-        year = EXCLUDED.year,
-        overview = EXCLUDED.overview,
-        poster_path = EXCLUDED.poster_path,
-        backdrop_path = EXCLUDED.backdrop_path,
-        genre_ids = EXCLUDED.genre_ids,
-        imdb_vote_count = EXCLUDED.imdb_vote_count,
-        imdb_vote_mean = EXCLUDED.imdb_vote_mean,
-        tmdb_vote_count = EXCLUDED.tmdb_vote_count,
-        tmdb_vote_mean = EXCLUDED.tmdb_vote_mean,
-        updated_at = now()`,
+    ON CONFLICT (imdb_id) DO NOTHING`,
     [
       m.imdb_id,
       m.tmdb_id,
@@ -98,9 +86,7 @@ for (const w of watchedData) {
           created_at,
           updated_at
       ) VALUES ($1,$2,$3,now(),now())
-      ON CONFLICT (imdb_id, user_id) DO UPDATE SET
-          date = EXCLUDED.date,
-          updated_at = now()`,
+      ON CONFLICT (imdb_id, user_id) DO NOTHING`,
     [w.imdb_id, localUserId, w.date],
   )
 }
@@ -126,10 +112,8 @@ for (const r of ratingsData) {
           created_at,
           updated_at
       ) VALUES ($1,$2,$3,$4,$5)
-      ON CONFLICT (imdb_id, user_id) DO UPDATE SET
-          value = EXCLUDED.value,
-          updated_at = now()`,
-    [r.imdb_id, localUserId, value, r.created_at, r.updated_at],
+      ON CONFLICT (imdb_id, user_id) DO NOTHING`,
+    [r.imdb_id, localUserId, r.value, r.created_at, r.updated_at],
   )
 }
 console.log(`Migrated ${ratingsData.length} rows from 'ratings' table`)
