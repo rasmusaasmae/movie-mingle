@@ -42,7 +42,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy migration files and drizzle config
 COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/drizzle.config.ts ./
-COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./
 
 USER nextjs
@@ -50,3 +49,6 @@ USER nextjs
 EXPOSE 3000
 
 CMD ["bun", "./server.js"]
+
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+  CMD wget -qO- http://localhost:3000/health || exit 1
