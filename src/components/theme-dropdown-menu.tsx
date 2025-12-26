@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from 'next-themes'
 
-export default function ThemeDropdownMenu() {
+export const ThemeDropdownMenu = () => {
   const { theme, resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState<boolean>(false)
 

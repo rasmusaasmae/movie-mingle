@@ -53,7 +53,7 @@ type RatingDistributionChartProps = {
   }[]
 }
 
-export default function RatingDistributionChart(props: RatingDistributionChartProps) {
+export const RatingDistributionChart = (props: RatingDistributionChartProps) => {
   const usePercentage = true
   const userDataKey = usePercentage ? 'userPercentage' : 'userCount'
   const otherDataKey = usePercentage ? 'otherPercentage' : 'otherCount'

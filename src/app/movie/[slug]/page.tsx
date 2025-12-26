@@ -1,17 +1,19 @@
-import { RedirectType, redirect } from 'next/navigation'
-
-import Collection from './_components/collection'
-import Recommendations from './_components/recommendations'
+import { getIdFromSlug, selfHealMovieUrl } from '@/lib/url'
+import { getMovieDetails, getYear } from '@/lib/tmdb'
+import { Collection } from '@/components/collection'
+import { MovieSummary } from '@/components/movie-summary'
+import { Recommendations } from '@/components/recommendations'
 import { Separator } from '@/components/ui/separator'
-import Summary from './_components/summary'
-import { fetchMovie } from '@/utils/tmdb'
-import { getMovieUrl } from '@/utils/url'
+import { notFound } from 'next/navigation'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const tmdb_id = slug.split('-')[0]
-  const movie = await fetchMovie(tmdb_id)
-  const year = movie.release_date.split('-')[0]
+  const tmdbId = getIdFromSlug(slug)
+  if (tmdbId === null) {
+    return { title: 'Movie not found - Movie Mingle' }
+  }
+  const movie = await getMovieDetails(tmdbId)
+  const year = getYear(movie.release_date)
   return {
     title: `${movie.title} (${year}) - Movie Mingle`,
     description: `${movie.overview.slice(0, 150)}`,
@@ -21,19 +23,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-
-  const tmdb_id = slug.split('-')[0]
-  const movie = await fetchMovie(tmdb_id)
-
-  // Self-heal URL
-  const correctUrl = getMovieUrl(movie.id, movie.title)
-  if (slug !== correctUrl.split('/').pop()) {
-    redirect(correctUrl, RedirectType.replace)
-  }
+  const tmdbId = getIdFromSlug(slug) ?? notFound()
+  const movie = await getMovieDetails(tmdbId)
+  selfHealMovieUrl(slug, movie.id, movie.title)
 
   return (
     <main className="flex min-h-[calc(100vh-56px)] w-full flex-col items-center gap-6 pb-8">
-      <Summary movie={movie} />
+      <MovieSummary movie={movie} />
       <div className="flex w-full flex-col items-center gap-4 px-6">
         <Collection collection={movie.belongs_to_collection} />
         {!!movie.belongs_to_collection && <Separator />}

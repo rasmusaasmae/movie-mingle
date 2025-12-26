@@ -1,12 +1,12 @@
 import './globals.css'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { AuthProvider } from '@/contexts/auth'
-import Footer from '@/app/_components/footer'
-import Header from '@/app/_components/header'
+import { Footer } from '@/components/footer'
+import { Header } from '@/components/header'
 import type { Metadata } from 'next'
-import QueryProvider from '@/app/_components/query-provider'
+import { QueryProvider } from '@/components/query-provider'
 import { Separator } from '@/components/ui/separator'
-import { ThemeProvider } from '@/app/_components/theme-provider'
+import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/sonner'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -33,19 +33,18 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <QueryProvider>
-          <AuthProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <Header />
-              {children}
-              <Separator />
-              <Footer />
-            </ThemeProvider>
-          </AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            {children}
+            <Separator />
+            <Footer />
+            <Toaster />
+          </ThemeProvider>
         </QueryProvider>
       </body>
     </html>

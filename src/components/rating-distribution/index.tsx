@@ -1,20 +1,13 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import {
-  getRatingDistribution,
-  getRatingStatistics,
-  getUserRatingStatistics,
-} from '@/utils/supabase/queries'
-import RatingDistributionChart from './rating-distribution-chart'
+import { RatingDistributionChart } from './rating-distribution-chart'
 import clsx from 'clsx'
-import { createClient } from '@/utils/supabase/server'
+import { getRatingStats } from '@/actions'
 
-export default async function RatingDistribution() {
-  const supabase = await createClient()
-  const ratingDistribution = await getRatingDistribution(supabase)
-  const totalStats = await getRatingStatistics(supabase)
-  const userStats = await getUserRatingStatistics(supabase)
+export const RatingDistribution = async () => {
+  const { distribution, stats } = await getRatingStats()
 
-  const meanDifference = (100 * userStats.mean) / totalStats.mean - 100
+  const meanDifference =
+    stats.total.mean && stats.user.mean ? (100 * stats.user.mean) / stats.total.mean - 100 : 0
 
   return (
     <Card>
@@ -22,20 +15,20 @@ export default async function RatingDistribution() {
         <CardTitle>Rating Distribution</CardTitle>
       </CardHeader>
       <CardContent>
-        <RatingDistributionChart data={ratingDistribution} />
+        <RatingDistributionChart data={distribution} />
       </CardContent>
       <CardFooter>
         <ul className="mb-6 ml-6 list-disc [&>li]:mt-2">
           <li>
-            You have rated a total of <span className="text-yellow-400">{userStats.count}</span>{' '}
+            You have rated a total of <span className="text-yellow-400">{stats.user.count}</span>{' '}
             movies
           </li>
           <li>
             Your <span className="font-semibold">average rating</span> is{' '}
             <span
               className={clsx({
-                'text-red-400': userStats.mean < totalStats.mean,
-                'text-green-400': userStats.mean > totalStats.mean,
+                'text-red-400': (stats.user.mean ?? 0) < (stats.total.mean ?? 0),
+                'text-green-400': (stats.user.mean ?? 0) > (stats.total.mean ?? 0),
               })}
             >
               {meanDifference > 0

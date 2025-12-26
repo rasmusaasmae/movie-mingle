@@ -1,36 +1,37 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import Link from 'next/link'
+import { RatingWrapper } from './rating-wrapper'
 
 type TMDBRatingProps = {
   tmdbId: number
-  voteAverage: number
-  voteCount: number
+  rating: { mean: number; count: number }
 }
-
-export default async function TMDBRating({ tmdbId, voteAverage, voteCount }: TMDBRatingProps) {
+export const TMDBRating = ({ tmdbId, rating }: TMDBRatingProps) => {
   return (
-    <div className="flex flex-col items-center space-y-1">
-      <h4 className="text-sm uppercase">tmdb rating</h4>
+    <RatingWrapper title="TMDB rating">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
             <Button asChild variant="outline" className="flex h-10 min-w-40 flex-row space-x-3">
-              <Link href={`https://www.themoviedb.org/movie/${tmdbId}`} target="_blank">
+              <a
+                href={`https://www.themoviedb.org/movie/${tmdbId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Image src="/tmdb.svg" alt="TMDB Rating" height={18} width={41} />
                 <div className="self-center text-lg tracking-wider text-black dark:text-white">
-                  <span className="font-bold">{voteAverage.toFixed(1)}</span>
+                  <span className="font-bold">{rating.mean.toFixed(1)}</span>
                   /10
                 </div>
-              </Link>
+              </a>
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>{voteCount} votes</p>
+            <p>{`${rating.count} vote${rating.count !== 1 ? 's' : ''}`}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-    </div>
+    </RatingWrapper>
   )
 }

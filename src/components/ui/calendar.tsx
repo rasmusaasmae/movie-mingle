@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/tailwind'
 
 function Calendar({
   className,
@@ -85,7 +85,7 @@ function Calendar({
           defaultClassNames.week_number,
         ),
         day: cn(
-          'group/day relative aspect-square h-full w-full p-0 text-center select-none [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md',
+          'group/day relative aspect-square flex-1 p-0 text-center select-none [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md',
           defaultClassNames.day,
         ),
         range_start: cn('rounded-l-md bg-accent', defaultClassNames.range_start),

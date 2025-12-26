@@ -1,32 +1,37 @@
+'use client'
+
 import Image from 'next/image'
 import { ImageIcon } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { getPosterImageUrl } from '@/utils/url'
+import { cn } from '@/lib/tailwind'
+import { useState } from 'react'
 
 type PosterImageProps = React.HTMLProps<HTMLDivElement> & {
-  title: string
-  poster_path: string | null
+  title?: string | null
+  posterUrl?: string | null
 }
 
-function PosterImage(props: PosterImageProps) {
-  const { title, poster_path, className, ...rest } = props
+export const PosterImage = (props: PosterImageProps) => {
+  const { title, posterUrl, className, ...rest } = props
+  const [hasError, setHasError] = useState(false)
+
+  const showFallback = !posterUrl || hasError
 
   return (
-    <div className={cn('relative aspect-[2/3] h-64', className)} {...rest}>
-      {poster_path !== null ? (
+    <div className={cn('relative aspect-2/3 h-64', className)} {...rest}>
+      {!showFallback ? (
         <Image
-          alt={`Poster of ${title}`}
-          src={getPosterImageUrl(poster_path)}
+          alt={title ? `Poster of ${title}` : 'Poster'}
+          src={posterUrl}
           fill
+          sizes="(max-width: 768px) 50vw, 256px"
           className="object-cover"
+          onError={() => setHasError(true)}
         />
       ) : (
-        <div className="grid h-full w-full place-items-center">
+        <div className="grid h-full w-full place-items-center rounded bg-muted">
           <ImageIcon className="h-8 w-8 opacity-50" />
         </div>
       )}
     </div>
   )
 }
-
-export { PosterImage }

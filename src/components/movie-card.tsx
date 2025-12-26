@@ -1,36 +1,29 @@
-import AverageRatingCircle from '@/components/rating/average-rating-circle'
-import { type Database } from '@/utils/supabase/types'
+import { type Movie as TmdbMovie, getPosterImageUrl, getYear } from '@/lib/tmdb'
 import Link from 'next/link'
+import { MeanRatingCircle } from '@/components/rating/mean-rating-circle'
+import { Movie } from '@/db/types'
 import { PosterImage } from '@/components/poster-image'
 import { Skeleton } from '@/components/ui/skeleton'
-import { type TmdbMovie } from '@/utils/tmdb/schemas'
-import { cn } from '@/lib/utils'
-import { getMovieUrl } from '@/utils/url'
+import { getMovieUrl } from '@/lib/url'
 
-type MovieCardProps = React.HTMLProps<HTMLDivElement> & {
-  movie: Database['public']['Views']['movies_with_rating_and_popularity']['Row']
+type MovieCardProps = {
+  movie: Pick<Movie, 'tmdbId' | 'title' | 'year' | 'posterPath'> & {
+    voteMean?: number
+    voteCount?: number
+  }
 }
 
-export function MovieCard(props: MovieCardProps) {
-  const { movie, className, ...rest } = props
-  const { imdb_id, tmdb_id, title, year, poster_path, vote_mean, vote_count } = movie
-
-  const rating =
-    vote_mean !== null && vote_count !== null ? { mean: vote_mean, count: vote_count } : null
-  const href = getMovieUrl(tmdb_id!, title)
+export const MovieCard = ({ movie }: MovieCardProps) => {
+  const { tmdbId, title, year, posterPath, voteMean, voteCount } = movie
+  const href = getMovieUrl(tmdbId, title)
+  const posterUrl = posterPath ? getPosterImageUrl(posterPath) : undefined
 
   return (
     <Link href={href}>
-      <div
-        className={cn(
-          'group relative aspect-[2/3] h-72 overflow-hidden rounded-md bg-background text-lg',
-          className,
-        )}
-        {...rest}
-      >
+      <div className="group relative aspect-2/3 h-72 overflow-hidden rounded-md bg-background text-lg">
         <PosterImage
-          title={title ?? imdb_id ?? tmdb_id!.toString()}
-          poster_path={poster_path}
+          title={title ?? undefined}
+          posterUrl={posterUrl}
           className="h-full transition-opacity group-hover:opacity-30 dark:group-hover:opacity-20"
         />
 
@@ -38,61 +31,31 @@ export function MovieCard(props: MovieCardProps) {
           <h3 className="line-clamp-3 text-center font-bold">{title}</h3>
           <p className="font-semibold">{year}</p>
         </div>
-        {rating !== null && (
-          <div className="absolute top-0 right-0 z-20 grid place-items-end p-1">
-            {<AverageRatingCircle rating={rating} />}
-          </div>
-        )}
+        <div className="absolute top-0 right-0 z-20 grid place-items-end p-1">
+          <MeanRatingCircle voteMean={voteMean} voteCount={voteCount} />
+        </div>
       </div>
     </Link>
   )
 }
 
-type MovieCardTmdbProps = React.HTMLProps<HTMLDivElement> & {
-  movie: TmdbMovie
-}
+export const MovieCardTmdb = ({ movie }: { movie: TmdbMovie }) => {
+  const { id, title, release_date, poster_path } = movie
 
-export async function MovieCardTmdb(props: MovieCardTmdbProps) {
-  const { movie, ...rest } = props
-  const {
-    id: tmdb_id,
-    title,
-    release_date,
-    overview,
-    genre_ids,
-    poster_path,
-    backdrop_path,
-    vote_count: tmdb_vote_count,
-    vote_average: tmdb_vote_mean,
-  } = movie
-
-  const year = new Date(release_date).getFullYear()
+  const year = getYear(release_date)
 
   return (
     <MovieCard
       movie={{
-        imdb_id: null,
-        tmdb_id,
+        tmdbId: id,
         title,
-        year: isNaN(year) ? null : year,
-        overview,
-        genre_ids,
-        poster_path,
-        backdrop_path,
-        imdb_vote_count: null,
-        imdb_vote_mean: null,
-        tmdb_vote_count,
-        tmdb_vote_mean,
-        vote_mean: null,
-        vote_count: null,
-        popularity: null,
-        last_rated: null,
+        year,
+        posterPath: poster_path,
       }}
-      {...rest}
     />
   )
 }
 
-export function MovieCardSkeleton(props: React.HTMLProps<HTMLDivElement>) {
-  return <Skeleton className="aspect-[2/3] h-72 rounded-md" {...props} />
+export const MovieCardSkeleton = () => {
+  return <Skeleton className="aspect-2/3 h-72 rounded-md" />
 }

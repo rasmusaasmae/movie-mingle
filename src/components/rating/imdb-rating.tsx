@@ -1,23 +1,25 @@
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import Link from 'next/link'
-import RatingWrapper from './rating-wrapper'
+import { RatingWrapper } from './rating-wrapper'
 
 type IMDbRatingProps = {
-  imdb_code: string
-  rating: number | null
+  imdbId: string
+  rating: {
+    mean: number | null
+  }
 }
 
-export default async function IMDbRating({ imdb_code, rating }: IMDbRatingProps) {
+export const IMDbRating = ({ imdbId, rating }: IMDbRatingProps) => {
+  const rounded = rating.mean !== null ? rating.mean.toFixed(1) : '-'
   return (
     <RatingWrapper title="IMDb rating">
       <Button asChild variant="outline" className="flex flex-row space-x-3">
-        <Link href={`https://www.imdb.com/title/${imdb_code}`} target="_blank">
+        <a href={`https://www.imdb.com/title/${imdbId}`} target="_blank" rel="noopener noreferrer">
           <Image src="/imdb.svg" alt="IMDb Rating" height={18} width={41} />
           <div className="self-center text-lg">
-            <span className="font-bold">{rating ?? '-'}</span>/10
+            <span className="font-bold">{rounded}</span>/10
           </div>
-        </Link>
+        </a>
       </Button>
     </RatingWrapper>
   )
