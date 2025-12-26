@@ -43,6 +43,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/drizzle.config.ts ./
 COPY --from=builder /app/package.json ./
+COPY --from=deps /app/node_modules ./node_modules
 
 USER nextjs
 
