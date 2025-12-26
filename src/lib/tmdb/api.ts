@@ -11,9 +11,6 @@ import {
 import { TMDB_BASE_URL } from './constants'
 import { z } from 'zod'
 
-if (!process.env.NEXT_PUBLIC_TMDB_API_KEY) {
-  throw new Error('NEXT_PUBLIC_TMDB_API_KEY must be set')
-}
 const tmdbFetch = async <T>(path: string, schema: z.ZodSchema<T>): Promise<T> => {
   const res = await fetch(`${TMDB_BASE_URL}${path}`, {
     method: 'GET',
