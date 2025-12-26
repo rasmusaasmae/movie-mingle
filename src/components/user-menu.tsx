@@ -21,7 +21,7 @@ export const UserMenu = () => {
   const handleSignIn = async () => {
     const { error } = await signIn.social({
       provider: 'google',
-      callbackURL: `${process.env.NEXT_PUBLIC_APP_URL}${path}`,
+      callbackURL: `${window.location.origin}${path}`,
     })
     if (error) {
       toast.error(error.message ?? 'Failed to login')
