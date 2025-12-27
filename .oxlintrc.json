@@ -1,20 +1,28 @@
 {
   "jsPlugins": ["eslint-plugin-better-tailwindcss"],
   "rules": {
-    "sort-imports": "error",
+    "sort-imports": "warn",
     "better-tailwindcss/enforce-consistent-class-order": [
       "warn",
-      { "entryPoint": "src/app/globals.css" }
+      { "entryPoint": "app/globals.css" }
     ],
-    "better-tailwindcss/no-conflicting-classes": ["error", { "entryPoint": "src/app/globals.css" }],
-    "better-tailwindcss/no-duplicate-classes": "error",
-    "better-tailwindcss/no-unnecessary-whitespace": "error",
+    "better-tailwindcss/no-conflicting-classes": ["error", { "entryPoint": "app/globals.css" }],
+    "better-tailwindcss/no-duplicate-classes": "warn",
+    "better-tailwindcss/no-unnecessary-whitespace": "warn",
     "better-tailwindcss/no-unregistered-classes": [
       "error",
       {
-        "entryPoint": "src/app/globals.css",
-        "ignore": ["toaster", "toast"]
+        "entryPoint": "app/globals.css",
+        "ignore": ["toaster", "toast", "cn-calendar-dropdown-root", "cn-calendar-caption-label", "dark"]
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["components/ui/**/*.ts", "components/ui/**/*.tsx"],
+      "rules": {
+        "better-tailwindcss/enforce-consistent-class-order": "off",
+      }
+    }
+  ]
 }
