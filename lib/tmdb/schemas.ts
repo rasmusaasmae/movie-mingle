@@ -65,7 +65,7 @@ export const movieDetailsSchema = z.object({
       name: z.string(),
     }),
   ),
-  status: z.enum(['Released', 'Planned']),
+  status: z.string(),
   tagline: z.string(),
   title: z.string(),
   video: z.boolean(),
