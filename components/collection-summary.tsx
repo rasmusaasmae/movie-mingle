@@ -1,8 +1,4 @@
-import {
-  TMDB_IMAGE_BASE_URL,
-  TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL,
-  TMDB_IMAGE_SIZE_POSTER_ORIGINAL,
-} from '../lib/tmdb/constants'
+import { getBackdropImageUrl, getPosterImageUrl } from '@/lib/tmdb/utils'
 import { type Collection } from '../lib/tmdb'
 import Image from 'next/image'
 
@@ -12,14 +8,14 @@ export const CollectionSummary = async ({ collection }: { collection: Collection
     <section className="relative flex w-full flex-col items-center overflow-hidden bg-background p-6">
       <Image
         alt={`Backdrop of ${name}`}
-        src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_BACKDROP_ORIGINAL}/${backdrop_path}`}
+        src={backdrop_path ? getBackdropImageUrl(backdrop_path) : ''}
         fill
         className="pointer-events-none aspect-video h-full object-cover object-[50%_20%] opacity-25"
       />
       <div className="z-10 flex w-full max-w-7xl flex-col items-center gap-10 sm:flex-row sm:items-start">
         <div className="relative aspect-2/3 w-full max-w-[18rem] overflow-hidden rounded-md">
           <Image
-            src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_ORIGINAL}/${poster_path}`}
+            src={poster_path ? getPosterImageUrl(poster_path, 'original') : ''}
             alt={`Poster of ${name}`}
             fill
             className="object-contain"

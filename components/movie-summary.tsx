@@ -4,8 +4,7 @@ import {
   getBackdropImageUrl,
   getPosterImageUrl,
   getYear,
-} from '../lib/tmdb'
-import { TMDB_IMAGE_BASE_URL, TMDB_IMAGE_SIZE_POSTER_ORIGINAL } from '../lib/tmdb/constants'
+} from '@/lib/tmdb'
 import Image from 'next/image'
 import { ImageIcon } from 'lucide-react'
 import { MeanRating } from './rating/mean-rating'
@@ -38,8 +37,8 @@ export const MovieSummary = async ({ movie }: { movie: MovieDetails }) => {
           <PosterImage title={title} posterUrl={posterUrl} className="h-full" />
           {poster_path !== null ? (
             <Image
-              alt={`Poster of ${movie.title}`}
-              src={`${TMDB_IMAGE_BASE_URL}/${TMDB_IMAGE_SIZE_POSTER_ORIGINAL}/${movie.poster_path}`}
+              alt={`Poster of ${title}`}
+              src={posterUrl ? getPosterImageUrl(posterUrl, 'original') : ''}
               priority
               fill
               className="object-cover"
