@@ -1,6 +1,6 @@
-import { getUserRatings } from '@/actions'
 import { RatingListItem } from '@/components/rating-list-item'
 import { auth } from '@/lib/auth'
+import { getUserRatings } from '@/actions'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 

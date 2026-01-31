@@ -1,11 +1,11 @@
 'use client'
 
-import type { MovieWithUserRating } from '@/db/types'
-import { getPosterImageUrl } from '@/lib/tmdb'
-import { getMovieUrl } from '@/lib/url'
 import { StarIcon, UsersIcon } from 'lucide-react'
 import Link from 'next/link'
+import type { MovieWithUserRating } from '@/db/types'
 import { PosterImage } from './poster-image'
+import { getMovieUrl } from '@/lib/url'
+import { getPosterImageUrl } from '@/lib/tmdb'
 
 type RatingListItemProps = {
   movie: MovieWithUserRating
