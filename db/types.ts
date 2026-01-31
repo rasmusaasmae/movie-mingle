@@ -12,6 +12,9 @@ export type MovieWithMeanRating = Movie & {
 
 export type MovieWithUserRating = Movie & {
   userRating: number
+  ratedAt: Date
+  voteMean: number
+  voteCount: number
 }
 
 export type RatingDistribution = {
