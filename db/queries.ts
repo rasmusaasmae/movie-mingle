@@ -77,20 +77,36 @@ export const getTopMovies = async () => {
 }
 
 export const getUserRatedMovies = async (userId: string) => {
+  const ratingStats = db
+    .select({
+      imdbId: ratings.imdbId,
+      voteMean: avg(ratings.value).mapWith(Number).as('vote_mean'),
+      voteCount: count(ratings.value).as('vote_count'),
+    })
+    .from(ratings)
+    .groupBy(ratings.imdbId)
+    .as('rating_stats')
+
   const result = await db
     .select({
       movie: movies,
       rating: ratings.value,
       updatedAt: ratings.updatedAt,
+      voteMean: ratingStats.voteMean,
+      voteCount: ratingStats.voteCount,
     })
     .from(ratings)
     .innerJoin(movies, eq(ratings.imdbId, movies.imdbId))
+    .innerJoin(ratingStats, eq(ratings.imdbId, ratingStats.imdbId))
     .where(eq(ratings.userId, userId))
     .orderBy(desc(ratings.value), desc(ratings.updatedAt))
 
   return result.map((r) => ({
     ...r.movie,
     userRating: r.rating,
+    ratedAt: r.updatedAt,
+    voteMean: r.voteMean,
+    voteCount: r.voteCount,
   }))
 }
 

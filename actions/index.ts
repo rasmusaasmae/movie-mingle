@@ -1,7 +1,7 @@
 'use server'
 
 import * as db from '@/db/queries'
-import type { MovieWithMeanRating, Rating, Watched } from '@/db/types'
+import type { MovieWithMeanRating, MovieWithUserRating, Rating, Watched } from '@/db/types'
 import { auth } from '@/lib/auth'
 import { getMovieByImdbId } from '@/lib/tmdb'
 import { headers } from 'next/headers'
@@ -79,6 +79,11 @@ export const getMeanRating = async (
 }> => {
   const { imdbId } = MovieDto.parse(dto)
   return db.getMeanRating(imdbId)
+}
+
+export const getUserRatings = async (): Promise<MovieWithUserRating[]> => {
+  const { id: userId } = await getUser()
+  return db.getUserRatedMovies(userId)
 }
 
 export const getRatingStats = async () => {
