@@ -14,7 +14,16 @@ FROM base AS deps
 
 COPY package.json bun.lock* ./
 
-RUN bun install --no-save --frozen-lockfile
+RUN bun install --no-save --frozen-lockfile --ignore-scripts
+
+# -----------------------------
+# Production dependencies stage
+# -----------------------------
+FROM base AS prod-deps
+
+COPY package.json bun.lock* ./
+
+RUN bun install --no-save --frozen-lockfile --production --ignore-scripts
 
 # -----------------------------
 # Builder stage
@@ -29,7 +38,9 @@ RUN bun run build
 # -----------------------------
 # Production runner stage
 # -----------------------------
-FROM base AS runner
+FROM oven/bun:1.3.5-slim AS runner
+
+WORKDIR /app
 
 RUN groupadd --system --gid 1001 nodejs && \
     useradd --system --uid 1001 --no-log-init -g nodejs nextjs
@@ -41,7 +52,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/drizzle.config.ts ./
 COPY --from=builder /app/package.json ./
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=prod-deps /app/node_modules ./node_modules
 
 ENV NODE_ENV=production \
     PORT=3000 \
