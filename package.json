@@ -44,7 +44,7 @@
     "@commitlint/cli": "20.2.0",
     "@commitlint/config-conventional": "20.5.0",
     "@supabase/supabase-js": "2.89.0",
-    "@tailwindcss/postcss": "4.1.18",
+    "@tailwindcss/postcss": "4.2.2",
     "@types/node": "20.19.27",
     "@types/pg": "8.16.0",
     "@types/react": "19.2.7",
