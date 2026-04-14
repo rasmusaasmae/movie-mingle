@@ -17,7 +17,7 @@ const RatingDto = MovieDto.extend({
 })
 
 const WatchedDto = MovieDto.extend({
-  date: z.coerce.date(),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
 })
 
 /* AUTH */
