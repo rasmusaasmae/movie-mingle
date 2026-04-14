@@ -1,7 +1,7 @@
 # -----------------------------
 # Base image
 # -----------------------------
-FROM oven/bun:1 AS base
+FROM oven/bun:1.3.5 AS base
 
 WORKDIR /app
 
@@ -42,7 +42,6 @@ COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/drizzle.config.ts ./
 COPY --from=builder /app/package.json ./
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=builder /app/scripts ./scripts
 
 ENV NODE_ENV=production \
     PORT=3000 \
