@@ -3,7 +3,6 @@ import { and, avg, count, desc, eq, sql } from 'drizzle-orm'
 import { movies, ratings, watched } from './schema'
 import { Movie } from '../lib/tmdb'
 import { db } from '.'
-import { format } from 'date-fns'
 
 /* MOVIES */
 
@@ -195,8 +194,8 @@ export const getWatched = async (userId: string, imdbId: string) => {
   })
 }
 
-export const setWatched = async (userId: string, imdbId: string, date: Date) => {
-  const dateString = format(date, 'yyyy-MM-dd')
+export const setWatched = async (userId: string, imdbId: string, date: string) => {
+  const dateString = date
 
   const [result] = await db
     .insert(watched)
