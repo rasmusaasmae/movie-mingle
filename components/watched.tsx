@@ -8,7 +8,7 @@ import { CalendarIcon } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/tailwind'
-import { format } from 'date-fns'
+import { format, parse } from 'date-fns'
 import { useSession } from '@/lib/auth-client'
 import { useState } from 'react'
 
@@ -26,7 +26,7 @@ export const Watched = ({ imdbId }: { imdbId: string }) => {
   const mutation = useMutation({
     mutationFn: async ({ date }: { date?: Date }) => {
       if (date === undefined) return deleteWatched({ imdbId })
-      return setWatched({ imdbId, date })
+      return setWatched({ imdbId, date: format(date, 'yyyy-MM-dd') })
     },
     onSettled: () => {
       return queryClient.invalidateQueries({
@@ -41,7 +41,7 @@ export const Watched = ({ imdbId }: { imdbId: string }) => {
   const date = mutation.isPending
     ? mutation.variables.date
     : query.data?.date
-      ? new Date(query.data.date)
+      ? parse(query.data.date, 'yyyy-MM-dd', new Date())
       : undefined
 
   const buttonContent = (() => {
