@@ -54,7 +54,7 @@
     "husky": "9.1.7",
     "oxfmt": "0.20.0",
     "oxlint": "1.35.0",
-    "tailwindcss": "4.1.18",
+    "tailwindcss": "4.2.2",
     "tsx": "4.21.0",
     "typescript": "5.9.3"
   },
