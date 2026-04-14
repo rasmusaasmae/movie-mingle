@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "20.2.0",
-    "@commitlint/config-conventional": "20.2.0",
+    "@commitlint/config-conventional": "20.5.0",
     "@supabase/supabase-js": "2.89.0",
     "@tailwindcss/postcss": "4.1.18",
     "@types/node": "20.19.27",
