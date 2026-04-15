@@ -2,7 +2,6 @@
 
 import {
   Collection,
-  Movie,
   MovieDetails,
   SearchMoviesResponse,
   collectionSchema,
@@ -50,7 +49,7 @@ export const searchMovies = async (
   return tmdbFetch(`/search/movie?query=${query}&page=${page}`, searchMoviesResponseSchema)
 }
 
-export const getMovieByImdbId = async (imdbId: string): Promise<Movie> => {
+export const getMovieByImdbId = async (imdbId: string): Promise<MovieDetails> => {
   const external = await tmdbFetch(
     `/find/${imdbId}?external_source=imdb_id`,
     searchMovieExternalResponseSchema,
@@ -64,5 +63,5 @@ export const getMovieByImdbId = async (imdbId: string): Promise<Movie> => {
     throw new Error('Multiple movies found')
   }
 
-  return external.movie_results[0]
+  return getMovieDetails(external.movie_results[0].id)
 }
