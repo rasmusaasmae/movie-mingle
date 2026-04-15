@@ -6,13 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "oxlint actions app components db lib",
-    "format": "oxfmt --write actions app components db lib",
-    "format:check": "oxfmt --check actions app components db lib",
+    "lint": "oxlint actions app components db lib scripts",
+    "format": "oxfmt --write actions app components db lib scripts",
+    "format:check": "oxfmt --check actions app components db lib scripts",
     "prepare": "husky",
     "db:generate": "bunx drizzle-kit generate",
     "db:migrate": "bunx drizzle-kit migrate",
-    "db:push": "bunx drizzle-kit push"
+    "db:push": "bunx drizzle-kit push",
+    "tmdb:import": "bun run scripts/tmdb-import.ts",
+    "tmdb:sync": "bun run scripts/tmdb-sync.ts"
   },
   "dependencies": {
     "@base-ui/react": "1.4.0",

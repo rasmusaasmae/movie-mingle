@@ -1,13 +1,15 @@
 import 'server-only'
 import { and, avg, count, desc, eq, sql } from 'drizzle-orm'
 import { movies, ratings, watched } from './schema'
-import { Movie } from '../lib/tmdb'
+import { MovieDetails } from '../lib/tmdb'
 import { db } from '.'
 
 /* MOVIES */
 
-export const upsertMovie = async (imdbId: string, movie: Movie) => {
-  const year = new Date(movie.release_date).getFullYear()
+export const upsertMovie = async (imdbId: string, movie: MovieDetails) => {
+  const year = movie.release_date ? new Date(movie.release_date).getFullYear() : null
+
+  const collection = movie.belongs_to_collection
 
   await db
     .insert(movies)
@@ -15,11 +17,21 @@ export const upsertMovie = async (imdbId: string, movie: Movie) => {
       imdbId,
       tmdbId: movie.id,
       title: movie.title,
-      year,
+      originalTitle: movie.original_title,
+      year: Number.isNaN(year) ? null : year,
       overview: movie.overview,
+      tagline: movie.tagline || null,
+      runtime: movie.runtime || null,
+      originalLanguage: movie.original_language,
+      popularity: movie.popularity,
+      adult: movie.adult,
       posterPath: movie.poster_path,
       backdropPath: movie.backdrop_path,
-      genreIds: movie.genre_ids,
+      genreIds: movie.genres.map((g) => g.id),
+      belongsToCollectionId: collection?.id ?? null,
+      belongsToCollectionName: collection?.name ?? null,
+      belongsToCollectionPosterPath: collection?.poster_path ?? null,
+      belongsToCollectionBackdropPath: collection?.backdrop_path ?? null,
       tmdbVoteCount: movie.vote_count,
       tmdbVoteMean: movie.vote_average,
     })
@@ -27,6 +39,21 @@ export const upsertMovie = async (imdbId: string, movie: Movie) => {
       target: movies.imdbId,
       set: {
         title: movie.title,
+        originalTitle: movie.original_title,
+        year: Number.isNaN(year) ? null : year,
+        overview: movie.overview,
+        tagline: movie.tagline || null,
+        runtime: movie.runtime || null,
+        originalLanguage: movie.original_language,
+        popularity: movie.popularity,
+        adult: movie.adult,
+        posterPath: movie.poster_path,
+        backdropPath: movie.backdrop_path,
+        genreIds: movie.genres.map((g) => g.id),
+        belongsToCollectionId: collection?.id ?? null,
+        belongsToCollectionName: collection?.name ?? null,
+        belongsToCollectionPosterPath: collection?.poster_path ?? null,
+        belongsToCollectionBackdropPath: collection?.backdrop_path ?? null,
         tmdbVoteCount: movie.vote_count,
         tmdbVoteMean: movie.vote_average,
       },
