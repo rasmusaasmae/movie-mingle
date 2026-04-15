@@ -30,7 +30,7 @@
         "zod": "4.3.6",
       },
       "devDependencies": {
-        "@commitlint/cli": "20.2.0",
+        "@commitlint/cli": "20.5.0",
         "@commitlint/config-conventional": "20.5.0",
         "@tailwindcss/postcss": "4.2.2",
         "@types/node": "20.19.27",
@@ -135,7 +135,7 @@
 
     "@better-fetch/fetch": ["@better-fetch/fetch@1.1.21", "", {}, "sha512-/ImESw0sskqlVR94jB+5+Pxjf+xBwDZF/N5+y2/q4EqD7IARUTSpPfIo8uf39SYpCxyOCtbyYpUrZ3F/k0zT4A=="],
 
-    "@commitlint/cli": ["@commitlint/cli@20.2.0", "", { "dependencies": { "@commitlint/format": "^20.2.0", "@commitlint/lint": "^20.2.0", "@commitlint/load": "^20.2.0", "@commitlint/read": "^20.2.0", "@commitlint/types": "^20.2.0", "tinyexec": "^1.0.0", "yargs": "^17.0.0" }, "bin": { "commitlint": "./cli.js" } }, "sha512-l37HkrPZ2DZy26rKiTUvdq/LZtlMcxz+PeLv9dzK9NzoFGuJdOQyYU7IEkEQj0pO++uYue89wzOpZ0hcTtoqUA=="],
+    "@commitlint/cli": ["@commitlint/cli@20.5.0", "", { "dependencies": { "@commitlint/format": "^20.5.0", "@commitlint/lint": "^20.5.0", "@commitlint/load": "^20.5.0", "@commitlint/read": "^20.5.0", "@commitlint/types": "^20.5.0", "tinyexec": "^1.0.0", "yargs": "^17.0.0" }, "bin": { "commitlint": "./cli.js" } }, "sha512-yNkyN/tuKTJS3wdVfsZ2tXDM4G4Gi7z+jW54Cki8N8tZqwKBltbIvUUrSbT4hz1bhW/h0CdR+5sCSpXD+wMKaQ=="],
 
     "@commitlint/config-conventional": ["@commitlint/config-conventional@20.5.0", "", { "dependencies": { "@commitlint/types": "^20.5.0", "conventional-changelog-conventionalcommits": "^9.2.0" } }, "sha512-t3Ni88rFw1XMa4nZHgOKJ8fIAT9M2j5TnKyTqJzsxea7FUetlNdYFus9dz+MhIRZmc16P0PPyEfh6X2d/qw8SA=="],
 
