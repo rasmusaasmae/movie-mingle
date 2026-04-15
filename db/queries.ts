@@ -1,8 +1,9 @@
 import 'server-only'
 import { and, avg, count, desc, eq, sql } from 'drizzle-orm'
-import { movies, ratings, watched } from './schema'
+import { movies, ratings, skips, watched } from './schema'
 import { Movie } from '../lib/tmdb'
 import { db } from '.'
+import { union } from 'drizzle-orm/pg-core'
 
 /* MOVIES */
 
@@ -214,4 +215,70 @@ export const setWatched = async (userId: string, imdbId: string, date: string) =
 
 export const deleteWatched = async (userId: string, imdbId: string) => {
   return db.delete(watched).where(and(eq(watched.userId, userId), eq(watched.imdbId, imdbId)))
+}
+
+/* SKIPS */
+
+export const getSkip = async (userId: string, imdbId: string) => {
+  return db.query.skips.findFirst({
+    where: and(eq(skips.userId, userId), eq(skips.imdbId, imdbId)),
+  })
+}
+
+export const addSkip = async (userId: string, imdbId: string) => {
+  const [result] = await db
+    .insert(skips)
+    .values({ userId, imdbId })
+    .onConflictDoNothing()
+    .returning()
+  return result
+}
+
+export const deleteSkip = async (userId: string, imdbId: string) => {
+  return db.delete(skips).where(and(eq(skips.userId, userId), eq(skips.imdbId, imdbId)))
+}
+
+/* DISCOVER */
+
+export type UserExclusions = {
+  /** tmdbIds of movies the user has rated or watched — never show again */
+  hard: number[]
+  /** tmdbIds of movies the user has skipped recently — suppress for now */
+  recentlySkipped: number[]
+}
+
+export const getUserExclusions = async (
+  userId: string,
+  skipCooldownDays: number = 30,
+): Promise<UserExclusions> => {
+  const ratedImdbIds = db
+    .select({ imdbId: ratings.imdbId })
+    .from(ratings)
+    .where(eq(ratings.userId, userId))
+
+  const watchedImdbIds = db
+    .select({ imdbId: watched.imdbId })
+    .from(watched)
+    .where(eq(watched.userId, userId))
+
+  const hardExcludedImdbIds = union(ratedImdbIds, watchedImdbIds).as('hard_excluded_imdb_ids')
+
+  const hardResult = await db
+    .select({ tmdbId: movies.tmdbId })
+    .from(movies)
+    .innerJoin(hardExcludedImdbIds, eq(movies.imdbId, hardExcludedImdbIds.imdbId))
+
+  const cooldownCutoff = new Date()
+  cooldownCutoff.setDate(cooldownCutoff.getDate() - skipCooldownDays)
+
+  const recentSkipsResult = await db
+    .select({ tmdbId: movies.tmdbId })
+    .from(skips)
+    .innerJoin(movies, eq(skips.imdbId, movies.imdbId))
+    .where(and(eq(skips.userId, userId), sql`${skips.createdAt} > ${cooldownCutoff.toISOString()}`))
+
+  return {
+    hard: hardResult.map((r) => r.tmdbId),
+    recentlySkipped: recentSkipsResult.map((r) => r.tmdbId),
+  }
 }

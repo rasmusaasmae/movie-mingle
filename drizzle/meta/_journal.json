@@ -8,6 +8,13 @@
       "when": 1766744537525,
       "tag": "0000_soft_doctor_octopus",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1776215917270,
+      "tag": "0001_add_skips_table",
+      "breakpoints": true
     }
   ]
 }

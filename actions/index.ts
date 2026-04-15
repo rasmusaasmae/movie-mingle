@@ -1,9 +1,11 @@
 'use server'
 
 import * as db from '@/db/queries'
-import type { MovieWithMeanRating, MovieWithUserRating, Rating, Watched } from '@/db/types'
+import type { MovieWithMeanRating, MovieWithUserRating, Rating, Skip, Watched } from '@/db/types'
+import { getMovieByImdbId, getMovieDetails } from '@/lib/tmdb'
+import type { MovieDetails } from '@/lib/tmdb'
 import { auth } from '@/lib/auth'
-import { getMovieByImdbId } from '@/lib/tmdb'
+import { getRecommendations } from '@/lib/recommender'
 import { headers } from 'next/headers'
 import { sum } from 'radash'
 import { z } from 'zod'
@@ -138,4 +140,61 @@ export const deleteWatched = async (dto: z.input<typeof MovieDto>): Promise<void
   const { id: userId } = await getUser()
   const { imdbId } = MovieDto.parse(dto)
   await db.deleteWatched(userId, imdbId)
+}
+
+/* SKIPS */
+
+export const getSkip = async (dto: z.input<typeof MovieDto>): Promise<Skip | null> => {
+  const { id: userId } = await getUser()
+  const { imdbId } = MovieDto.parse(dto)
+  const skip = await db.getSkip(userId, imdbId)
+  return skip ?? null
+}
+
+export const skipMovie = async (dto: z.input<typeof MovieDto>): Promise<void> => {
+  const { id: userId } = await getUser()
+  const { imdbId } = MovieDto.parse(dto)
+  await ensureMovie({ imdbId })
+  await db.addSkip(userId, imdbId)
+}
+
+export const undoSkip = async (dto: z.input<typeof MovieDto>): Promise<void> => {
+  const { id: userId } = await getUser()
+  const { imdbId } = MovieDto.parse(dto)
+  await db.deleteSkip(userId, imdbId)
+}
+
+/* DISCOVER */
+
+const DiscoverBatchDto = z.object({
+  excludeTmdbIds: z.array(z.number()).optional(),
+  batchSize: z.number().min(1).max(20).optional(),
+})
+
+export const getDiscoverBatch = async (
+  dto: z.input<typeof DiscoverBatchDto> = {},
+): Promise<MovieDetails[]> => {
+  const { id: userId } = await getUser()
+  const { excludeTmdbIds = [], batchSize = 10 } = DiscoverBatchDto.parse(dto)
+
+  const candidates = await getRecommendations({
+    userId,
+    batchSize,
+    additionalExcludeTmdbIds: excludeTmdbIds,
+  })
+
+  const details = await Promise.all(candidates.map((m) => getMovieDetails(m.id)))
+
+  const withImdbId = details.filter((d) => d.imdb_id !== null)
+
+  await Promise.all(
+    withImdbId.map((d) =>
+      db.upsertMovie(d.imdb_id as string, {
+        ...d,
+        genre_ids: d.genres.map((g) => g.id),
+      }),
+    ),
+  )
+
+  return withImdbId
 }

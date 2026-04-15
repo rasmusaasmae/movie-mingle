@@ -30,12 +30,20 @@ export const Header = async () => {
           <div className="flex items-center space-x-1 sm:space-x-4">
             <SearchMoviesDialog />
             {isAuthenticated && (
-              <Link
-                href="/ratings"
-                className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
-              >
-                My Ratings
-              </Link>
+              <>
+                <Link
+                  href="/discover"
+                  className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+                >
+                  Discover
+                </Link>
+                <Link
+                  href="/ratings"
+                  className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+                >
+                  My Ratings
+                </Link>
+              </>
             )}
             <UserMenu />
           </div>

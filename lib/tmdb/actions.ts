@@ -66,3 +66,7 @@ export const getMovieByImdbId = async (imdbId: string): Promise<Movie> => {
 
   return external.movie_results[0]
 }
+
+export const getPopularMovies = async (page: number = 1): Promise<SearchMoviesResponse> => {
+  return tmdbFetch(`/movie/popular?page=${page}`, searchMoviesResponseSchema)
+}
