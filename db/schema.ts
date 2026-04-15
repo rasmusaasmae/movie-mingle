@@ -74,3 +74,17 @@ export const watched = pgTable(
   },
   (table) => [primaryKey({ columns: [table.imdbId, table.userId] })],
 )
+
+export const skips = pgTable(
+  'skips',
+  {
+    imdbId: text('imdb_id')
+      .notNull()
+      .references(() => movies.imdbId),
+    userId: text('user_id')
+      .notNull()
+      .references(() => user.id),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [primaryKey({ columns: [table.imdbId, table.userId] })],
+)

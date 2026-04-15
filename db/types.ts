@@ -1,8 +1,9 @@
-import { movies, ratings, watched } from './schema'
+import { movies, ratings, skips, watched } from './schema'
 
 export type Movie = typeof movies.$inferSelect
 export type Watched = typeof watched.$inferSelect
 export type Rating = typeof ratings.$inferSelect
+export type Skip = typeof skips.$inferSelect
 
 export type MovieWithMeanRating = Movie & {
   voteMean: number
